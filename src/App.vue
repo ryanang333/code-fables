@@ -1,11 +1,19 @@
-<script setup>
+<template>
+  <Navbar v-if="!$route.path.includes('/login')"/>
+  <RouterView/>
+</template>
+
+<script>
+import Navbar from './components/Navbar/Navbar.vue';
+export default {
+  name: 'App',
+  components:{
+    Navbar
+  }
+}
 
 </script>
 
-<template>
-  <h1>Hello World</h1>
-</template>
-
-<style scoped>
+<style>
 
 </style>
