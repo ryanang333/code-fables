@@ -3,7 +3,7 @@ import App from "./App.vue";
 import { createRouter, createWebHistory } from "vue-router";
 import Account from "./components/Account/Account.vue";
 import Login from "./components/Login/Login.vue";
-import Social from "./components/Social/Social.vue";
+import Social from "./views/Social.vue";
 import Homepage from "./components/Homepage/Homepage.vue";
 import GameCode from "./views/GameCode.vue";
 

@@ -7,7 +7,7 @@
             (Insert Icon Here)
           </a>
         </div>
-        <div class="col-lg-6 col-sm-1 col-1"></div>
+        <div class="col-lg-6 col-md-4 col-sm-2 col-1"></div>
         <div class="col d-flex flex-row justify-content-between">
           <a class="text-white nav-link fs-5" href="/social">Social</a>
           <a class="text-white nav-link fs-5" href="/account">My Account</a>

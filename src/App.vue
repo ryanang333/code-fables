@@ -1,6 +1,7 @@
 <template>
-  <Navbar v-if="!$route.path.includes('/login')"/>
-  <RouterView/>
+  <Navbar v-if="!$route.path.includes('/login')" />
+  <RouterView />
+
 </template>
 
 <script>
@@ -9,11 +10,8 @@ export default {
   name: 'App',
   components:{
     Navbar
-  }
+  },
 }
-
 </script>
 
-<style>
-
-</style>
+<style></style>
