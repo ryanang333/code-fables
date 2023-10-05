@@ -3,16 +3,19 @@ import App from "./App.vue";
 import { createRouter, createWebHistory } from "vue-router";
 import Account from "./components/Account/Account.vue";
 import Login from "./components/Login/Login.vue";
-import Social from "./views/Social.vue";
 import Homepage from "./components/Homepage/Homepage.vue";
 import GameCode from "./views/GameCode.vue";
+import FriendsList from "./components/FriendsList/FriendsList.vue";
+import Leaderboard from "./components/Leaderboard/Leaderboard.vue";
 
+import store from "./store";
 const routes = [
   { path: "/", component: Homepage },
   { path: "/account", component: Account },
   { path: "/gamecode", component: GameCode },
   { path: "/login", component: Login },
-  { path: "/social", component: Social },
+  { path: "/myfriends", component: FriendsList },
+  { path: "/leaderboard", component: Leaderboard},
 
   //Catch-all route to redirect to homepage. LEAVE THIS AT THE LAST
   { path: "/:pathMatch(.*)*", redirect: "/" },
@@ -39,4 +42,5 @@ router.beforeEach((to, from, next) => {
     next();
   }
 });
-createApp(App).use(router).mount("#app");
+createApp(App).use(store).use(router).mount("#app");
+

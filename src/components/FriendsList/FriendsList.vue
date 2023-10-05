@@ -1,16 +1,17 @@
 <template>
-    
+    <h1>My Friends</h1>
 </template>
+
 
 <script>
     export default {
-        name: 'Social',
+        name: "FriendsList",
         components: {
-
+          
         }
-    }
+    };
 </script>
 
-<style>
+<style scoped>
 
 </style>
