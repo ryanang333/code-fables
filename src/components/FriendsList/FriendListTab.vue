@@ -11,8 +11,8 @@
           role="tab"
           aria-controls="nav-friends"
           aria-selected="true"
-        >My Friends</button>
-        <button @click="displayLeaderboardTab"
+        >Friends</button>
+        <button @click="displayRequestTab"
           class="nav-link"
           id="nav-leaderboard-tab"
           data-bs-toggle="tab"
@@ -21,7 +21,7 @@
           role="tab"
           aria-controls="nav-leaderboard"
           aria-selected="false"
-        >Leaderboard</button>
+        >Requests</button>
       </div>
       
     </nav>
@@ -30,12 +30,12 @@
 
 <script>
 export default {
-  name: "SocialNavTab",
+  name: "FriendListTab",
   methods: {
     displayFriendTab(){
         this.$emit("tab-updated", true);
     },
-    displayLeaderboardTab(){
+    displayRequestTab(){
         this.$emit("tab-updated", false);
     }
   }
