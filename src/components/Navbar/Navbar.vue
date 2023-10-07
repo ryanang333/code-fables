@@ -5,7 +5,7 @@
         <a class="navbar-brand" href="/">Icon</a>
       </div>
       
-      <div class="col-lg-4 col-8"></div>
+      <div class="col-lg-3 col-8"></div>
         <div class="col-2 mx-auto">
           <button
             class="navbar-toggler"
