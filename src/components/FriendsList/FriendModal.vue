@@ -8,11 +8,11 @@
         class="d-flex flex-column align-items-center justify-content-center"
       >
         <img :src="profile_pic_ID" class="w-50" />
-        <p class="mb-2 fs-2 mt-5 mb-2">Username: {{ username }}</p>
-        <p class="mb-2 fs-2 mb-2">Level: {{ level }}</p>
-        <p class="mb-2 fs-2 mb-2">Experience: {{ experience }}</p>
-        <p class="mb-2 fs-2 mb-2">Number of Friends: {{ numberOfFriends }}</p>
-        <button class="btn btn-dark btn-block mt-3 w-25 fs-3 p-3" @click="closeModal">
+        <p class="mb-2 mt-5 mb-2">Username: {{ username }}</p>
+        <p class="mb-2 mb-2">Level: {{ level }}</p>
+        <p class="mb-2 mb-2">Experience: {{ experience }}</p>
+        <p class="mb-2 mb-2">Number of Friends: {{ numberOfFriends }}</p>
+        <button class="btn btn-dark btn-block mt-3 w-auto fs-3 p-3" @click="closeModal">
           Close
         </button>
       </div>
@@ -76,5 +76,31 @@ export default {
 .modal-container {
   box-shadow: 10px 10px 10px rgba(158, 148, 148, 0.6);
 }
+
+@media (max-width: 576px) {
+    p {
+        font-size: 16px; 
+    }
+}
+
+
+@media (min-width: 576px) {
+    p {
+        font-size: 20px; 
+    }
+}
+
+@media (min-width: 768px) {
+    p {
+        font-size: 30px; 
+    }
+}
+
+@media (min-width: 992px) {
+    p {
+        font-size: 34px; 
+    }
+}
+
 
 </style>
