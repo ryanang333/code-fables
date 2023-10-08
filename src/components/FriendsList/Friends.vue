@@ -1,12 +1,13 @@
 <template>
   <div class="container d-flex flex-row justify-content-between">
     <h3>Friends ({{ numberOfFriends }})</h3>
-    <form class="d-flex w-50" role="search">
+    <form class="d-flex w-50" role="search" @submit.prevent="openRequestModal">
       <input
         class="form-control me-2"
         type="search"
         placeholder="Add Friends by Username"
         aria-label="Search"
+        v-model="friendRequest"
       />
       <button class="btn btn-outline-success" type="submit">Search</button>
     </form>
@@ -20,7 +21,7 @@
         :key="friend.username"
         :id="friend.username"
         class="border-5 rounded-4 border border-white p-4 my-2 bg-secondary col-12 col-md-6 col-lg-4 col-xl-3 d-flex flex-row align-items-center"
-        @click="openModal(friend.username)"
+        @click="openFriendModal(friend.username)"
       >
         <div class="profilePic">
           <img :src="friend.picture" class="rounded-circle" />
@@ -40,12 +41,14 @@
     </div>
   </div>
   <teleport to="body">
-    <FriendModal v-if="isModal" :username="friendOpen" @close="closeModal" />
+    <FriendModal v-if="isFriendModal" :username="friendOpen" :isSearching="false" @close="closeFriendModal" />
+  </teleport>
+  <teleport to="body">
+    <FriendModal v-if="isRequestModal" :username="friendRequest" :isSearching="true" @close="closeRequestModal" />
   </teleport>
 </template>
 
 <script>
-import store from "../../store/index";
 import FriendModal from "./FriendModal.vue";
 import db from "../../firebase/init";
 import { getDoc, doc } from "firebase/firestore";
@@ -57,29 +60,35 @@ export default {
   data() {
     return {
       numberOfFriends: 5,
-      isModal: false,
+      isFriendModal: false,
       friendOpen: "",
       friends: [],
+      friendRequest: '',
+      isRequestModal : false,
     };
   },
   methods: {
-    openModal(username) {
-      console.log(username);
-      this.isModal = true;
+    openFriendModal(username) {
+      this.isFriendModal = true;
       this.friendOpen = username;
     },
-    closeModal() {
-      this.isModal = false;
+    closeFriendModal() {
+      this.isFriendModal = false;
+    },
+    async openRequestModal() {
+      this.isRequestModal= true;
+    },
+    closeRequestModal() {
+      this.isRequestModal = false;
+      this.friendRequest = '';
     },
     async getFriends() {
       const docSnap = await getDoc(doc(db, "accounts", "ryanang333"));
       if (docSnap.exists()) {
         var myFriends = docSnap.data().friends;
-        console.log(myFriends);
         for (const value of myFriends) {
           const friendDocSnap = await getDoc(doc(db, "accounts", value));
           const friendDetails = friendDocSnap.data();
-          console.log(friendDetails);
           this.friends.push({
             profile_name: friendDetails.profile_name,
             username: friendDetails.username,
@@ -87,11 +96,9 @@ export default {
             picture: friendDetails.profile_pic_ID,
           });
         }
-        console.log(this.friends);
-      } else {
-        console.log("User data doesn't exist");
-      }
+      } 
     },
+    
   },
   mounted() {
     this.getFriends();

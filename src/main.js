@@ -7,8 +7,8 @@ import Homepage from "./components/Homepage/Homepage.vue";
 import GameCode from "./views/GameCode.vue";
 import FriendsList from "./components/FriendsList/FriendsList.vue";
 import Leaderboard from "./components/Leaderboard/Leaderboard.vue";
-
 import store from "./store";
+
 const routes = [
   { path: "/", component: Homepage },
   { path: "/account", component: Account },

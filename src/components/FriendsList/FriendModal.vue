@@ -1,20 +1,62 @@
 <template>
-  <div class="modal-overlay d-flex align-items-center justify-content-center">
-    <div class="modal-container w-50 bg-secondary-subtle p-5 rounded-4">
-      <div class="text-center d-flex justify-content-center">
-        <h1 class="fs-1 text-center mb-5">{{ profile_name }}</h1>
+  <div v-if="showDiv">
+    <div
+      v-if="isFriendFound"
+      class="modal-overlay d-flex align-items-center justify-content-center"
+    >
+      <div class="modal-container w-50 bg-secondary-subtle p-5 rounded-4">
+        <div class="text-center d-flex justify-content-center">
+          <h1 class="fs-1 text-center mb-5">{{ profile_name }}</h1>
+        </div>
+        <div
+          class="d-flex flex-column align-items-center justify-content-center"
+        >
+          <img :src="profile_pic_ID" class="w-50" />
+          <p class="mb-2 mt-5 mb-2">Username: {{ username }}</p>
+          <p class="mb-2 mb-2">Level: {{ level }}</p>
+          <p class="mb-2 mb-2">Experience: {{ experience }}</p>
+          <p class="mb-2 mb-2">Number of Friends: {{ numberOfFriends }}</p>
+          <button
+            class="btn btn-dark btn-block mt-3 w-auto fs-3 p-3"
+            @click="closeModal"
+          >
+            Close
+          </button>
+          <button
+            v-if="isSearching"
+            class="btn btn-dark btn-block mt-3 w-auto fs-3 p-3"
+            @click="addFriend"
+          >
+            Add Friend
+          </button>
+          <button
+            v-else
+            class="btn btn-dark btn-block mt-3 w-auto fs-3 p-3"
+            @click="removeFriend"
+          >
+            Remove Friend
+          </button>
+        </div>
       </div>
-      <div
-        class="d-flex flex-column align-items-center justify-content-center"
-      >
-        <img :src="profile_pic_ID" class="w-50" />
-        <p class="mb-2 mt-5 mb-2">Username: {{ username }}</p>
-        <p class="mb-2 mb-2">Level: {{ level }}</p>
-        <p class="mb-2 mb-2">Experience: {{ experience }}</p>
-        <p class="mb-2 mb-2">Number of Friends: {{ numberOfFriends }}</p>
-        <button class="btn btn-dark btn-block mt-3 w-auto fs-3 p-3" @click="closeModal">
-          Close
-        </button>
+    </div>
+    <div
+      v-else
+      class="modal-overlay d-flex align-items-center justify-content-center"
+    >
+      <div class="modal-container w-50 bg-secondary-subtle p-5 rounded-4">
+        <div class="text-center d-flex justify-content-center">
+          <h1 class="fs-1 text-center mb-5">No user found.</h1>
+        </div>
+        <div
+          class="d-flex flex-column align-items-center justify-content-center"
+        >
+          <button
+            class="btn btn-dark btn-block mt-3 w-auto fs-3 p-3"
+            @click="closeModal"
+          >
+            Close
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -25,6 +67,8 @@ export default {
   name: "FriendModal",
   data() {
     return {
+      showDiv : false,
+      isFriendFound: true,
       profile_name: "",
       level: "",
       experience: "",
@@ -35,23 +79,41 @@ export default {
   },
   props: {
     username: String,
+    isSearching: Boolean,
   },
   methods: {
     closeModal() {
       this.$emit("close");
     },
     async loadFriendData() {
-      const data = await this.$store.dispatch("fetchData", {
-        collection: "accounts",
-        documentKey: this.username,
-      });
-      this.profile_name = data.profile_name;
-      this.level = data.level;
-      this.experience = data.exp;
-      this.profile_pic_ID = data.profile_pic_ID;
-      this.skin_ID = data.skin_ID;
-      this.numberOfFriends = data.friends.length;
+      try{
+        const data = await this.$store.dispatch("fetchData", {
+          collection: "accounts",
+          documentKey: this.username,
+        });
+        if (data === null) {
+          this.isFriendFound = false;
+        } else {
+          this.profile_name = data.profile_name;
+          this.level = data.level;
+          this.experience = data.exp;
+          this.profile_pic_ID = data.profile_pic_ID;
+          this.skin_ID = data.skin_ID;
+          this.numberOfFriends = data.friends.length;
+        }
+      } finally{
+        this.showDivAfterDelay();
+      }
     },
+    addFriend() {
+      console.log("Add friend!");
+    },
+    removeFriend() {
+      console.log("Remove friend!");
+    },
+    showDivAfterDelay() {
+      this.showDiv = true;
+    }
   },
   mounted() {
     this.loadFriendData();
@@ -78,29 +140,26 @@ export default {
 }
 
 @media (max-width: 576px) {
-    p {
-        font-size: 16px; 
-    }
+  p {
+    font-size: 16px;
+  }
 }
 
-
 @media (min-width: 576px) {
-    p {
-        font-size: 20px; 
-    }
+  p {
+    font-size: 20px;
+  }
 }
 
 @media (min-width: 768px) {
-    p {
-        font-size: 30px; 
-    }
+  p {
+    font-size: 30px;
+  }
 }
 
 @media (min-width: 992px) {
-    p {
-        font-size: 34px; 
-    }
+  p {
+    font-size: 34px;
+  }
 }
-
-
 </style>
