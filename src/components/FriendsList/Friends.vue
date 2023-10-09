@@ -17,14 +17,14 @@
       <!-- Conditional rendering of friend list -->
       <div
         v-if="friends.length > 0"
-        v-for="friend in friends"
+        v-for="friend in friendsDetails"
         :key="friend.username"
         :id="friend.username"
         class="border-5 rounded-4 border border-white p-4 my-2 bg-secondary col-12 col-md-6 col-lg-4 col-xl-3 d-flex flex-row align-items-center"
         @click="openFriendModal(friend.username)"
       >
         <div class="profilePic">
-          <img :src="friend.picture" class="rounded-circle" />
+          <img :src="friend.profile_pic_ID" class="rounded-circle" />
         </div>
         <div class="ms-4 mt-1 text-center fs-6">
           <p class="text-white">{{ friend.profile_name }}</p>
@@ -35,23 +35,33 @@
       </div>
       <!-- Show loading or empty state when friends are not yet available -->
       <div v-else>
-        <p class="fs-1">Loading friends...</p>
+        <p class="fs-1">No friends yet!</p>
         <!-- You can also add a loading spinner here if needed -->
       </div>
     </div>
   </div>
   <teleport to="body">
-    <FriendModal v-if="isFriendModal" :username="friendOpen" :isSearching="false" @close="closeFriendModal" />
+    <FriendModal
+      v-if="isFriendModal"
+      :username="friendOpen"
+      :isSearching="false"
+      :friendDetails="friendsDetails"
+      @close="closeFriendModal"
+    />
   </teleport>
   <teleport to="body">
-    <FriendModal v-if="isRequestModal" :username="friendRequest" :isSearching="true" @close="closeRequestModal" />
+    <FriendModal
+      v-if="isRequestModal"
+      :username="friendRequest"
+      :isSearching="true"
+      @close="closeRequestModal"
+      :friendUsername="friendRequest"
+    />
   </teleport>
 </template>
 
 <script>
 import FriendModal from "./FriendModal.vue";
-import db from "../../firebase/init";
-import { getDoc, doc } from "firebase/firestore";
 export default {
   name: "Friends",
   components: {
@@ -59,13 +69,17 @@ export default {
   },
   data() {
     return {
-      numberOfFriends: 5,
+      numberOfFriends: 0,
       isFriendModal: false,
       friendOpen: "",
       friends: [],
-      friendRequest: '',
-      isRequestModal : false,
+      friendRequest: "",
+      isRequestModal: false,
+      friendsDetails: [],
     };
+  },
+  watch: {
+    "$store.state.dataOfUser.friends": "getFriends",
   },
   methods: {
     openFriendModal(username) {
@@ -76,33 +90,34 @@ export default {
       this.isFriendModal = false;
     },
     async openRequestModal() {
-      this.isRequestModal= true;
+      this.isRequestModal = true;
     },
     closeRequestModal() {
       this.isRequestModal = false;
-      this.friendRequest = '';
+      this.friendRequest = "";
     },
     async getFriends() {
-      const docSnap = await getDoc(doc(db, "accounts", "ryanang333"));
-      if (docSnap.exists()) {
-        var myFriends = docSnap.data().friends;
-        for (const value of myFriends) {
-          const friendDocSnap = await getDoc(doc(db, "accounts", value));
-          const friendDetails = friendDocSnap.data();
-          this.friends.push({
-            profile_name: friendDetails.profile_name,
-            username: friendDetails.username,
-            level: friendDetails.level,
-            picture: friendDetails.profile_pic_ID,
-          });
-        }
-      } 
+      this.friends = this.$store.getters.getUserData.friends;
+      this.friendsDetails = []; // Clear the existing data
+      for (const value of this.friends) {
+        const friendData = await this.$store.dispatch("fetchData", {
+          collection: "accounts",
+          documentKey: value,
+        });
+        this.friendsDetails.push({
+          exp: friendData.exp,
+          level: friendData.level,
+          profile_name: friendData.profile_name,
+          profile_pic_ID: friendData.profile_pic_ID,
+          skin_ID: friendData.skin_ID,
+          username: friendData.username,
+          friends: friendData.friends,
+        });
+      }
+      this.numberOfFriends = this.friends.length;
     },
-    
   },
-  mounted() {
-    this.getFriends();
-  },
+  mounted() {},
 };
 </script>
 

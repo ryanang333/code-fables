@@ -33,7 +33,7 @@
               </button>
             </form>
             <p v-if="loginError" class="text-danger mt-3">
-                {{ errorReason }}
+              {{ errorReason }}
             </p>
           </div>
         </div>
@@ -49,7 +49,7 @@ export default {
       username: "",
       password: "",
       loginError: false,
-      errorReason: '',
+      errorReason: "",
     };
   },
   methods: {
@@ -59,24 +59,22 @@ export default {
         collection: "accounts",
         documentKey: this.username,
       });
-      if (data === null){
-        this.errorReason = 'Wrong username.';
+      if (data === null) {
+        this.errorReason = "Wrong username.";
         this.loginError = true;
-      }else if(data.password !== this.password){
-        this.errorReason = 'Wrong password.';
+      } else if (data.password !== this.password) {
+        this.errorReason = "Wrong password.";
         this.loginError = true;
-      }
-      else { 
-        this.$store.dispatch("setUserData", data);
-        this.$router.push('/');
+      } else {
+        await this.$store.dispatch("setUserData", data);
+        this.$router.push("/");
         this.loginError = false;
-        console.log(this.$store.getters.getUserData)
+        console.log(this.$store.getters.getUserData);
       }
       console.log(data);
 
       this.username = "";
       this.password = "";
- 
     },
   },
 };

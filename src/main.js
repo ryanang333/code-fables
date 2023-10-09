@@ -8,6 +8,7 @@ import GameCode from "./views/GameCode.vue";
 import FriendsList from "./components/FriendsList/FriendsList.vue";
 import Leaderboard from "./components/Leaderboard/Leaderboard.vue";
 import store from "./store";
+import './firebase/listeners/firestoreListeners';
 
 const routes = [
   { path: "/", component: Homepage },
@@ -42,5 +43,6 @@ router.beforeEach((to, from, next) => {
     next();
   }
 });
+
 createApp(App).use(store).use(router).mount("#app");
 

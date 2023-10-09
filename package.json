@@ -13,7 +13,8 @@
     "firebase": "^10.4.0",
     "vue": "^3.3.4",
     "vue-router": "^4.2.5",
-    "vuex": "^4.0.2"
+    "vuex": "^4.0.2",
+    "vuex-persistedstate": "^4.1.0"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.2.3",
