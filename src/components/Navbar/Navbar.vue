@@ -31,6 +31,9 @@
           <li class="nav-item">
             <a class="nav-link " href="/account">My Account</a>
           </li>
+          <li class="nav-item">
+            <button class="nav-link" @click="logOut">Sign Out</button>
+          </li>
         </ul>
       </div>
     </div>
@@ -38,14 +41,30 @@
 </template>
 
 <script>
+import { getAuth, signOut } from "firebase/auth";
+let auth;
 export default {
   name: "NavBar",
+  data() {
+    return {
+      
+    }
+  },
+  methods:{
+    logOut(){
+      let auth = getAuth();
+      signOut(auth).then(() => {
+        this.$router.push('/login');
+      })
+    }
+  },
+ 
 };
 </script>
 
 <style scoped> 
 
-a {
+a, button {
   color: white;
   font-size: 18px;
   text-decoration:none;

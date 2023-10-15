@@ -1,12 +1,13 @@
 <template>
   <div class="container d-flex flex-row justify-content-between">
     <h3>Friends ({{ numberOfFriends }})</h3>
-    <form class="d-flex w-50" role="search">
+    <form class="d-flex w-50" role="search" @submit.prevent="openRequestModal">
       <input
         class="form-control me-2"
         type="search"
-        placeholder="Add Friends by Username"
+        placeholder="Add Friends by Email"
         aria-label="Search"
+        v-model="friendRequest"
       />
       <button class="btn btn-outline-success" type="submit">Search</button>
     </form>
@@ -16,39 +17,60 @@
       <!-- Conditional rendering of friend list -->
       <div
         v-if="friends.length > 0"
-        v-for="friend in friends"
+        v-for="friend in friendsDetails"
         :key="friend.username"
         :id="friend.username"
-        class="border-5 rounded-4 border border-white p-4 my-2 bg-secondary col-12 col-md-6 col-lg-4 col-xl-3 d-flex flex-row align-items-center"
-        @click="openModal(friend.username)"
+        class="border-5 rounded-4 border border-white p-4 my-2 bg-secondary col-12 col-lg-6 d-flex flex-row align-items-center"
+        @click="openFriendModal(friend.username)"
       >
-        <div class="profilePic">
-          <img :src="friend.picture" class="rounded-circle" />
+        <div class="col-3 profilePic">
+          <img :src="friend.profile_pic_ID" class="rounded-circle" style="width:150px; height:150px;" />
+        </div>
+        <div class="col-1">
+
         </div>
         <div class="ms-4 mt-1 text-center fs-6">
-          <p class="text-white">{{ friend.profile_name }}</p>
-          <p class="text-white">{{ friend.username }}</p>
+          <p class="text-white">Name: {{ friend.profile_name }}</p>
+          <p class="text-white">Username: {{ friend.username }}</p>
           <p class="text-white">Level: {{ friend.level }}</p>
           <!-- You can include online/offline status here -->
         </div>
       </div>
       <!-- Show loading or empty state when friends are not yet available -->
       <div v-else>
-        <p class="fs-1">Loading friends...</p>
+        <p class="fs-1">No friends yet!</p>
         <!-- You can also add a loading spinner here if needed -->
       </div>
     </div>
   </div>
   <teleport to="body">
-    <FriendModal v-if="isModal" :username="friendOpen" @close="closeModal" />
+    <FriendModal
+      v-if="isFriendModal"
+      :myUser = "username"
+      :username="friendOpen"
+      :isSearching="false"
+      :friendDetails="friendsDetails"
+      :userFriends = 'friends'
+      :myUID = 'UID'
+      @close="closeFriendModal"
+    />
+  </teleport>
+  <teleport to="body">
+    <FriendModal
+      v-if="isRequestModal"
+      :myUser = "username"
+      :username="friendRequest"
+      :isSearching="true"
+      @close="closeRequestModal"
+    />
   </teleport>
 </template>
 
 <script>
-import store from "../../store/index";
+import { getDoc, doc } from "firebase/firestore"; 
+import { getAuth } from "firebase/auth";
 import FriendModal from "./FriendModal.vue";
 import db from "../../firebase/init";
-import { getDoc, doc } from "firebase/firestore";
 export default {
   name: "Friends",
   components: {
@@ -56,46 +78,64 @@ export default {
   },
   data() {
     return {
-      numberOfFriends: 5,
-      isModal: false,
-      friendOpen: "",
+      username: '',
       friends: [],
+      friendsDetails: [],
+      UID: '',
+      numberOfFriends: 0,
+      isFriendModal: false,
+      friendOpen: "",
+      friendRequest: "",
+      isRequestModal: false,
     };
   },
   methods: {
-    openModal(username) {
-      console.log(username);
-      this.isModal = true;
+    openFriendModal(username) {
+      this.isFriendModal = true;
       this.friendOpen = username;
     },
-    closeModal() {
-      this.isModal = false;
+    closeFriendModal() {
+      this.isFriendModal = false;
+    },
+    async openRequestModal() {
+      this.isRequestModal = true;
+    },
+    closeRequestModal() {
+      this.isRequestModal = false;
+      this.friendRequest = "";
     },
     async getFriends() {
-      const docSnap = await getDoc(doc(db, "accounts", "ryanang333"));
-      if (docSnap.exists()) {
-        var myFriends = docSnap.data().friends;
-        console.log(myFriends);
-        for (const value of myFriends) {
-          const friendDocSnap = await getDoc(doc(db, "accounts", value));
-          const friendDetails = friendDocSnap.data();
-          console.log(friendDetails);
-          this.friends.push({
-            profile_name: friendDetails.profile_name,
-            username: friendDetails.username,
-            level: friendDetails.level,
-            picture: friendDetails.profile_pic_ID,
-          });
+      const docSnap = await getDoc(doc(db, 'accounts', this.UID));
+      if (docSnap.exists()){
+        let friends = docSnap.data().friends;
+        console.log(friends);
+        this.friends = friends;
+        this.numberOfFriends = this.friends.length;
+        for (const friendEmail of friends){
+          const friendInfo = await getDoc(doc(db, 'user_profiles', friendEmail));
+          const friendUID = await getDoc(doc(db, 'accounts', friendInfo.data().uid));
+          console.log(friendUID.data());
+          const friendData = friendUID.data();
+          this.friendsDetails = [];
+          this.friendsDetails.push({
+            uid: friendInfo.data().uid,
+            exp: friendData.exp,
+            level: friendData.level,
+            profile_name: friendData.profile_name,
+            profile_pic_ID: friendData.profile_pic_ID,
+            username: friendEmail,
+            friends: friendData.friends,
+          })
         }
-        console.log(this.friends);
-      } else {
-        console.log("User data doesn't exist");
       }
+
     },
   },
-  mounted() {
+  mounted(){
+    this.UID = getAuth().currentUser.uid;
+    this.username = getAuth().currentUser.email;
     this.getFriends();
-  },
+  }
 };
 </script>
 
