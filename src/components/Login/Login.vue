@@ -1,80 +1,50 @@
 <template>
-  <div class="container mt-5">
-    <div class="row justify-content-center">
-      <div class="col-md-6">
-        <div class="card">
-          <div class="card-header">
-            <h1 class="text-center">Login</h1>
-          </div>
-          <div class="card-body">
-            <form @submit.prevent="login">
-              <div class="form-group">
-                <label for="username">Username:</label>
-                <input
-                  type="text"
-                  id="username"
-                  class="form-control"
-                  v-model="username"
-                  required
-                />
-              </div>
-              <div class="form-group">
-                <label for="password">Password:</label>
-                <input
-                  type="password"
-                  id="password"
-                  class="form-control"
-                  v-model="password"
-                  required
-                />
-              </div>
-              <button type="submit" class="btn btn-primary btn-block">
-                Login
-              </button>
-            </form>
-            <p v-if="loginError" class="text-danger mt-3">
-              {{ errorReason }}
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+  <h1>Login</h1>
+  <p><input type="text" placeholder="Email" v-model="email" /></p>
+  <p><input type="password" placeholder="Password" v-model="password" /></p>
+  <p v-if="errMsg" style="color: red">{{ errMsg }}</p>
+  <p><button @click="login">Login</button></p>
 </template>
 
 <script>
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 export default {
+  name: "Login",
+  components: {},
+
   data() {
     return {
-      username: "",
+      email: "",
       password: "",
-      loginError: false,
-      errorReason: "",
+      errMsg: "",
     };
   },
   methods: {
     async login() {
-      // Simulate a simple login process (replace with your actual authentication logic)
-      const data = await this.$store.dispatch("fetchData", {
-        collection: "accounts",
-        documentKey: this.username,
-      });
-      if (data === null) {
-        this.errorReason = "Wrong username.";
-        this.loginError = true;
-      } else if (data.password !== this.password) {
-        this.errorReason = "Wrong password.";
-        this.loginError = true;
-      } else {
-        await this.$store.dispatch("setUserData", data);
-        this.$router.push("/");
-        this.loginError = false;
-        console.log(this.$store.getters.getUserData);
-      }
-      console.log(data);
-
-      this.username = "";
-      this.password = "";
+      const auth = getAuth();
+      signInWithEmailAndPassword(auth, this.email, this.password)
+        .then((data)=> {
+          console.log('Successfuly logged in!');
+          console.log(auth.currentUser);
+          this.$router.push("/");
+        })
+        .catch((error) => {
+          console.log(error.code);
+          switch (error.code) {
+            case "auth/invalid-email":
+              this.errMsg = 'Invalid email';
+              break;
+            case "auth/user-not-found":
+              this.errMsg = "No account with that email was found";
+              break;
+            case "auth/wrong-password":
+              this.errMsg = 'Incorrect password';
+              break;
+            default:
+              this.errMsg = 'Email or password was incorrect';
+              break;
+          }
+        })
     },
   },
 };

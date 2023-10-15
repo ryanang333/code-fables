@@ -1,7 +1,7 @@
 <template>
   <div v-if="showDiv">
     <div
-      v-if="isFriendFound && username!== $store.getters.getUserData.username"
+      v-if="isFriendFound && username!== myUser"
       class="modal-overlay d-flex align-items-center justify-content-center"
     >
       <div class="modal-container w-50 bg-secondary-subtle p-5 rounded-4">
@@ -46,7 +46,7 @@
       </div>
     </div>
     <div
-      v-if="username === $store.getters.getUserData.username"
+      v-if="username == myUser"
       class="modal-overlay d-flex align-items-center justify-content-center"
     >
       <div class="modal-container w-50 bg-secondary-subtle p-5 rounded-4">
@@ -89,6 +89,8 @@
 </template>
 
 <script>
+import { getDoc, doc, updateDoc } from 'firebase/firestore';
+import db from '../../firebase/init';
 export default {
   name: "FriendModal",
   data() {
@@ -103,13 +105,17 @@ export default {
       skin_ID: "",
       isRequestSent: false,
       isAlreadyFriend: false,
+      UID : '',
+      friendsFriends : [],
     };
   },
   props: {
     username: String,
     isSearching: Boolean,
     friendDetails: Array,
-    friendUsername: String,
+    myUser: String,
+    userFriends: Array,
+    myUID: String,
   },
   methods: {
     closeModal() {
@@ -117,25 +123,30 @@ export default {
     },
     async loadFriendData() {
       if (!this.isSearching) {
+        console.log(this.friendDetails);
         var data = this.friendDetails.filter(
           (value) => value.username === this.username
         );
+        this.UID = data[0].uid;
         this.profile_name = data[0].profile_name;
         this.level = data[0].level;
         this.experience = data[0].exp;
         this.profile_pic_ID = data[0].profile_pic_ID;
-        this.skin_ID = data[0].skin_ID;
         this.numberOfFriends = data[0].friends.length;
+        this.friendsFriends = data[0].friends;
         this.showDivAfterDelay();
       } else {
         try {
-          var data = await this.$store.dispatch("fetchData", {
-            collection: "accounts",
-            documentKey: this.username,
-          });
-          if (data === null) {
+          console.log(this.username);
+          const docSnap = await getDoc(doc(db, 'user_profiles', this.username));
+          console.log(docSnap.data());
+          if (docSnap.data() === undefined) {
             this.isFriendFound = false;
           } else {
+            this.UID = docSnap.data().uid;
+            console.log(this.UID);
+            const friendData = await getDoc(doc(db, 'accounts', docSnap.data().uid))
+            const data = friendData.data();
             this.profile_name = data.profile_name;
             this.level = data.level;
             this.experience = data.exp;
@@ -143,10 +154,10 @@ export default {
             this.skin_ID = data.skin_ID;
             this.numberOfFriends = data.friends.length;
             data.friend_requests.includes(
-              this.$store.getters.getUserData.username
+              this.myUser
             ) && (this.isRequestSent = true);
             data.friends.includes(
-              this.$store.getters.getUserData.username
+              this.myUser
             ) && (this.isAlreadyFriend = true);
           }
         } finally {
@@ -156,47 +167,39 @@ export default {
     },
     async addFriend() {
       this.isRequestSent = true;
-      console.log(this.friendUsername);
-      const friendData = await this.$store.dispatch("fetchData", {
-        collection: "accounts",
-        documentKey: this.friendUsername,
-      });
-      friendData.friend_requests.push(this.$store.getters.getUserData.username);
-      console.log(friendData);
-      await this.$store.dispatch("updateData", {
-        collection: 'accounts',
-        documentKey: this.friendUsername,
-        payload: {friend_requests: friendData.friend_requests}
+
+      const friendData = await getDoc(doc(db, 'accounts', this.UID));
+      console.log(friendData.data());
+      const friendReq = friendData.data().friend_requests;
+      console.log(friendReq);
+      friendReq.push(this.myUser);
+      await updateDoc(doc(db, 'accounts', this.UID), {
+        friend_requests: friendReq
       });
       
     },
     async removeFriend() {
-      const user = await this.$store.dispatch("fetchData", {
-        collection: "accounts",
-        documentKey: this.$store.getters.getUserData.username,
-      });
-      const userFriends = user.friends.filter(
+      console.log(this.username);
+      console.log(this.userFriends);
+      console.log(this.UID);
+      const userFriends = this.userFriends.filter(
         (friend) => friend !== this.username
       );
-      await this.$store.dispatch("updateData", {
-        collection: "accounts",
-        documentKey: this.$store.getters.getUserData.username,
-        payload: { friends: userFriends },
-      });
+      console.log(userFriends);
 
-      const userFriend = await this.$store.dispatch("fetchData", {
-        collection: "accounts",
-        documentKey: this.username,
+      await updateDoc(doc(db ,'accounts', this.myUID), {
+        friends: userFriends
       });
-      const userFriendFriends = userFriend.friends.filter(
-        (friend) => friend !== this.$store.getters.getUserData.username
+      
+
+      const friendsFriends = this.friendsFriends.filter(
+        (friend) => friend !== this.myUser
       );
-      this.$emit("close");
-      await this.$store.dispatch("updateData", {
-        collection: "accounts",
-        documentKey: this.username,
-        payload: { friends: userFriendFriends },
+      console.log(this.UID);
+      await updateDoc(doc(db, 'accounts', this.UID), {
+        friends: friendsFriends
       });
+  
     },
     showDivAfterDelay() {
       this.showDiv = true;
@@ -240,7 +243,7 @@ export default {
 
 @media (min-width: 768px) {
   p {
-    font-size: 28px;
+    font-size: 26px;
   }
 }
 

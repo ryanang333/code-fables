@@ -5,7 +5,7 @@
       <input
         class="form-control me-2"
         type="search"
-        placeholder="Add Friends by Username"
+        placeholder="Add Friends by Email"
         aria-label="Search"
         v-model="friendRequest"
       />
@@ -20,15 +20,18 @@
         v-for="friend in friendsDetails"
         :key="friend.username"
         :id="friend.username"
-        class="border-5 rounded-4 border border-white p-4 my-2 bg-secondary col-12 col-md-6 col-lg-4 col-xl-3 d-flex flex-row align-items-center"
+        class="border-5 rounded-4 border border-white p-4 my-2 bg-secondary col-12 col-lg-6 d-flex flex-row align-items-center"
         @click="openFriendModal(friend.username)"
       >
-        <div class="profilePic">
-          <img :src="friend.profile_pic_ID" class="rounded-circle" />
+        <div class="col-3 profilePic">
+          <img :src="friend.profile_pic_ID" class="rounded-circle" style="width:150px; height:150px;" />
+        </div>
+        <div class="col-1">
+
         </div>
         <div class="ms-4 mt-1 text-center fs-6">
-          <p class="text-white">{{ friend.profile_name }}</p>
-          <p class="text-white">{{ friend.username }}</p>
+          <p class="text-white">Name: {{ friend.profile_name }}</p>
+          <p class="text-white">Username: {{ friend.username }}</p>
           <p class="text-white">Level: {{ friend.level }}</p>
           <!-- You can include online/offline status here -->
         </div>
@@ -43,25 +46,31 @@
   <teleport to="body">
     <FriendModal
       v-if="isFriendModal"
+      :myUser = "username"
       :username="friendOpen"
       :isSearching="false"
       :friendDetails="friendsDetails"
+      :userFriends = 'friends'
+      :myUID = 'UID'
       @close="closeFriendModal"
     />
   </teleport>
   <teleport to="body">
     <FriendModal
       v-if="isRequestModal"
+      :myUser = "username"
       :username="friendRequest"
       :isSearching="true"
       @close="closeRequestModal"
-      :friendUsername="friendRequest"
     />
   </teleport>
 </template>
 
 <script>
+import { getDoc, doc } from "firebase/firestore"; 
+import { getAuth } from "firebase/auth";
 import FriendModal from "./FriendModal.vue";
+import db from "../../firebase/init";
 export default {
   name: "Friends",
   components: {
@@ -69,17 +78,16 @@ export default {
   },
   data() {
     return {
+      username: '',
+      friends: [],
+      friendsDetails: [],
+      UID: '',
       numberOfFriends: 0,
       isFriendModal: false,
       friendOpen: "",
-      friends: [],
       friendRequest: "",
       isRequestModal: false,
-      friendsDetails: [],
     };
-  },
-  watch: {
-    "$store.state.dataOfUser.friends": "getFriends",
   },
   methods: {
     openFriendModal(username) {
@@ -97,27 +105,37 @@ export default {
       this.friendRequest = "";
     },
     async getFriends() {
-      this.friends = this.$store.getters.getUserData.friends;
-      this.friendsDetails = []; // Clear the existing data
-      for (const value of this.friends) {
-        const friendData = await this.$store.dispatch("fetchData", {
-          collection: "accounts",
-          documentKey: value,
-        });
-        this.friendsDetails.push({
-          exp: friendData.exp,
-          level: friendData.level,
-          profile_name: friendData.profile_name,
-          profile_pic_ID: friendData.profile_pic_ID,
-          skin_ID: friendData.skin_ID,
-          username: friendData.username,
-          friends: friendData.friends,
-        });
+      const docSnap = await getDoc(doc(db, 'accounts', this.UID));
+      if (docSnap.exists()){
+        let friends = docSnap.data().friends;
+        console.log(friends);
+        this.friends = friends;
+        this.numberOfFriends = this.friends.length;
+        for (const friendEmail of friends){
+          const friendInfo = await getDoc(doc(db, 'user_profiles', friendEmail));
+          const friendUID = await getDoc(doc(db, 'accounts', friendInfo.data().uid));
+          console.log(friendUID.data());
+          const friendData = friendUID.data();
+          this.friendsDetails = [];
+          this.friendsDetails.push({
+            uid: friendInfo.data().uid,
+            exp: friendData.exp,
+            level: friendData.level,
+            profile_name: friendData.profile_name,
+            profile_pic_ID: friendData.profile_pic_ID,
+            username: friendEmail,
+            friends: friendData.friends,
+          })
+        }
       }
-      this.numberOfFriends = this.friends.length;
+
     },
   },
-  mounted() {},
+  mounted(){
+    this.UID = getAuth().currentUser.uid;
+    this.username = getAuth().currentUser.email;
+    this.getFriends();
+  }
 };
 </script>
 

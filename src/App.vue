@@ -1,5 +1,5 @@
 <template>
-  <Navbar v-if="!$route.path.includes('/login')" />
+  <Navbar v-if="!$route.path.includes('/login') && !$route.path.includes('/register')" />
   <RouterView />
 </template>
 
