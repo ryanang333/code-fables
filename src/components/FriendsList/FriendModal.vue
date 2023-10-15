@@ -116,6 +116,7 @@ export default {
     myUser: String,
     userFriends: Array,
     myUID: String,
+    onFriendRemoved: Function,
   },
   methods: {
     closeModal() {
@@ -179,6 +180,7 @@ export default {
       
     },
     async removeFriend() {
+
       console.log(this.username);
       console.log(this.userFriends);
       console.log(this.UID);
@@ -199,7 +201,11 @@ export default {
       await updateDoc(doc(db, 'accounts', this.UID), {
         friends: friendsFriends
       });
-  
+      this.$emit("close");
+      this.onFriendRemoved();
+      
+    
+      
     },
     showDivAfterDelay() {
       this.showDiv = true;

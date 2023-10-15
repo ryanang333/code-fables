@@ -24,11 +24,13 @@
         @click="openFriendModal(friend.username)"
       >
         <div class="col-3 profilePic">
-          <img :src="friend.profile_pic_ID" class="rounded-circle" style="width:150px; height:150px;" />
+          <img
+            :src="friend.profile_pic_ID"
+            class="rounded-circle"
+            style="width: 150px; height: 150px"
+          />
         </div>
-        <div class="col-1">
-
-        </div>
+        <div class="col-1"></div>
         <div class="ms-4 mt-1 text-center fs-6">
           <p class="text-white">Name: {{ friend.profile_name }}</p>
           <p class="text-white">Username: {{ friend.username }}</p>
@@ -46,19 +48,20 @@
   <teleport to="body">
     <FriendModal
       v-if="isFriendModal"
-      :myUser = "username"
+      :myUser="username"
       :username="friendOpen"
       :isSearching="false"
       :friendDetails="friendsDetails"
-      :userFriends = 'friends'
-      :myUID = 'UID'
+      :userFriends="friends"
+      :myUID="UID"
+      :onFriendRemoved="updateFriendsList"
       @close="closeFriendModal"
     />
   </teleport>
   <teleport to="body">
     <FriendModal
       v-if="isRequestModal"
-      :myUser = "username"
+      :myUser="username"
       :username="friendRequest"
       :isSearching="true"
       @close="closeRequestModal"
@@ -67,7 +70,7 @@
 </template>
 
 <script>
-import { getDoc, doc } from "firebase/firestore"; 
+import { getDoc, doc } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 import FriendModal from "./FriendModal.vue";
 import db from "../../firebase/init";
@@ -78,10 +81,10 @@ export default {
   },
   data() {
     return {
-      username: '',
+      username: "",
       friends: [],
       friendsDetails: [],
-      UID: '',
+      UID: "",
       numberOfFriends: 0,
       isFriendModal: false,
       friendOpen: "",
@@ -90,6 +93,9 @@ export default {
     };
   },
   methods: {
+    updateFriendsList() {
+      this.getFriends();
+    },
     openFriendModal(username) {
       this.isFriendModal = true;
       this.friendOpen = username;
@@ -105,18 +111,22 @@ export default {
       this.friendRequest = "";
     },
     async getFriends() {
-      const docSnap = await getDoc(doc(db, 'accounts', this.UID));
-      if (docSnap.exists()){
+      const docSnap = await getDoc(doc(db, "accounts", this.UID));
+      if (docSnap.exists()) {
         let friends = docSnap.data().friends;
         console.log(friends);
         this.friends = friends;
         this.numberOfFriends = this.friends.length;
-        for (const friendEmail of friends){
-          const friendInfo = await getDoc(doc(db, 'user_profiles', friendEmail));
-          const friendUID = await getDoc(doc(db, 'accounts', friendInfo.data().uid));
+        this.friendsDetails = [];
+        for (const friendEmail of friends) {
+          const friendInfo = await getDoc(
+            doc(db, "user_profiles", friendEmail)
+          );
+          const friendUID = await getDoc(
+            doc(db, "accounts", friendInfo.data().uid)
+          );
           console.log(friendUID.data());
           const friendData = friendUID.data();
-          this.friendsDetails = [];
           this.friendsDetails.push({
             uid: friendInfo.data().uid,
             exp: friendData.exp,
@@ -125,17 +135,16 @@ export default {
             profile_pic_ID: friendData.profile_pic_ID,
             username: friendEmail,
             friends: friendData.friends,
-          })
+          });
         }
       }
-
     },
   },
-  mounted(){
+  mounted() {
     this.UID = getAuth().currentUser.uid;
     this.username = getAuth().currentUser.email;
     this.getFriends();
-  }
+  },
 };
 </script>
 
