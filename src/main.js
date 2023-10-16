@@ -10,6 +10,7 @@ import Leaderboard from "./components/Leaderboard/Leaderboard.vue";
 import "./firebase/listeners/firestoreListeners";
 import Register from "./components/Login/Register.vue";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
+import ModelRender from "./components/ModelRender/ModelRender.vue";
 const routes = [
   {
     path: "/",
@@ -17,6 +18,13 @@ const routes = [
     meta: {
       requiresAuth: true,
     },
+  },
+  {
+      path:"/modelRender",
+      component: ModelRender,
+      meta:{
+        requiresAuth: true
+      }
   },
   {
     path: "/account",
