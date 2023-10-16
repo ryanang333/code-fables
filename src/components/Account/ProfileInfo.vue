@@ -59,8 +59,7 @@
         let username = docSnap.data().profile_name;
         this.username = username
 
-        let profile_pic = docSnap.data().profile_pic_ID;
-        console.log(profile_pic)
+        let profile_pic = docSnap.data().profile_pic_ID;''
         this.profileUrl = profile_pic
       }
 
