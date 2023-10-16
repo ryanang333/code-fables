@@ -93,8 +93,15 @@ export default {
     };
   },
   methods: {
-    updateFriendsList() {
-      this.getFriends();
+    updateFriendsList(username) {
+      console.log(username);
+      var newFriends = this.friends.filter( (friend) => friend !== username);
+      this.friends = newFriends;
+      var newFriendDetails = this.friendsDetails.filter( (friendObj) => friendObj.username !== username);
+      console.log(newFriends);
+      console.log(newFriendDetails);
+      this.friendsDetails = newFriendDetails;
+      this.numberOfFriends = this.friends.length;
     },
     openFriendModal(username) {
       this.isFriendModal = true;

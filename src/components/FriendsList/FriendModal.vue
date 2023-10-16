@@ -89,6 +89,7 @@
 </template>
 
 <script>
+import ModelRender from '../ModelRender/ModelRender.vue';
 import { getDoc, doc, updateDoc } from 'firebase/firestore';
 import db from '../../firebase/init';
 export default {
@@ -108,6 +109,9 @@ export default {
       UID : '',
       friendsFriends : [],
     };
+  },
+  components:{
+    ModelRender
   },
   props: {
     username: String,
@@ -181,6 +185,8 @@ export default {
     },
     async removeFriend() {
 
+      this.$emit("close");
+      this.onFriendRemoved(this.username);
       console.log(this.username);
       console.log(this.userFriends);
       console.log(this.UID);
@@ -201,8 +207,7 @@ export default {
       await updateDoc(doc(db, 'accounts', this.UID), {
         friends: friendsFriends
       });
-      this.$emit("close");
-      this.onFriendRemoved();
+      
       
     
       
