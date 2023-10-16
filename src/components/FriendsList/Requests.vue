@@ -17,8 +17,7 @@
             style="width: 150px; height: 150px"
           />
         </div>
-        <div class="col-1"></div>
-        <div class="ms-4 mt-1 text-center fs-6">
+        <div class="col-9 ms-4 mt-1 text-center fs-6">
           <p class="text-white">Name: {{ request.profile_name }}</p>
           <p class="text-white">Username: {{ request.username }}</p>
           <p class="text-white">Level: {{ request.level }}</p>
@@ -26,16 +25,18 @@
           <button
             type="button"
             @click="acceptHandler(request.username)"
-            class="btn btn-success me-5"
+            class="btn btn-success me-5 action-button"
           >
             Accept
           </button>
           <button
             type="button"
             @click="ignoreHandler(request.username)"
-            class="btn btn-danger ms-5"
+            @mouseover="shakePic()"
+            @mouseout="unshakePic()"
+            class="btn btn-danger ms-5 action-button"
           >
-            Ignore
+            Reject
           </button>
         </div>
       </div>
@@ -63,6 +64,18 @@ export default {
     };
   },
   methods: {
+    unshakePic(){ 
+      var button = event.target;
+      var img = button.parentNode.previousSibling.children[0];
+      img.classList.remove('shake-image');
+    },
+
+    shakePic(){ 
+      var button = event.target;
+      var img = button.parentNode.previousSibling.children[0];
+      img.classList.add('shake-image');
+
+    },
     async getRequests() {
       const docSnap = await getDoc(doc(db, "accounts", this.UID));
       const friendReq = docSnap.data().friend_requests;
@@ -100,7 +113,6 @@ export default {
         friends: newFriends,
         friend_requests: newFriendReq,
       });
-      this.getRequests();
       const friendData = await getDoc(doc(db, "user_profiles", username));
       const friendUID = friendData.data().uid;
       const friendInfo = await getDoc(doc(db, "accounts", friendUID));
@@ -109,6 +121,7 @@ export default {
       await updateDoc(doc(db, "accounts", friendUID), {
         friends: friendFriends,
       });
+      this.getRequests();
     },
     async ignoreHandler(username) {
         const newFriendReq = this.requests.filter( (email) => email !== username);
@@ -127,4 +140,36 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+.action-button:hover {
+  transform: scale(1.2);
+  transition: transform 0.3s;
+}
+
+.shake-image {
+  animation: shake 0.5s linear infinite; /* Apply the "shake" animation */
+}
+
+@keyframes shake {
+  0% {
+    transform: rotate(5deg);
+  }
+
+  25% {
+    transform: rotate(-6deg);
+  }
+
+  50% {
+    transform: rotate(5deg);
+  }
+
+  75% {
+    transform: rotate(-6deg);
+  }
+
+  100% {
+    transform: rotate(5deg);
+  }
+}
+</style>
+
