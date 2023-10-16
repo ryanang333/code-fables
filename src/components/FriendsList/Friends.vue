@@ -20,7 +20,7 @@
         v-for="friend in friendsDetails"
         :key="friend.username"
         :id="friend.username"
-        class="border-5 rounded-4 border border-white p-4 my-2 bg-secondary col-12 col-lg-6 d-flex flex-row align-items-center"
+        class="border-5 rounded-4 border border-white p-4 my-2 bg-secondary col-12 col-lg-6 d-flex flex-row align-items-center friend-div"
         @click="openFriendModal(friend.username)"
       >
         <div class="col-3 profilePic">
@@ -148,4 +148,10 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.friend-div:hover {
+  transform: scale(1.05); /* Scale the element on hover */
+  transition: transform 0.2s; /* Add smooth transitions */
+}
+</style>
+

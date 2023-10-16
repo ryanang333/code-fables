@@ -13,9 +13,9 @@
         >
           <img :src="profile_pic_ID" class="w-50" />
           <p class="mb-2 mt-5 mb-2 fw-bold">{{ username }}</p>
-          <p class="mb-2 mb-2">Level: {{ level }}</p>
-          <p class="mb-2 mb-2">Experience: {{ experience }}</p>
-          <p class="mb-2 mb-2">Friends: {{ numberOfFriends }}</p>
+          <p class="mb-2 mb-2">Level {{ level }}</p>
+          <p class="mb-2 mb-2">EXP: {{ experience }}</p>
+          <p class="mb-2 mb-2">{{ numberOfFriends }} Friend(s)</p>
           <button
             v-if="isSearching && !isAlreadyFriend && !isRequestSent"
             class="btn btn-dark btn-block mt-3 w-auto fs-3 p-3"
