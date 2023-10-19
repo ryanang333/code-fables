@@ -1,15 +1,17 @@
 <template>
-    <h1>Account</h1>
     <ProfileInfo></ProfileInfo>
+    <SkinSelect></SkinSelect>
 </template>
 
 <script>
 import ProfileInfo from "./ProfileInfo.vue";
+import SkinSelect from "./SkinSelect.vue";
 
     export default {
         name: 'Account',
         components: {
-            ProfileInfo
+            ProfileInfo,
+            SkinSelect
         }
     }
 </script>
