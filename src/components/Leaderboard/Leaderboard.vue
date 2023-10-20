@@ -1,5 +1,4 @@
 <template>
- 
   <div class="container mt-5 podium-div" v-if="leaderboardPodium.length == 3">
     <h1 class="text-center mt-4">Leaderboard:</h1>
     <div class="mt-4 row justify-content-center">
@@ -13,9 +12,7 @@
             :src="leaderboardPodium[1].profile_pic_ID"
           />
 
-          <p class="fw-bold">
-            Level {{ leaderboardPodium[1].level }}
-          </p>
+          <p class="fw-bold">Level {{ leaderboardPodium[1].level }}</p>
           <p class="">EXP: {{ leaderboardPodium[1].exp }}</p>
           <p class="">{{ leaderboardPodium[1].profile_name }}</p>
         </div>
@@ -46,6 +43,35 @@
           <p class="fw-bold">Level {{ leaderboardPodium[2].level }}</p>
           <p>EXP: {{ leaderboardPodium[2].exp }}</p>
           <p>{{ leaderboardPodium[2].profile_name }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br />
+  <hr />
+  <div class="container mt-5">
+    <div
+      class="padding-5"
+      v-for="(person, index) in leaderboardList"
+      :key="person.profile_name"
+    >
+      <div
+        class="row bg-secondary-subtle d-flex mb-4 align-items-center rounded-3 px-3 pt-3 d-flex-row"
+      >
+        <div class="col-1 mb-3 me-4">
+          <h1>{{ index + 4 }}</h1>
+        </div>
+        <div
+          class="col-2 justify-content-center d-flex flex-column align-items-center"
+        >
+          <img class="podium" :src="person.profile_pic_ID" />
+          <p class="fw-bold text-center">Level {{ person.level }}</p>
+        </div>
+        <div class="col-6 mb-3 text-center">
+          <p>{{ person.profile_name }}</p>
+        </div>
+        <div class="col mb-3">
+          <p class="text-center">EXP: {{ person.exp }}</p>
         </div>
       </div>
     </div>
@@ -98,7 +124,7 @@ export default {
   height: auto;
 }
 
-.podium-div p{
-  margin-top:-8px;
+.podium-div p {
+  margin-top: -8px;
 }
 </style>
