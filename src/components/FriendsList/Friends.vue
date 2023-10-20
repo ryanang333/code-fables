@@ -23,19 +23,21 @@
         class="border-5 rounded-4 border border-white p-4 my-2 bg-secondary col-12 col-lg-6 d-flex flex-row align-items-center friend-div"
         @click="openFriendModal(friend.username)"
       >
-        <div class="col-3 profilePic">
-          <img
-            :src="friend.profile_pic_ID"
-            class="rounded-circle"
-            style="width: 150px; height: 150px"
-          />
-        </div>
-        <div class="col-1"></div>
-        <div class="ms-4 mt-1 text-center fs-6">
-          <p class="text-white">Name: {{ friend.profile_name }}</p>
-          <p class="text-white">Username: {{ friend.username }}</p>
-          <p class="text-white">Level: {{ friend.level }}</p>
-          <!-- You can include online/offline status here -->
+        <div class="row">
+          <div class="col-12 col-sm-4 col-md-6 col-lg-5 profilePic d-flex justify-content-center align-items-center">
+            <img
+              :src="friend.profile_pic_ID"
+              class="rounded-circle"
+              style="width: 150px; height: 150px"
+            />
+          </div>
+          <div class="col-1 "></div>
+          <div class="col-12 col-sm-6 col-md-5 mt-3 text-center fs-6 d-flex flex-column justify-content-center align-items-center">
+            <p class="text-white">Name: {{ friend.profile_name }}</p>
+            <p class="text-white">Username: {{ friend.username }}</p>
+            <p class="text-white">Level: {{ friend.level }}</p>
+            <!-- You can include online/offline status here -->
+          </div>
         </div>
       </div>
       <!-- Show loading or empty state when friends are not yet available -->
@@ -160,5 +162,6 @@ export default {
   transform: scale(1.05); /* Scale the element on hover */
   transition: transform 0.2s; /* Add smooth transitions */
 }
+
 </style>
 
