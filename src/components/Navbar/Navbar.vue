@@ -3,7 +3,7 @@
     <div class="container-fluid mx-5 row p-1">
       <div class="col-lg-1 col-2 mx-auto">
         <a class="navbar-brand" href="/">
-          <img src="/src/assets/images/code-fables.png" style="width:200px; height:auto;"/>
+          <img src="/src/assets/images/code-fables.png" style="width:150px; height:auto;"/>
         </a>
       </div>
       
