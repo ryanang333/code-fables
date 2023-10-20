@@ -42,7 +42,7 @@
           camera.position.z = 5;
   
           const controls = new OrbitControls(camera, renderer.domElement);
-          camera.position.set(0, 2, 1);
+          camera.position.set(0, 0, 2);
           controls.update();
   
           function animate() {
@@ -85,6 +85,8 @@
             const container = this.container
             renderer.setSize(container.clientWidth/2,container.clientHeight)
         }
+
+        
       },
     };
   </script>
