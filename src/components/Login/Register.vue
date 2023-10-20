@@ -1,9 +1,53 @@
 <template>
-  <h1>Create an Account</h1>
-  <p><input type="text" placeholder="Email" v-model="email" /></p>
-  <p><input type="password" placeholder="Password" v-model="password" /></p>
-  <p v-if="errMsg" style="color: red">{{ errMsg }}</p>
-  <p><button @click="register">Register</button></p>
+  <div
+    class="container-fluid bg-image d-flex flex-column align-items-center justify-content-center"
+  >
+    <div
+      id="overlay"
+      class="container-fluid bg-overlay d-flex flex-column align-items-center justify-content-center"
+    >
+      <img src="/src/assets/images/code-fables.png" class=" mb-5" />
+      <div
+        class="col-7 col-sm-6 col-md-5 col-lg-4 col-xl-3 col-xxl-3 container rounded-4 pt-5 pb-3 input-form d-flex flex-column justify-content-center align-items-center"
+      >
+        <div class="mb-3 w-75">
+          <label for="exampleInputEmail1" class="form-label fw-bold text-black"
+            >Email:</label
+          >
+          <input
+            type="email"
+            class="form-control w-100"
+            aria-describedby="emailHelp"
+            v-model="email"
+          />
+        </div>
+        <div class="mb-3 w-75">
+          <label
+            for="exampleInputPassword1"
+            class="form-label fw-bold text-black"
+            >Password:</label
+          >
+          <input type="password" class="form-control" v-model="password" />
+        </div>
+        <p
+          v-if="errMsg"
+          class="mt-1 fs-6"
+          style="color: rgba(255, 0, 0, 0.656)"
+        >
+          {{ errMsg }}!
+        </p>
+        <button @click="register" type="button" class="mt-1 mb-3 btn btn-dark">
+          Sign Up
+        </button>
+        <div class="mb-3 w-100 text-center">
+          <p class="fs-6">
+            Already have an account?
+            <a href="/login" class="text-success fw-bold"> Log in. </a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -45,7 +89,7 @@ export default {
                 errorMessageParts = errorMessageParts[0].split(": ");
                 this.errMsg = errorMessageParts[1];
               } else {
-                this.errMsg = "Weak password"; 
+                this.errMsg = "Weak password";
               }
               break;
           }
@@ -66,4 +110,33 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.bg-image {
+  background-image: url("/src/assets/images/bgRegister.jpg");
+  width: 100vw;
+  height: 100vh;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+}
+
+.bg-overlay {
+  content: "";
+  background: rgba(0, 0, 0, 0.65);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+.input-form {
+  background-color: #dbe5be;
+  box-shadow: 2px 5px 5px 2px rgb(145, 167, 146);
+  transition: transform 0.3s ease;
+}
+
+.input-form:hover {
+  transform: scale(1.02);
+}
+</style>

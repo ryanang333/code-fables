@@ -2,7 +2,9 @@
   <nav class="navbar navbar-expand-lg bg-success">
     <div class="container-fluid mx-5 row p-1">
       <div class="col-lg-1 col-2 mx-auto">
-        <a class="navbar-brand" href="/">Icon</a>
+        <a class="navbar-brand" href="/">
+          <img src="/src/assets/images/code-fables.png" style="width:200px; height:auto;"/>
+        </a>
       </div>
       
       <div class="col-lg-3 col-8"></div>
@@ -26,10 +28,10 @@
             <a class="nav-link me-lg-2 me-xl-5 " aria-current="page" href="/leaderboard">Leaderboard</a>
           </li>
           <li class="nav-item me-lg-2 me-xl-5 ">
-            <a class="nav-link " href="/myfriends">My Friends</a>
+            <a class="nav-link " href="/myfriends">Friends</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link " href="/account">My Account</a>
+            <a class="nav-link " href="/account">Account</a>
           </li>
           <li class="nav-item">
             <button class="nav-link" @click="logOut">Sign Out</button>
