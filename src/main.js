@@ -20,11 +20,11 @@ const routes = [
     },
   },
   {
-      path:"/modelRender",
-      component: ModelRender,
-      meta:{
-        requiresAuth: true
-      }
+    path: "/modelRender",
+    component: ModelRender,
+    meta: {
+      requiresAuth: true,
+    },
   },
   {
     path: "/account",
@@ -40,7 +40,6 @@ const routes = [
       requiresAuth: true,
     },
   },
-  { path: "/login", component: Login },
   {
     path: "/myfriends",
     component: FriendsList,
@@ -56,6 +55,8 @@ const routes = [
     },
   },
   { path: "/register", component: Register },
+  { path: "/login", component: Login },
+
   //Catch-all route to redirect to homepage. LEAVE THIS AT THE LAST
   { path: "/:pathMatch(.*)*", redirect: "/" },
 ];
@@ -67,16 +68,16 @@ const router = createRouter({
 
 const getCurrentUser = () => {
   return new Promise((resolve, reject) => {
-    const removeListener= onAuthStateChanged(
-      getAuth(), 
+    const removeListener = onAuthStateChanged(
+      getAuth(),
       (user) => {
         removeListener();
         resolve(user);
       },
       reject
-    )
-  })
-}
+    );
+  });
+};
 router.beforeEach(async (to, from, next) => {
   if (to.matched.some((record) => record.meta.requiresAuth)) {
     if (await getCurrentUser()) {
