@@ -6,7 +6,7 @@
       id="overlay"
       class="container-fluid bg-overlay d-flex flex-column align-items-center justify-content-center"
     >
-      <img src="/src/assets/images/code-fables.png" class=" mb-5" />
+      <img src="/src/assets/images/code-fables.png" class="mb-5" />
       <div
         class="col-7 col-sm-6 col-md-5 col-lg-4 col-xl-3 col-xxl-3 container rounded-4 pt-5 pb-3 input-form d-flex flex-column justify-content-center align-items-center"
       >

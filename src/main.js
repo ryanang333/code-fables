@@ -11,6 +11,7 @@ import "./firebase/listeners/firestoreListeners";
 import Register from "./components/Login/Register.vue";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import ModelRender from "./components/ModelRender/ModelRender.vue";
+import CustomisationScreen from "./components/Login/CustomisationScreen.vue";
 const routes = [
   {
     path: "/",
@@ -50,6 +51,13 @@ const routes = [
   {
     path: "/leaderboard",
     component: Leaderboard,
+    meta: {
+      requiresAuth: true,
+    },
+  },
+  {
+    path: "/character",
+    component: CustomisationScreen,
     meta: {
       requiresAuth: true,
     },

@@ -4,14 +4,14 @@
       v-if="isFriendFound && username!== myUser"
       class="modal-overlay d-flex align-items-center justify-content-center"
     >
-      <div class="modal-container w-50 bg-secondary-subtle p-5 rounded-4">
+      <div class="modal-container bg-secondary-subtle p-5 rounded-4">
         <div class="text-center d-flex justify-content-center">
           <h1 class="fs-1 text-center mb-5">{{ profile_name }}</h1>
         </div>
         <div
-          class="d-flex flex-column align-items-center justify-content-center"
+          class="d-flex flex-column align-items-center justify-content-center modal-content"
         >
-          <img :src="profile_pic_ID" class="w-50" />
+          <img :src="profile_pic_ID" style="width:100px; height:auto;" />
           <p class="mb-2 mt-5 mb-2 fw-bold">{{ username }}</p>
           <p class="mb-2 mb-2">Level {{ level }}</p>
           <p class="mb-2 mb-2">EXP: {{ experience }}</p>
@@ -49,12 +49,12 @@
       v-if="username == myUser"
       class="modal-overlay d-flex align-items-center justify-content-center"
     >
-      <div class="modal-container w-50 bg-secondary-subtle p-5 rounded-4">
+      <div class="modal-container bg-secondary-subtle p-5 rounded-4">
         <div class="text-center d-flex justify-content-center">
           <h1 class="fs-1 text-center mb-5">Can't add yourself, silly goose! </h1>
         </div>
         <div
-          class="d-flex flex-column align-items-center justify-content-center"
+          class="d-flex flex-column align-items-center justify-content-center modal-content"
         >
           <button
             class="btn btn-dark btn-block mt-3 w-auto fs-3 p-3"
@@ -69,12 +69,12 @@
       v-if="!isFriendFound"
       class="modal-overlay d-flex align-items-center justify-content-center"
     >
-      <div class="modal-container w-50 bg-secondary-subtle p-5 rounded-4">
+      <div class="modal-container bg-secondary-subtle p-5 rounded-4">
         <div class="text-center d-flex justify-content-center">
           <h1 class="fs-1 text-center mb-5">No user found.</h1>
         </div>
         <div
-          class="d-flex flex-column align-items-center justify-content-center"
+          class="d-flex flex-column align-items-center justify-content-center modal-content"
         >
           <button
             class="btn btn-dark btn-block mt-3 w-auto fs-3 p-3"
@@ -238,12 +238,21 @@ export default {
 
 .modal-container {
   box-shadow: 10px 10px 10px rgba(158, 148, 148, 0.6);
+  overflow:hidden;
 }
 
+.modal-content{
+  max-height:100%;
+  overflow-y:auto;
+}
 @media (max-width: 576px) {
   p {
     font-size: 18px;
   }
+  /* .modal-container{
+    height:auto;
+    width:auto;
+  } */
 }
 
 @media (min-width: 576px) {
