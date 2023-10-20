@@ -11,7 +11,8 @@
         <div
           class="d-flex flex-column align-items-center justify-content-center modal-content"
         >
-          <img :src="profile_pic_ID" style="width:100px; height:auto;" />
+          <!-- <img :src="profile_pic_ID" style="width:100px; height:auto;" /> -->
+          <ModelRender/>
           <p class="mb-2 mt-5 mb-2 fw-bold">{{ username }}</p>
           <p class="mb-2 mb-2">Level {{ level }}</p>
           <p class="mb-2 mb-2">EXP: {{ experience }}</p>
