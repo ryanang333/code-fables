@@ -10,7 +10,7 @@ import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 export default {
 	name: "ModelRender",
 	props: {
-		modelName: {
+		modelUrl: {
 			type: String,
 			required: true,
 		},
@@ -22,28 +22,21 @@ export default {
 		};
 	},
 	mounted() {
-		this.displayModel(this.modelName);
+		this.displayModel(this.modelUrl);
 		window.addEventListener("resize", this.onWindowResize);
 	},
 	methods: {
-		displayModel(modelName) {
-			const renderer = new THREE.WebGLRenderer( {alpha : true});
+		displayModel(modelUrl) {
+			const renderer = new THREE.WebGLRenderer({ alpha: true });
 			const container = this.$refs.modelContainer;
 			const height = container.clientHeight;
 			const width = container.clientWidth;
 			renderer.setSize(width / 2, height);
-			console.log("container height is " + container.clientHeight);
-			console.log("container width is " + container.clientWidth);
 
 			var scene = new THREE.Scene();
-			scene.background = null
+			scene.background = null;
 
-			const camera = new THREE.PerspectiveCamera(
-				75,
-				width / height/2,
-				1,
-				10
-			);
+			const camera = new THREE.PerspectiveCamera(75, width / height / 2, 1, 10);
 			camera.position.z = 5;
 
 			const controls = new OrbitControls(camera, renderer.domElement);
@@ -68,17 +61,17 @@ export default {
 			createLight();
 
 			const loader = new GLTFLoader();
-			var path = "/3DModels/" + modelName + ".glb";
+			var path = modelUrl;
 
 			loader.load(
 				path,
 				function (gltf) {
 					let char = gltf.scene;
 					window.char = char;
-          var box = new THREE.Box3().setFromObject( char );
-          var center = new THREE.Vector3();
-          box.getCenter( center );
-          char.position.sub( center )
+					var box = new THREE.Box3().setFromObject(char);
+					var center = new THREE.Vector3();
+					box.getCenter(center);
+					char.position.sub(center);
 					scene.add(char);
 				},
 				undefined,
