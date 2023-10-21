@@ -6,7 +6,14 @@
       id="overlay"
       class="container-fluid bg-overlay d-flex flex-column align-items-center justify-content-center"
     >
-      <img src="/src/assets/images/code-fables.png" class="mb-5" />
+      <div
+        class="col-12 col-md-10 col-lg-9 col-xl-8 col-xxl-7 d-flex justify-content-center align-items-center"
+      >
+        <img
+          src="/src/assets/images/code-fables.png"
+          class="mb-5 logo-pic w-75"
+        />
+      </div>
       <div
         class="col-7 col-sm-6 col-md-5 col-lg-4 col-xl-3 col-xxl-3 container rounded-4 pt-5 pb-3 input-form d-flex flex-column justify-content-center align-items-center"
       >

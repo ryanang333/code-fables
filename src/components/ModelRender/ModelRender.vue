@@ -64,7 +64,6 @@
   
           const loader = new GLTFLoader();
           var path = "/3DModels/knight.glb";
-  
           loader.load(
             path,
             function (gltf) {
