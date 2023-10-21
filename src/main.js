@@ -12,7 +12,6 @@ import Register from "./components/Login/Register.vue";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import ModelRender from "./components/ModelRender/ModelRender.vue";
 import CustomisationScreen from "./components/Login/CustomisationScreen.vue";
-import Ide from "./components/Game/ide.vue";
 import Codingquestion from "./components/Game/Codingquestion.vue";
 
 const routes = [
@@ -66,6 +65,14 @@ const routes = [
     },
   },
   { path: "/register", component: Register },
+  { path: "/login", component: Login },
+  {
+    path: "/codingquestion",
+    component: Codingquestion,
+    meta: {
+      requiresAuth: true,
+    },
+  },
   //Catch-all route to redirect to homepage. LEAVE THIS AT THE LAST
   { path: "/:pathMatch(.*)*", redirect: "/" },
 ];

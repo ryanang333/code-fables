@@ -19,7 +19,7 @@
         </div>
 
         <!-- Integrated Replit IDE -->
-        <ReplitEmbed replitUrl="replitUrl" />
+        <ReplitEmbed :replitUrl="replitUrl" />
 
         <button @click="loadNextQuestion">Next</button>
     </div>
@@ -31,42 +31,43 @@
 
 import ReplitEmbed from "./ide.vue";
 import db  from "../../firebase/init";
-import { getDocs, collection, query, where, getFirestore, doc,limit } from 'firebase/firestore';
+import { getDocs, getDoc, collection, query, where, getFirestore, doc,limit } from 'firebase/firestore';
 
 
 export default {
-    name: "ide",
+    name: "Codingquestion",
     components: {
         ReplitEmbed
     },
     data() {
         return {
-        selectedTopic: {
-            name: 'Topic Name', // Initialize with the selected topic
-        },
+        selectedTopic: '',
         selectedQuestion: 'topicId1', // Initialize with the first question
         selectedQuestionIndex: 0, // Index of the selected question
-        replitUrl: 'https://replit.com/@muhdalmaliki141/Python',
+        replitUrl: 'https://replit.com/@muhdalmaliki141/Python?embed=true',
         isLoading: false,
         selectedTopicId: 'topicId1',
         };
     },
     methods: {
         async fetchSelectedTopicData() {
-            try {
-                const topicsRef = collection(db, 'topics');
-                const topicDoc = doc(topicsRef, this.selectedTopicId); 
-                const docSnapshot = await getDocs(topicDoc);
+            // try {
+            //     const topicsRef = collection(db, 'topics');
+            //     const topicDoc = doc(topicsRef, this.selectedTopicId); 
+            //     const docSnapshot = await getDocs(topicDoc);
 
-                if (docSnapshot.exists()) {
-                    this.selectedTopic = docSnapshot.data();
-                } else {
-                    this.showErrorMessage('Selected topic does not exist.');
-                }
-            } catch (error) {
-                console.error('Error fetching selected topic data:', error);
-                this.showErrorMessage('An error occurred while fetching selected topic data.');
-            }
+            //     if (docSnapshot.exists()) {
+            //         this.selectedTopic = docSnapshot.data();
+            //     } else {
+            //         this.showErrorMessage('Selected topic does not exist.');
+            //     }
+            // } catch (error) {
+            //     console.error('Error fetching selected topic data:', error);
+            //     this.showErrorMessage('An error occurred while fetching selected topic data.');
+            // }
+            const docSnap = await getDoc(doc(db, 'topics', this.selectedTopicId));
+            this.selectedTopic = docSnap.data().name;
+            console.log(this.selectedTopic);
         },
 
 
@@ -152,7 +153,7 @@ export default {
             console.log(message);
         },
         },
-        created() {
+        mounted() {
             this.fetchSelectedTopicData();
             this.fetchInitialSelectedQuestion();
         },

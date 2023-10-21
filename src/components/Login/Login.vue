@@ -5,7 +5,14 @@
     <div
       class="container-fluid bg-overlay d-flex flex-column align-items-center justify-content-center"
     >
-      <img src="/src/assets/images/code-fables.png" class="mb-5 logo-pic" />
+      <div
+        class="col-12 col-md-10 col-lg-9 col-xl-8 col-xxl-7 d-flex justify-content-center align-items-center"
+      >
+        <img
+          src="/src/assets/images/code-fables.png"
+          class="mb-5 logo-pic w-75"
+        />
+      </div>
       <div
         class="col-7 col-sm-6 col-md-5 col-lg-4 col-xl-3 col-xxl-3 container rounded-4 pt-5 pb-3 input-form d-flex flex-column justify-content-center align-items-center"
       >
@@ -28,16 +35,20 @@
           >
           <input type="password" class="form-control" v-model="password" />
         </div>
-        <p v-if="errMsg" class="mt-1 fs-6" style="color: rgba(255, 0, 0, 0.656)">{{ errMsg }}!</p>
+        <p
+          v-if="errMsg"
+          class="mt-1 fs-6"
+          style="color: rgba(255, 0, 0, 0.656)"
+        >
+          {{ errMsg }}!
+        </p>
         <button @click="login" type="button" class="mt-1 mb-3 btn btn-dark">
           Sign In
         </button>
         <div class="mb-3 w-100 text-center">
           <p class="fs-6">
-            Don't Have an Account? 
-            <a href="/register" class=" text-success fw-bold">
-              Create it.
-            </a>
+            Don't Have an Account?
+            <a href="/register" class="text-success fw-bold"> Create it. </a>
           </p>
         </div>
       </div>
@@ -118,9 +129,6 @@ export default {
 .input-form:hover {
   transform: scale(1.02);
 }
-
-
-
 
 /* @media screen and (max-width: 576px){
   .logo-pic{
