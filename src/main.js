@@ -13,6 +13,7 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 import ModelRender from "./components/ModelRender/ModelRender.vue";
 import CustomisationScreen from "./components/Login/CustomisationScreen.vue";
 import Codingquestion from "./components/Game/Codingquestion.vue";
+import TopicList from "./components/Game/TopicList.vue"; 
 
 const routes = [
   {
@@ -69,6 +70,13 @@ const routes = [
   {
     path: "/codingquestion",
     component: Codingquestion,
+    meta: {
+      requiresAuth: true,
+    },
+  },
+  {
+    path: "/topiclist",
+    component: TopicList,
     meta: {
       requiresAuth: true,
     },

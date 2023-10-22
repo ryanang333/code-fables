@@ -1,12 +1,5 @@
 <template>
 <div class="container">
-        <!-- Display the topic -->
-
-    <select v-model="selectedTopicId">
-        <option value="topicId1">Topic 1</option>
-        <option value="topicId2">Topic 2</option>
-    </select>
-    
     <div class="topic mb-4">
         <h2 class="text-light">{{ selectedTopic.name }}</h2>
     </div>
