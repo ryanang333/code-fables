@@ -12,7 +12,7 @@
         </div>
 
         <!-- Integrated Replit IDE -->
-        <ReplitEmbed :replitUrl="replitUrl" />
+        <ReplitEmbed />
 
         <button @click="loadNextQuestion">Next</button>
     </div>
