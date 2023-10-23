@@ -25,6 +25,7 @@
             class="form-control w-100"
             aria-describedby="emailHelp"
             v-model="email"
+            @keydown.enter="handleEnter"
           />
         </div>
         <div class="mb-3 w-75">
@@ -33,7 +34,12 @@
             class="form-label fw-bold text-black"
             >Password:</label
           >
-          <input type="password" class="form-control" v-model="password" />
+          <input
+            type="password"
+            class="form-control"
+            v-model="password"
+            @keydown.enter="handleEnter"
+          />
         </div>
         <p
           v-if="errMsg"
@@ -96,7 +102,11 @@ export default {
           }
         });
     },
+    handleEnter() {
+      this.login();
   },
+  },
+  
 };
 </script>
 

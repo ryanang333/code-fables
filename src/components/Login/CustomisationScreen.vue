@@ -17,10 +17,10 @@
               <div
                 class="carousel-item text-center"
                 v-for="(model, index) in models"
-                :key="model"
+                :key="model.name"
                 :class="{ active: index === 0 }"
               >
-                <img :src="model.url" style="width: 150px; height: auto" />
+                <ModelRender :modelUrl="model.url" />
 
                 <p class="mt-2 text-white fs-2">
                   {{ model.name }}
@@ -67,7 +67,11 @@
           </div>
         </div>
         <div class="row d-flex justify-content-center">
-          <button type="button" class="mt-5 w-50 btn btn-dark" @click="selectModel">
+          <button
+            type="button"
+            class="mt-5 w-50 btn btn-dark"
+            @click="selectModel"
+          >
             Create Character
           </button>
         </div>
@@ -77,38 +81,38 @@
 </template>
 
 <script>
+import db from "../../firebase/init";
+import { getDocs, query, collection, orderBy } from "firebase/firestore";
 import ModelRender from "../ModelRender/ModelRender.vue";
 export default {
   name: "CustomisationScreen",
   components: { ModelRender },
   data() {
     return {
-      models: [
-        {
-          name: "banana",
-          url: "https://images.unsplash.com/photo-1481349518771-20055b2a7b24?auto=format&fit=crop&q=80&w=1000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8cmFuZG9tfGVufDB8fDB8fHww",
-        },
-        {
-          name: "blackman",
-          url: "https://plus.unsplash.com/premium_photo-1688891564708-9b2247085923?auto=format&fit=crop&q=80&w=1000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cmFuZG9tJTIwcGVyc29ufGVufDB8fDB8fHww",
-        },
-        {
-          name: "whiteman",
-          url: "https://img.freepik.com/free-photo/portrait-hesitant-man-purses-lips-looks-bewilderment-feels-doubt_273609-16785.jpg",
-        },
-      ],
+      models: [],
       selectedModel: "",
     };
   },
   methods: {
-    getModels() {},
+    async getModels() {
+      const q = query(collection(db, "models"));
+      const querySnap = await getDocs(q);
+    
+      querySnap.forEach((doc) => {
+        // console.log(doc.data().path);
+        // console.log(doc.id);
+        this.models.push({'name': doc.id.toUpperCase(), 'url':doc.data().path})
+      });
+
+      console.log(this.models);
+    },
     selectModel() {
-      const activeCarousel = document.getElementsByClassName('active')[0];
+      const activeCarousel = document.getElementsByClassName("active")[0];
       console.log(activeCarousel);
     },
   },
   mounted() {
-    this.getModels;
+    this.getModels();
   },
 };
 </script>

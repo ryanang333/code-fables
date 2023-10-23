@@ -26,6 +26,7 @@
             class="form-control w-100"
             aria-describedby="emailHelp"
             v-model="email"
+            @keydown.enter="handleEnter"
           />
         </div>
         <div class="mb-3 w-75">
@@ -34,7 +35,12 @@
             class="form-label fw-bold text-black"
             >Password:</label
           >
-          <input type="password" class="form-control" v-model="password" />
+          <input
+            type="password"
+            class="form-control"
+            v-model="password"
+            @keydown.enter="handleEnter"
+          />
         </div>
         <p
           v-if="errMsg"
@@ -84,6 +90,12 @@ export default {
           console.log(error);
           console.log(error.code);
           switch (error.code) {
+            case "auth/missing-email":
+              this.errMsg = "Missing email address";
+              break;
+            case "auth/missing-password":
+              this.errMsg = "Missing password";
+              break;
             case "auth/invalid-email":
               this.errMsg = "Invalid email";
               break;
@@ -101,6 +113,9 @@ export default {
               break;
           }
         });
+    },
+    handleEnter(){
+      this.register();
     },
     async createUser(userUID) {
       await setDoc(doc(db, "user_profiles", this.email), {

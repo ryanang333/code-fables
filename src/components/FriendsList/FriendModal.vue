@@ -109,7 +109,7 @@ export default {
       isAlreadyFriend: false,
       UID : '',
       friendsFriends : [],
-      modelUrl : '/3DModels/knight.glb',
+      modelUrl : '/3DModels/sword.glb',
     };
   },
   components:{

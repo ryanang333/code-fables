@@ -30,12 +30,6 @@
           <li class="nav-item me-lg-2 me-xl-5 ">
             <a class="nav-link " href="/myfriends">Friends</a>
           </li>
-          <!-- <li class="nav-item">
-            <a class="nav-link " href="/account">Account</a>
-          </li>
-          <li class="nav-item">
-            <button class="nav-link" @click="logOut">Sign Out</button>
-          </li> -->
           <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Account

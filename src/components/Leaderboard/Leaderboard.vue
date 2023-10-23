@@ -46,9 +46,9 @@
         </div>
       </div>
     </div>
+    <br />
+    <hr />
   </div>
-  <br />
-  <hr />
   <div class="container mt-5">
     <div
       class="padding-5"
