@@ -9,6 +9,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "ace-builds": "^1.30.0",
+    "axios": "^1.5.1",
     "bootstrap": "^5.3.2",
     "firebase": "^10.4.0",
     "three": "^0.157.0",
