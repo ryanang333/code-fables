@@ -6,6 +6,7 @@
 import * as THREE from "three";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+import { render } from "vue";
 
 export default {
 	name: "ModelRender",
@@ -21,6 +22,9 @@ export default {
 			container: null,
 		};
 	},
+	updated(){
+		this.onWindowResize()
+	},
 	mounted() {
 		this.displayModel(this.modelUrl);
 		window.addEventListener("resize", this.onWindowResize);
@@ -29,18 +33,18 @@ export default {
 		displayModel(modelUrl) {
 			const renderer = new THREE.WebGLRenderer({ alpha: true });
 			const container = this.$refs.modelContainer;
-			const height = container.clientHeight;
-			const width = container.clientWidth;
-			renderer.setSize(width / 2, height);
+			const height = window.innerHeight/2
+			const width = window.innerWidth
+			renderer.setSize(width, height);
 
 			var scene = new THREE.Scene();
 			scene.background = null;
 
-			const camera = new THREE.PerspectiveCamera(75, width / height / 2, 1, 10);
+			const camera = new THREE.PerspectiveCamera(45, width / height / 2, 1, 10);
 			camera.position.z = 5;
 
 			const controls = new OrbitControls(camera, renderer.domElement);
-			camera.position.set(0, 0, 1.5);
+			camera.position.set(0, 0, 5);
 			controls.update();
 
 			function animate() {
@@ -84,6 +88,7 @@ export default {
 		},
 		onWindowResize() {
 			const renderer = this.renderer;
+			renderer.setPixelRatio(window.devicePixelRatio)
 			const container = this.container;
 			renderer.setSize(container.clientWidth / 2, container.clientHeight);
 		},
