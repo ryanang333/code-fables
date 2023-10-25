@@ -20,6 +20,8 @@ export default {
 		return {
 			renderer: null,
 			container: null,
+			width: 0,
+			height: 0
 		};
 	},
 	updated(){
@@ -33,9 +35,11 @@ export default {
 		displayModel(modelUrl) {
 			const renderer = new THREE.WebGLRenderer({ alpha: true });
 			const container = this.$refs.modelContainer;
-			const height = window.innerHeight/2
-			const width = window.innerWidth
-			renderer.setSize(width, height);
+			this.height = window.innerHeight/2
+			this.width = window.innerWidth
+			const height = this.height
+			const width = this.width
+			renderer.setSize(width/2, height);
 
 			var scene = new THREE.Scene();
 			scene.background = null;
@@ -89,8 +93,8 @@ export default {
 		onWindowResize() {
 			const renderer = this.renderer;
 			renderer.setPixelRatio(window.devicePixelRatio)
-			const container = this.container;
-			renderer.setSize(container.clientWidth / 2, container.clientHeight);
+			renderer.setSize(this.width / 2, this.height);
+			console.log('resized')
 		},
 	},
 };
