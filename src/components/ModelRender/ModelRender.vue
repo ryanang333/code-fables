@@ -94,7 +94,6 @@ export default {
 			const renderer = this.renderer;
 			renderer.setPixelRatio(window.devicePixelRatio)
 			renderer.setSize(this.width / 2, this.height);
-			console.log('resized')
 		},
 	},
 };
