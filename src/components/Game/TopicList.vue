@@ -1,95 +1,196 @@
+
 <template>
+    
     <div>
-        <h2>User Dashboard</h2>
-        <ul>
-        <li v-for="topic in topics" :key="topic.id">
-            <span>{{ topic.name }}</span>
-            <span v-if="topic.isCompleted">✔</span>
-            <button @click="selectTopic(topic)" :disabled="!topic.isUnlocked">Start</button>
-        </li>
-        </ul>
+        <h2 class="text-center">Greetings Hero</h2>
     </div>
+
+    <div class="row text-center">
+        <div class="col-lg-4 col-md-6">
+            <div class="card" style="background-image: url('/src/assets/images/image1.jpg');">
+                <div class="card-body">
+                    <h5 class="card-title game-font">Topic Name</h5>
+                    <p class="card-text game-font">tLorem ipsum dolor sit amet, consectetur adipisci elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur</p>
+                    <div class="progress">
+                        <div class="progress-bar" role="progressbar" style="width: 75%;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                    <p class="text-success">Completed</p>
+                    <p class="text-danger">Not Completed</p>
+                    <a href="#" class="btn btn-game">Begin Game</a>
+                </div>
+            </div>
+        </div> 
+
+        <div class="col-lg-4 col-md-6">
+            <div class="card" style="background-image: url('/src/assets/images/image2.jpg');">
+                <div class="card-body">
+                    <h5 class="card-title game-font">Topic Name</h5>
+                    <p class="card-text game-font">tLorem ipsum dolor sit amet, consectetur adipisci elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur</p>
+                    <div class="progress">
+                        <div class="progress-bar" role="progressbar" style="width: 75%;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                    <p class="text-success">Completed</p>
+                    <p class="text-danger">Not Completed</p>
+                    <a href="#" class="btn btn-game">Begin Game</a>
+                </div>
+            </div>
+        </div> 
+
+        <div class="col-lg-4 col-md-6">
+            <div class="card" style="background-image: url('/src/assets/images/image3.jpg');">
+                <div class="card-body">
+                    <h5 class="card-title game-font">Topic Name</h5>
+                    <p class="card-text game-font">tLorem ipsum dolor sit amet, consectetur adipisci elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur</p>
+                    <div class="progress">
+                        <div class="progress-bar" role="progressbar" style="width: 75%;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                    <p class="text-success">Completed</p>
+                    <p class="text-danger">Not Completed</p>
+                    <a href="#" class="btn btn-game">Begin Game</a>
+                </div>
+            </div>
+        </div> 
+
+        <div class="col-lg-4 col-md-6">
+            <div class="card" style="background-image: url('/src/assets/images/image4.jpg');">
+                <div class="card-body">
+                    <h5 class="card-title game-font">Topic Name</h5>
+                    <p class="card-text game-font">tLorem ipsum dolor sit amet, consectetur adipisci elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur</p>
+                    <div class="progress">
+                        <div class="progress-bar" role="progressbar" style="width: 75%;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                    <p class="text-success">Completed</p>
+                    <p class="text-danger">Not Completed</p>
+                    <a href="#" class="btn btn-game">Begin Game</a>
+                </div>
+            </div>
+        </div> 
+
+        <div class="col-lg-4 col-md-6">
+            <div class="card" style="background-image: url('/src/assets/images/image5.jpg');">
+                <div class="card-body">
+                    <h5 class="card-title game-font">Topic Name</h5>
+                    <p class="card-text game-font">tLorem ipsum dolor sit amet, consectetur adipisci elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur</p>
+                    <div class="progress">
+                        <div class="progress-bar" role="progressbar" style="width: 75%;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                    <p class="text-success">Completed</p>
+                    <p class="text-danger">Not Completed</p>
+                    <a href="#" class="btn btn-game">Begin Game</a>
+                </div>
+            </div>
+        </div> 
+
+        <div class="col-lg-4 col-md-6">
+            <div class="card" style="background-image: url('/src/assets/images/image6.jpg');">
+                <div class="card-body">
+                    <h5 class="card-title game-font">Topic Name</h5>
+                    <p class="card-text game-font">tLorem ipsum dolor sit amet, consectetur adipisci elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur</p>
+                    <div class="progress">
+                        <div class="progress-bar" role="progressbar" style="width: 75%;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                    <p class="text-success">Completed</p>
+                    <p class="text-danger">Not Completed</p>
+                    <a href="#" class="btn btn-game">Begin Game</a>
+                </div>
+            </div>
+        </div> 
+        
+    </div>
+    
+    
 </template>
 
+
+
 <script>
-    export default {
-        data() {
-        return {
-            topics: [], // An array of topic objects
-            userProgress: {}, // User's progress data
-        };
-        },
-        methods: {
-        selectTopic(topic) {
-            if (topic.isUnlocked) {
-            // Redirect to the QuestionPage for the selected topic
-            this.$router.push(`/question/${topic.id}`);
-            } else {
-            alert('Topic is locked. Complete previous topics first.');
-            }
-        },
-        },
-        computed: {
-        // Compute unlocked and completed topics based on user progress
-        unlockedTopics() {
-            return this.topics.filter(topic => topic.isUnlocked);
-        },
-        completedTopics() {
-            return this.topics.filter(topic => topic.isCompleted);
-        },
-        },
-        watch: {
-        // Watch for changes in user progress and update topics' unlock status
-        userProgress: {
-            deep: true,
-            handler(newProgress) {
-            this.topics.forEach(topic => {
-                topic.isUnlocked = this.isTopicUnlocked(topic, newProgress);
-                topic.isCompleted = this.isTopicCompleted(topic, newProgress);
-            });
-            },
-        },
-        },
-        created() {
-        // Fetch topics and user progress from your database
-        this.topics = this.fetchTopics();
-        this.userProgress = this.fetchUserProgress();
-        },
-        methods: {
-        fetchTopics() {
-            // Fetch topics from your database
-            // Mock data for demonstration:
-            return [
-            { id: 1, name: 'Topic 1', isUnlocked: true, isCompleted: true },
-            { id: 2, name: 'Topic 2', isUnlocked: false, isCompleted: false },
-            { id: 3, name: 'Topic 3', isUnlocked: false, isCompleted: false },
-            { id: 4, name: 'Topic 4', isUnlocked: false, isCompleted: false },
-            { id: 5, name: 'Topic 5', isUnlocked: false, isCompleted: false },
-            { id: 6, name: 'Topic 6', isUnlocked: false, isCompleted: false },
-            ];
-        },
-        fetchUserProgress() {
-            // Fetch user progress data from your database
-            // Mock data for demonstration:
+
+    /* export default{
+        data(){
             return {
-            topic1: { completed: false },
-            topic2: { completed: false },
-            // Add more topics...
+            topics: [],
+            userObj:{},
             };
-        },
-        isTopicUnlocked(topic, progress) {
-            // Implement the logic to determine if a topic is unlocked
-            // (e.g., check if the previous topic is completed)
-            if (topic.id === 1) {
-            return true; // The first topic is always unlocked
-            }
-            const previousTopicId = topic.id - 1;
-            return progress[`topic${previousTopicId}`].completed;
-        },
-        isTopicCompleted(topic, progress) {
-            // Implement the logic to determine if a topic is completed
-            return progress[`topic${topic.id}`].completed;
-        },
-        },
-    };
-</script>
+        }      
+    } */  
+</script> 
+
+
+<style scoped>
+
+    h2 {
+        animation: glow 1s infinite alternate;
+    }
+    @keyframes glow {
+        0% {
+            text-shadow: 0 0 5px rgba(16, 69, 246, 0.5);
+        }
+        100% {
+            text-shadow: 0 0 10px rgba(9, 22, 49, 0.7);
+        }
+    }
+    .card {
+        background-color: #000; 
+        color: #fff; 
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        border: none;
+        border-radius: 10px;
+        overflow: hidden; 
+        position: relative; 
+        margin: 3px;
+        padding: 10px;
+    }
+    .card-body {
+        padding: 1px;
+    }
+    .card-title {
+        font-family: 'Press Start 2P', cursive; /* Gaming font */
+        font-size: 1.8rem;
+        margin-bottom: 10px;
+    }
+    .card:hover {
+        box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
+    }
+    .card-text {
+        font-family: 'Press Start 2P', cursive; /* Gaming font */
+        font-size: 1rem;
+        margin-bottom: 15px;
+    }
+    .progress {
+        height: 15px; /* Progress bar height */
+        margin-bottom: 15px;
+    }
+    .text-success {
+        color: #28a745;
+        font-weight: bold;
+    }
+    .text-danger {
+        color: #dc3545;
+        font-weight: bold;
+    }
+    .btn-primary {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+    }
+    .btn-primary:hover {
+        background-color: #0056b3;
+    }
+    .btn-game {
+        background-color: #ff0000; /* Red button color */
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        padding: 8px 16px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+    .btn-game:hover {
+        background-color: #ff4444; /* Darker red on hover */
+    }
+</style>
