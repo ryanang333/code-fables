@@ -152,13 +152,13 @@
     
     <style scoped>
     .container {
-        position: relative;
-        margin-left: auto;
-        margin-right: auto;
-        margin-top: 40px;
-        background-color: rgb(233, 233, 233);
-        padding: 20px 20px 20px 20px;
-        border-radius: 30px;
+      position: relative;
+        margin-left: 10px;
+        margin-right: 0px;
+        margin-top: 20px;
+        background-color: rgb(202, 202, 202);
+        padding: 20px;
+        border-radius: 20px;
     }
 
     .middle {
