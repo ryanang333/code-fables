@@ -35,7 +35,6 @@
                 </div>
             </div>
         </div> 
-
         <div class="col-lg-4 col-md-6">
             <div class="card" style="background-image: url('/src/assets/images/image3.jpg');">
                 <div class="card-body">
