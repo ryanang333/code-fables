@@ -111,6 +111,94 @@ export default {
         friend_requests: [],
         friends: [],
         level: 0,
+        profile_name: "", 
+        topics: {
+          Topic_1:{
+            name: "Variables and Data Types",
+            isCompleted: false, 
+            isLocked: false,
+            lesson: false, 
+            questions: {
+              q1: false, 
+              q2: false, 
+              q3: false, 
+              q4: false, 
+              q5: false, 
+              q6: false, 
+            }
+          },
+          Topic_2:{
+            name: "Input and Output",
+            isCompleted: false, 
+            isLocked: true,
+            lesson: false, 
+            questions: {
+              q1: false, 
+              q2: false, 
+              q3: false, 
+              q4: false, 
+              q5: false, 
+              q6: false, 
+            }
+          },
+          Topic_3:{
+            name: "Conditional and Decision Making",
+            isCompleted: false, 
+            isLocked: true,
+            lesson: false, 
+            questions: {
+              q1: false, 
+              q2: false, 
+              q3: false, 
+              q4: false, 
+              q5: false, 
+              q6: false, 
+            }
+          },
+          Topic_4:{
+            name: "Loops and Iteration",
+            isCompleted: false, 
+            isLocked: true,
+            lesson: false, 
+            questions: {
+              q1: false, 
+              q2: false, 
+              q3: false, 
+              q4: false, 
+              q5: false, 
+              q6: false, 
+            }
+          },
+          Topic_5:{
+            name: "List and Arrays",
+            isCompleted: false, 
+            isLocked: true,
+            lesson: false, 
+            questions: {
+              q1: false, 
+              q2: false, 
+              q3: false, 
+              q4: false, 
+              q5: false, 
+              q6: false, 
+            }
+          },  
+          Topic_6:{
+            name: "Strings and Manipulation",
+            isCompleted: false, 
+            isLocked: true,
+            lesson: false, 
+            questions: {
+              q1: false, 
+              q2: false, 
+              q3: false, 
+              q4: false, 
+              q5: false, 
+              q6: false, 
+            }
+          }
+        }
+
       });
     },
   },
