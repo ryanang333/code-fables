@@ -104,6 +104,12 @@ export default {
       let question = data.resources[q];
       this.questionDetails = question;
       this.questionLoaded = true;
+      const docSnapUser = await getDoc(doc(db, 'accounts', this.UID));
+      if (docSnapUser.data().topics[currentTopic].questions[q]){
+        if (this.userProg == '6') return;
+        document.getElementById("nextBtn").classList.remove("disabled");
+      }
+
     },
     async nextQuestion() {
       if (this.userProg == 6) {
@@ -137,6 +143,7 @@ export default {
       // this.userProg = docSnap.data().
       this.userProg = docSnap.data().topics[topic].position;
       this.getQuestion(this.currentTopic, this.userProg);
+
     },
   },
 
