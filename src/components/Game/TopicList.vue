@@ -5,113 +5,118 @@
         <h2 class="text-center">Greetings Hero</h2>
     </div>
 
-    <div class="row text-center">
-        <div class="col-lg-4 col-md-6">
-            <div class="card" style="background-image: url('/src/assets/images/image1.jpg');">
-                <div class="card-body">
-                    <h5 class="card-title game-font">Topic Name</h5>
-                    <p class="card-text game-font">tLorem ipsum dolor sit amet, consectetur adipisci elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur</p>
-                    <div class="progress">
-                        <div class="progress-bar" role="progressbar" style="width: 75%;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-                    <p class="text-success">Completed</p>
-                    <p class="text-danger">Not Completed</p>
-                    <a href="#" class="btn btn-game">Begin Game</a>
+    <div class="row">
+    <div class="col-6" v-for="(topic, index) in topics" :key="index">
+        <div class="card">
+            <div class="card-body">
+                <img class="card-img-top fixed-sized" :src="topic.image" alt="Card image cap">
+                <h5 class="card-title game-font">{{ topic.name }}</h5>
+                <p class="card-text game-font">{{ topic.description }}</p>
+                <div class="progress">
+                <div class="progress-bar" role="progressbar" style="width: 75%;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
+                <p class="text-success" v-if="topic.isCompleted">
+                    <i class="fa-solid fa-circle-check fa-beat" style="color: #1bb666;"></i> Completed
+                </p>
+                <p class="text-danger" v-else><i class="fas fa-times-circle fa-beat"></i> Not Completed
+                </p>
+                <a href="#" class="btn btn-game">Begin Game</a>
             </div>
-        </div> 
-
-        <div class="col-lg-4 col-md-6">
-            <div class="card" style="background-image: url('/src/assets/images/image2.jpg');">
-                <div class="card-body">
-                    <h5 class="card-title game-font">Topic Name</h5>
-                    <p class="card-text game-font">tLorem ipsum dolor sit amet, consectetur adipisci elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur</p>
-                    <div class="progress">
-                        <div class="progress-bar" role="progressbar" style="width: 75%;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-                    <p class="text-success">Completed</p>
-                    <p class="text-danger">Not Completed</p>
-                    <a href="#" class="btn btn-game">Begin Game</a>
-                </div>
-            </div>
-        </div> 
-        <div class="col-lg-4 col-md-6">
-            <div class="card" style="background-image: url('/src/assets/images/image3.jpg');">
-                <div class="card-body">
-                    <h5 class="card-title game-font">Topic Name</h5>
-                    <p class="card-text game-font">tLorem ipsum dolor sit amet, consectetur adipisci elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur</p>
-                    <div class="progress">
-                        <div class="progress-bar" role="progressbar" style="width: 75%;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-                    <p class="text-success">Completed</p>
-                    <p class="text-danger">Not Completed</p>
-                    <a href="#" class="btn btn-game">Begin Game</a>
-                </div>
-            </div>
-        </div> 
-
-        <div class="col-lg-4 col-md-6">
-            <div class="card" style="background-image: url('/src/assets/images/image4.jpg');">
-                <div class="card-body">
-                    <h5 class="card-title game-font">Topic Name</h5>
-                    <p class="card-text game-font">tLorem ipsum dolor sit amet, consectetur adipisci elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur</p>
-                    <div class="progress">
-                        <div class="progress-bar" role="progressbar" style="width: 75%;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-                    <p class="text-success">Completed</p>
-                    <p class="text-danger">Not Completed</p>
-                    <a href="#" class="btn btn-game">Begin Game</a>
-                </div>
-            </div>
-        </div> 
-
-        <div class="col-lg-4 col-md-6">
-            <div class="card" style="background-image: url('/src/assets/images/image5.jpg');">
-                <div class="card-body">
-                    <h5 class="card-title game-font">Topic Name</h5>
-                    <p class="card-text game-font">tLorem ipsum dolor sit amet, consectetur adipisci elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur</p>
-                    <div class="progress">
-                        <div class="progress-bar" role="progressbar" style="width: 75%;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-                    <p class="text-success">Completed</p>
-                    <p class="text-danger">Not Completed</p>
-                    <a href="#" class="btn btn-game">Begin Game</a>
-                </div>
-            </div>
-        </div> 
-
-        <div class="col-lg-4 col-md-6">
-            <div class="card" style="background-image: url('/src/assets/images/image6.jpg');">
-                <div class="card-body">
-                    <h5 class="card-title game-font">Topic Name</h5>
-                    <p class="card-text game-font">tLorem ipsum dolor sit amet, consectetur adipisci elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur</p>
-                    <div class="progress">
-                        <div class="progress-bar" role="progressbar" style="width: 75%;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-                    <p class="text-success">Completed</p>
-                    <p class="text-danger">Not Completed</p>
-                    <a href="#" class="btn btn-game">Begin Game</a>
-                </div>
-            </div>
-        </div> 
-        
+        </div>
     </div>
+</div>
+
     
-    
+
 </template>
 
 
 
 <script>
+    import { getDoc, doc ,getDocs, query, collection} from "firebase/firestore"; 
+    import { getAuth } from "firebase/auth";
+    import db from "../../firebase/init";
 
-    /* export default{
+    export default{
+        name: "topiclist",
+        components: {
+
+        },
         data(){
-            return {
-            topics: [],
-            userObj:{},
+            return{
+                topics: [],
+                userObj:"", 
+                completed:"",
+                isCompleted1: "",
+                isCompleted2: "",
+                isCompleted3: "",
+                isCompleted4: "",
+                isCompleted5: "", 
+                isCompleted6: "",
+
             };
-        }      
-    } */  
+
+        },
+        methods: {
+            async getTopics(){ 
+                const querySnap = await getDocs(query(collection(db, 'topics')))
+                querySnap.forEach((doc) => {
+                    this.topics.push(doc.data());
+                    
+                })
+                console.log(this.topics);
+                },
+
+            async getUserInfo(){
+                const docSnap = await getDoc(doc(db, 'accounts', this.UID));
+                if (docSnap.exists()){
+                    this.userObj = docSnap.data();
+
+                    this.isCompleted1 = this.userObj['Topics']['Topic 1']['isCompleted'];
+                    this.topics[0]['isCompleted'] = this.isCompleted1;
+
+                    this.isCompleted2 = this.userObj['Topics']['Topic 2']['isCompleted'];
+                    this.topics[1]['isCompleted'] = this.isCompleted2;
+
+
+                    this.isCompleted3 = this.userObj['Topics']['Topic 3']['isCompleted'];
+                    this.topics[2]['isCompleted'] = this.isCompleted3;
+
+
+                    this.isCompleted4 = this.userObj['Topics']['Topic 4']['isCompleted'];
+                    this.topics[3]['isCompleted'] = this.isCompleted4;
+
+
+                    this.isCompleted5 = this.userObj['Topics']['Topic 5']['isCompleted'];
+                    this.topics[4]['isCompleted'] = this.isCompleted5;
+
+
+                    this.isCompleted6 = this.userObj['Topics']['Topic 6']['isCompleted'];
+                    this.topics[5]['isCompleted'] = this.isCompleted6;
+
+
+                    
+                    //console.log(this.userObj['Topics']);
+                }else{
+                    console.log('Document does not exist');
+                }
+                //console.log(this.userObj);
+                //console.log(this.completedtopic2);
+            },
+
+
+
+        },
+        mounted(){
+            this.getTopics();
+            this.UID = getAuth().currentUser.uid;
+            this.getUserInfo();
+            
+
+        }
+        
+    }
+
 </script> 
 
 
@@ -119,6 +124,7 @@
 
     h2 {
         animation: glow 1s infinite alternate;
+        padding: 20px; 
     }
     @keyframes glow {
         0% {
@@ -128,10 +134,13 @@
             text-shadow: 0 0 10px rgba(9, 22, 49, 0.7);
         }
     }
+
+    .fixed-sized{
+        width: 800px; 
+        height: 400px;
+    }
     .card {
-        background-color: #000; 
-        color: #fff; 
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        box-shadow: 0 6px 1px rgba(0, 0, 0, 0.4);
         border: none;
         border-radius: 10px;
         overflow: hidden; 
@@ -143,7 +152,7 @@
         padding: 1px;
     }
     .card-title {
-        font-family: 'Press Start 2P', cursive; /* Gaming font */
+        font-weight: bold;
         font-size: 1.8rem;
         margin-bottom: 10px;
     }
@@ -177,7 +186,7 @@
         background-color: #0056b3;
     }
     .btn-game {
-        background-color: #ff0000; /* Red button color */
+        background-color: #746e6e; /* Red button color */
         color: #fff;
         border: none;
         border-radius: 5px;
@@ -190,6 +199,6 @@
         transition: background-color 0.3s;
     }
     .btn-game:hover {
-        background-color: #ff4444; /* Darker red on hover */
+        background-color: #078627; /* Darker red on hover */
     }
 </style>
