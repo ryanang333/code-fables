@@ -7,6 +7,10 @@
       <option value="python">Python</option>
     </select>
   </div> -->
+  <h3>{{ question[0] }}</h3>
+  <br>
+  <h6>{{ question[1] }}</h6>
+  <br>
   <div class="editor" id="editor"></div>
   <div class="button-container">
     <button class="btn" @click="executeCode">Run</button>
@@ -17,6 +21,8 @@
 <script>
 import axios from "axios";
 import { getAuth } from "firebase/auth";
+import db from "../../firebase/init";
+import { collection, addDoc, getDoc, doc, setDoc } from "firebase/firestore";
 export default {
   name: "Ide",
   data() {
@@ -25,9 +31,21 @@ export default {
       editor: null, // Define the editor here
       username: "",
       output: "",
+      question: [],
     };
   },
   methods: {
+    async getCode(){
+      const docSnap = await getDoc(doc(db, 'topics', 'topic1'));
+      console.log(docSnap.data());
+      const startingCode = docSnap.data().resources.qn1.starting_code;
+      const question = docSnap.data().resources.qn1.question;
+      this.question = question;
+      var codeLines = startingCode.split("##newline##");
+      var codeWithLineBreaks = codeLines.join("\n");
+      this.editor.setValue(codeWithLineBreaks, -1);
+      this.editor.getSession().setUseSoftTabs(true);
+    },
     async executeCode() {
       const userCode = this.editor.getSession().getValue(); // Use "this" to access data properties
       console.log(userCode);
@@ -70,6 +88,7 @@ export default {
     this.editor.setTheme("ace/theme/monokai");
     this.editor.session.setMode("ace/mode/python");
     this.editor.session.setValue
+    this.getCode();
   },
 };
 </script>
@@ -123,5 +142,6 @@ export default {
   min-height: 100px;
   width: 99%;
   resize: none;
+  white-space: pre-line;
 }
 </style>
