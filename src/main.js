@@ -17,13 +17,6 @@ import TopicList from "./components/Game/TopicList.vue";
 
 const routes = [
   {
-    path: "/",
-    component: Homepage,
-    meta: {
-      requiresAuth: true,
-    },
-  },
-  {
     path: "/modelRender",
     component: ModelRender,
     meta: {
@@ -75,7 +68,7 @@ const routes = [
     },
   },
   {
-    path: "/topiclist",
+    path: "/",
     component: TopicList,
     meta: {
       requiresAuth: true,
