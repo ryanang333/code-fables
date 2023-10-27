@@ -34,9 +34,9 @@
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Account
           </a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item text-black" href="/account">My Profile</a></li>
-            <li> <button class="dropdown-item text-black" @click="logOut">Sign Out</button></li>
+          <ul class="dropdown-menu bg-success text-white border-0 ">
+            <li><a class="dropdown-item " href="/account">My Profile</a></li>
+            <li> <button class="dropdown-item " @click="logOut">Sign Out</button></li>
           </ul>
         </li>
         </ul>
