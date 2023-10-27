@@ -97,11 +97,11 @@ export default {
     async getModels() {
       const q = query(collection(db, "models"));
       const querySnap = await getDocs(q);
-    
+
       querySnap.forEach((doc) => {
         // console.log(doc.data().path);
         // console.log(doc.id);
-        this.models.push({'name': doc.id.toUpperCase(), 'url':doc.data().path})
+        this.models.push({ name: doc.id.toUpperCase(), url: doc.data().path });
       });
 
       console.log(this.models);

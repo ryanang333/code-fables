@@ -48,7 +48,7 @@ export default {
 			camera.position.z = 5;
 
 			const controls = new OrbitControls(camera, renderer.domElement);
-			camera.position.set(0, 0, 5);
+			camera.position.set(0, 0, 4);
 			controls.update();
 
 			function animate() {
