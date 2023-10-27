@@ -1,106 +1,127 @@
 <template>
-  <div class="header">Online IDE</div>
-  <div class="control-panel">
-    Select Language: 
-    <br/>
+  <!-- <div class="header">Online IDE</div> -->
+  <!-- <div class="control-panel">
+    Select Language:
+    <br />
     <select id="languages" class="languages">
-      <option value="python"> Python </option>
+      <option value="python">Python</option>
     </select>
-  </div>
+  </div> -->
   <div class="editor" id="editor"></div>
   <div class="button-container">
     <button class="btn" @click="executeCode">Run</button>
   </div>
-  <div class="output"></div>
+  <div class="output">{{ output }}</div>
 </template>
 
 <script>
-import axios from 'axios';
-
+import axios from "axios";
+import { getAuth } from "firebase/auth";
 export default {
-  name: "ReplitEmbed",
+  name: "Ide",
   data() {
     return {
       hasError: false,
       editor: null, // Define the editor here
+      username: "",
+      output: "",
     };
   },
   methods: {
-    executeCode() {
-      const code = this.editor.getSession().getValue(); // Use "this" to access data properties
-      const language = 'python'; // You can change this based on your language selection
-      const url = '/backend/compiler.php';
-
+    async executeCode() {
+      const userCode = this.editor.getSession().getValue(); // Use "this" to access data properties
+      console.log(userCode);
+      
+      const url = "http://3.27.193.241/compiler.php";
+      
       // Make an Axios POST request
-      axios.post(url, {
-        language: language,
-        code: code,
+      const param = {
+        language: "python",
+        code: userCode,
+        name: this.username,
+      };
+      console.log(param);
+      axios.get(url,{
+        params: param
       })
       .then(response => {
         // Process the response data object
         console.log('Server Response:', response.data);
+        console.log(response.data);
+        console.log(response);
+        this.output = response.data.output;
+        if (response.data.output.includes('.txt",')){
+          this.output = response.data.output.split('.txt",')[1];
+        }else{
+          this.output = response.data.output;
+        }
       })
       .catch(error => {
         // Process the error object
         console.error('An error occurred:', error);
       });
+     
     },
   },
   mounted() {
-    ace.config.set('basePath', '/backend/');
-    this.editor = ace.edit('editor'); // Assign the editor to "this.editor"
-    this.editor.setTheme('ace/theme/monokai');
-    this.editor.session.setMode('ace/mode/python');
+    this.username = getAuth().currentUser.email.split(".com")[0];
+    ace.config.set("basePath", "/backend/");
+    this.editor = ace.edit("editor"); // Assign the editor to "this.editor"
+    this.editor.setTheme("ace/theme/monokai");
+    this.editor.session.setMode("ace/mode/python");
+    this.editor.session.setValue
   },
 };
 </script>
 
-
 <style scoped>
-  *{margin: 0;}
+* {
+  margin: 0;
+}
 
 .header {
-    background: #070707;
-    text-align: left;
-    font-size: 20px;
-    font-weight: bold;
-    color: white;
-    padding: 4px;
-    font-family: sans-serif;
+  background: #070707;
+  text-align: left;
+  font-size: 20px;
+  font-weight: bold;
+  color: white;
+  padding: 4px;
+  font-family: sans-serif;
 }
 
 .control-panel {
-    background: lightgray;
-    text-align: right;
-    padding: 4px;
-    font-family: sans-serif;
+  background: lightgray;
+  text-align: right;
+  padding: 4px;
+  font-family: sans-serif;
 }
 
 .languages {
-    background: white;
-    border: 1px solid gray;
+  background: white;
+  border: 1px solid gray;
 }
 
-#editor { height: 400px; }
+#editor {
+  height: 400px;
+}
 
 .button-container {
-    text-align: right;
-    padding: 4px;
+  text-align: right;
+  padding: 4px;
 }
 
 .btn {
-    background: #57a958;
-    color: white;
-    padding: 8px;
-    border: 0;
+  background: #57a958;
+  color: white;
+  padding: 8px;
+  border: 0;
 }
 
 .output {
-        padding: 4px;
-        border: 2px solid gray;
-        min-height: 100px;
-        width: 99%;
-        resize: none;
-
+  padding: 4px;
+  border: 2px solid gray;
+  min-height: 100px;
+  width: 99%;
+  resize: none;
 }
 </style>
