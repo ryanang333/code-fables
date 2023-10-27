@@ -12,7 +12,7 @@
         </div>
 
         <!-- Integrated Replit IDE -->
-        <ReplitEmbed />
+        <Ide />
 
         <button @click="loadNextQuestion">Next</button>
     </div>
@@ -22,7 +22,7 @@
 
 <script>
 
-import ReplitEmbed from "./ide.vue";
+import Ide from "./ide.vue";
 import db  from "../../firebase/init";
 import { getDocs, getDoc, collection, query, where, getFirestore, doc,limit } from 'firebase/firestore';
 
@@ -30,7 +30,7 @@ import { getDocs, getDoc, collection, query, where, getFirestore, doc,limit } fr
 export default {
     name: "Codingquestion",
     components: {
-        ReplitEmbed
+        Ide
     },
     data() {
         return {

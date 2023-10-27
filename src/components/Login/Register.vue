@@ -84,7 +84,7 @@ export default {
           console.log("Registered successfully!");
           const userUID = data.user.uid;
           this.createUser(userUID);
-          this.$router.push("/login");
+          this.$router.push("/character");
         })
         .catch((error) => {
           console.log(error);

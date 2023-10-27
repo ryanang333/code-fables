@@ -1,6 +1,6 @@
 <template>
-  <div class="container-fluid bg-image">
-    <div class="container-fluid bg-overlay">
+  <div class="container-fluid bg-image ">
+    <div class="container-fluid bg-overlay ">
       <div class="row d-flex justify-content-center">
         <img
           src="/src/assets/images/code-fables.png"
@@ -9,8 +9,10 @@
         />
       </div>
       <div
-        class="row d-flex flex-row align-items-center justify-content-center"
+        class="mt-5 bg-dark rounded-5 row d-flex flex-row align-items-center justify-content-center w-50"
+        style="margin-left:auto; margin-right:auto; "
       >
+      <p class="fs-1 mt-4 text-white text-center">Create a New Hero</p>
         <div class="col-12 mt-5">
           <div id="carouselExample" class="carousel slide">
             <div class="carousel-inner">
@@ -56,21 +58,25 @@
         <div class="col-10 mt-5">
           <div class="mb-3 bg-secondary p-4 rounded-5">
             <label for="exampleInputEmail1" class="text-white form-label"
-              >Username</label
+              >Who do you want to be known as?</label
             >
             <input
               type="text"
               class="form-control"
               id="chosenUsername"
               aria-describedby="username"
+              v-model="display_name"
             />
+            <p class="text-warning ms-1 mt-3 fw-bold">
+              {{ errorMsg }}
+            </p>
           </div>
         </div>
         <div class="row d-flex justify-content-center">
           <button
             type="button"
-            class="mt-5 w-50 btn btn-dark"
-            @click="selectModel"
+            class="mt-4 w-50 btn btn-success mb-5 "
+            @click="createCharacter"
           >
             Create Character
           </button>
@@ -82,37 +88,72 @@
 
 <script>
 import db from "../../firebase/init";
-import { getDocs, query, collection, orderBy } from "firebase/firestore";
+import { doc, getDocs, query, collection, updateDoc } from "firebase/firestore";
 import ModelRender from "../ModelRender/ModelRender.vue";
+import { getAuth } from "firebase/auth";
 export default {
   name: "CustomisationScreen",
   components: { ModelRender },
   data() {
     return {
+      UID: "",
       models: [],
-      selectedModel: "",
+      selectedModelObj: {},
+      display_name: "",
+      errorMsg: "",
     };
   },
   methods: {
     async getModels() {
       const q = query(collection(db, "models"));
       const querySnap = await getDocs(q);
-    
+
       querySnap.forEach((doc) => {
         // console.log(doc.data().path);
         // console.log(doc.id);
-        this.models.push({'name': doc.id.toUpperCase(), 'url':doc.data().path})
+        this.models.push({ name: doc.id.toUpperCase(), url: doc.data().path });
       });
 
       console.log(this.models);
     },
-    selectModel() {
-      const activeCarousel = document.getElementsByClassName("active")[0];
-      console.log(activeCarousel);
+    async createCharacter() {
+      //guard statements for invalid display_name input
+      this.errorMsg = "";
+      if (this.display_name.length < 4) {
+        this.errorMsg = "Chosen name must be at least 4 characters long!";
+        return;
+      }
+      if (/^[0-9]+$/.test(this.display_name)) {
+        this.errorMsg = "Chosen name cannot be all numbers!";
+        return;
+      }
+      if (/[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/.test(this.display_name)) {
+        this.errorMsg = "Chosen name cannot contain any special characters!";
+        return;
+      }
+
+      const activeCarousel =
+        document.getElementsByClassName("active")[0].childNodes[1];
+      var selectedModelName = activeCarousel.textContent;
+      console.log(this.models);
+      this.models.forEach((modelObj) => {
+        if (modelObj.name === selectedModelName) {
+          this.selectedModelObj = modelObj;
+        }
+      });
+      console.log(this.selectedModelObj);
+      await updateDoc(doc(db, 'accounts', this.UID), {
+        profile_name: this.display_name,
+        model_ID: this.selectedModelObj.url
+      })
+      this.$router.push('/');
+
     },
   },
   mounted() {
     this.getModels();
+    this.UID = getAuth().currentUser.uid;
+    console.log(this.UID);
   },
 };
 </script>
