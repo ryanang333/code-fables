@@ -114,7 +114,7 @@ export default {
           }
         });
     },
-    handleEnter(){
+    handleEnter() {
       this.register();
     },
     async createUser(userUID) {
@@ -126,94 +126,89 @@ export default {
         friend_requests: [],
         friends: [],
         level: 0,
-        profile_name: "", 
+        profile_name: "",
+        model_ID: "",
+        profile_pic_ID: "",
         topics: {
-          Topic_1:{
-            name: "Variables and Data Types",
-            isCompleted: false, 
-            isLocked: false,
-            lesson: false, 
+          topic1: {
+            name: "Python Variables and Data Types",
+            isCompleted: false,
             questions: {
-              q1: false, 
-              q2: false, 
-              q3: false, 
-              q4: false, 
-              q5: false, 
-              q6: false, 
-            }
+              qn1: false,
+              qn2: false,
+              qn3: false,
+              qn4: false,
+              qn5: false,
+              qn6: false,
+            },
+            position: 1,
           },
-          Topic_2:{
-            name: "Input and Output",
-            isCompleted: false, 
-            isLocked: true,
-            lesson: false, 
+          topic2: {
+            name: "Python Operators",
+            isCompleted: false,
             questions: {
-              q1: false, 
-              q2: false, 
-              q3: false, 
-              q4: false, 
-              q5: false, 
-              q6: false, 
-            }
+              qn1: false,
+              qn2: false,
+              qn3: false,
+              qn4: false,
+              qn5: false,
+              qn6: false,
+            },
+            position: 1,
           },
-          Topic_3:{
-            name: "Conditional and Decision Making",
-            isCompleted: false, 
-            isLocked: true,
-            lesson: false, 
+          topic3: {
+            name: "Python Booleans",
+            isCompleted: false,
             questions: {
-              q1: false, 
-              q2: false, 
-              q3: false, 
-              q4: false, 
-              q5: false, 
-              q6: false, 
-            }
+              qn1: false,
+              qn2: false,
+              qn3: false,
+              qn4: false,
+              qn5: false,
+              qn6: false,
+            },
+            position: 1,
           },
-          Topic_4:{
-            name: "Loops and Iteration",
-            isCompleted: false, 
-            isLocked: true,
-            lesson: false, 
+          topic4: {
+            name: "Python Lists and For Loops",
+            isCompleted: false,
             questions: {
-              q1: false, 
-              q2: false, 
-              q3: false, 
-              q4: false, 
-              q5: false, 
-              q6: false, 
-            }
+              qn1: false,
+              qn2: false,
+              qn3: false,
+              qn4: false,
+              qn5: false,
+              qn6: false,
+            },
+            position: 1,
           },
-          Topic_5:{
-            name: "List and Arrays",
-            isCompleted: false, 
-            isLocked: true,
-            lesson: false, 
+          topic5: {
+            name: "Python Functions",
+            isCompleted: false,
             questions: {
-              q1: false, 
-              q2: false, 
-              q3: false, 
-              q4: false, 
-              q5: false, 
-              q6: false, 
-            }
-          },  
-          Topic_6:{
-            name: "Strings and Manipulation",
-            isCompleted: false, 
-            isLocked: true,
-            lesson: false, 
+              qn1: false,
+              qn2: false,
+              qn3: false,
+              qn4: false,
+              qn5: false,
+              qn6: false,
+            },
+            position: 1,
+          },
+          topic6: {
+            name: "Python Super Challenge",
+            isCompleted: false,
             questions: {
-              q1: false, 
-              q2: false, 
-              q3: false, 
-              q4: false, 
-              q5: false, 
-              q6: false, 
-            }
-          }
-        }
-
+              qn1: false,
+              qn2: false,
+              qn3: false,
+              qn4: false,
+              qn5: false,
+              qn6: false,
+            },
+            position: 1,
+          },
+        },
       });
     },
   },

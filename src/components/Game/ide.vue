@@ -7,9 +7,14 @@
       <option value="python">Python</option>
     </select>
   </div> -->
-  <h3>{{ question[0] }}</h3>
-  <br>
-  <h6>{{ question[1] }}</h6>
+  <div v-if="isLesson">
+    <h3>{{ question[0] }}</h3>
+    <br>
+    <h6>{{ question[1] }}</h6>
+  </div>
+  <div v-else>
+    <h3>{{ question }}</h3>
+  </div>
   <br>
   <div class="editor" id="editor"></div>
   <div class="button-container">
@@ -25,6 +30,9 @@ import db from "../../firebase/init";
 import { collection, addDoc, getDoc, doc, setDoc } from "firebase/firestore";
 export default {
   name: "Ide",
+  props:{
+    questionInfo: Object,
+  },
   data() {
     return {
       hasError: false,
@@ -32,17 +40,20 @@ export default {
       username: "",
       output: "",
       question: [],
+      isLesson: false,
     };
   },
+  emits: ['resultOK'],
   methods: {
-    async getCode(){
-      const docSnap = await getDoc(doc(db, 'topics', 'topic1'));
-      console.log(docSnap.data());
-      const startingCode = docSnap.data().resources.qn1.starting_code;
-      const question = docSnap.data().resources.qn1.question;
-      this.question = question;
-      var codeLines = startingCode.split("##newline##");
-      var codeWithLineBreaks = codeLines.join("\n");
+    getCode(){
+      console.log(this.questionInfo.question);
+      if (Array.isArray(this.questionInfo.question)){
+        this.isLesson = true;
+      }
+      this.question = this.questionInfo.question;
+      let startingCode = this.questionInfo.starting_code;
+      let codeLines = startingCode.split("##newline##");
+      let codeWithLineBreaks = codeLines.join("\n");
       this.editor.setValue(codeWithLineBreaks, -1);
       this.editor.getSession().setUseSoftTabs(true);
     },
@@ -52,7 +63,7 @@ export default {
       
       const url = "http://3.27.193.241/compiler.php";
       
-      // Make an Axios POST request
+      // Make an Axios GET request
       const param = {
         language: "python",
         code: userCode,
@@ -73,6 +84,11 @@ export default {
         }else{
           this.output = response.data.output;
         }
+        let correctOutput = this.questionInfo['test_case'];
+        var x = this.output.replace(/\n/g, '');
+        if (x == correctOutput){
+          this.$emit('resultOK');
+        }
       })
       .catch(error => {
         // Process the error object
@@ -82,6 +98,7 @@ export default {
     },
   },
   mounted() {
+    console.log(this.questionInfo);
     this.username = getAuth().currentUser.email.split(".com")[0];
     ace.config.set("basePath", "/backend/");
     this.editor = ace.edit("editor"); // Assign the editor to "this.editor"
