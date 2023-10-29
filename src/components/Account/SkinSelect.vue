@@ -11,15 +11,20 @@
               <ModelRender :modelUrl="model.url" />
               <!-- need to implment some sort of v-if here to disable and have overlay if the user havent unlock certain skins -->
               <p class="mt-2 text-white fs-2">
-                {{ model.name }}
+                {{ model.name }} 
               </p>
+
+              
             </div>
+
+          
           </div>
           <button
             class="carousel-control-prev"
             type="button"
             data-bs-target="#carouselExample"
             data-bs-slide="prev"
+            @click="selectModel"
           >
             <span
               class="carousel-control-prev-icon"
@@ -32,6 +37,7 @@
             type="button"
             data-bs-target="#carouselExample"
             data-bs-slide="next"
+            @click="selectModel"
           >
             <span
               class="carousel-control-next-icon"
@@ -39,8 +45,14 @@
             ></span>
             <span class="visually-hidden">Next</span>
           </button>
+
+
+
         </div>
+        
+        <button type="button" class="btn btn-success submit" @click="updateModel">Set as Current Skin</button>
   </div>
+
       
   </template>
   
@@ -113,19 +125,19 @@ mounted(){
   .container{
       position: relative;
       background-image: url("/src/assets/images/background3.png");
-      margin-left: 0px;
-      margin-right: 20px;
+      margin-left: auto;
+      margin-right: auto;
       margin-top: 20px;
       width: 100%;
-      opacity: 90%;
       background-color: rgb(202, 202, 202);
       padding: 20px;
       border-radius: 15px;
   }
 
-  button {
-      position: absolute;
-      right: 20px;
+  .submit {
+    margin-left: 500px;
+    margin-right: auto;
+    width: 200px;
   }
 
   p,h2, h3 {

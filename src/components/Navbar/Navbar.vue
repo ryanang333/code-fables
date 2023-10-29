@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-expand-lg bg-success">
+  <nav class="navbar navbar-expand-lg bg-dark">
     <div class="container-fluid mx-5 row p-1">
       <div class="col-lg-1 col-2 mx-auto">
         <a class="navbar-brand" href="/">
@@ -77,6 +77,7 @@ a, button {
 
 a:hover {
   opacity: 0.9; /* Decrease the opacity on hover */
+  color: #88fcd7
 }
 
 
