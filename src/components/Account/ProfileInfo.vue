@@ -9,11 +9,12 @@
         </div>
         <div class="row">
             <h2>{{username}}</h2>
+            <h3>{{email}}</h3>
             <h3>Level {{ level }}</h3>
         </div>
         <div class="row">
             <div class="levelback">
-            <div class="level" :style="{'width': progress + '%'}">{{ progress }}%</div>
+            <div class="level" :style="{'width': progress + '%'}"><span class="left">{{ exp }}xp</span>{{ progress }}%</div>
             </div>
         </div>  
         <div class="row">
@@ -66,6 +67,7 @@
     return {
       pictures: [],
       username: '',
+      email: '',
       profileUrl: '',
       mainUrl: '',
       exp: '',
@@ -116,6 +118,7 @@
       if (docSnap.exists()){
 
         this.username = docSnap.data().profile_name;
+        this.email = getAuth().currentUser.email
         this.profileUrl = docSnap.data().profile_pic_ID;
         this.mainUrl = docSnap.data().profile_pic_ID;
         this.exp = docSnap.data().exp;
@@ -143,7 +146,6 @@
   },
   mounted(){
     this.UID = getAuth().currentUser.uid;
-    this.username = getAuth().currentUser.email;
     this.getInfo();
     this.getPictures();
   }
@@ -153,24 +155,13 @@
     <style scoped>
     .container {
       position: relative;
-        margin-left: 10px;
-        margin-right: 0px;
+        margin-left: auto;
+        margin-right: auto;
         margin-top: 20px;
         background-color: rgb(202, 202, 202);
         padding: 20px;
         border-radius: 20px;
     }
-
-    .middle {
-  transition: .5s ease;
-  opacity: 0;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  -ms-transform: translate(-50%, -50%);
-  text-align: center;
-}
 
     .profile {
         position: relative;
@@ -196,6 +187,7 @@
         text-align: center;
         opacity: 0;
         transition: opacity .35s ease;
+        
     }
 
     .button a{
@@ -205,8 +197,10 @@
         padding: 5px 5px;
         text-align: center;
         color: black;
+        background-color: #88fcd7;
         border: solid 1px rgb(128, 128, 128);
         z-index: 1;
+        border-radius: 5px;
     }
 
     .profile:hover .button {
@@ -217,10 +211,25 @@
         text-align: center;
     }
 
+    h2 {
+      font-size: 50px;
+    }
+
+    h3 {
+      font-size: 25px;
+      color: rgb(70, 70, 70);
+    }
+
     img {
     width: 100%;
     height: auto;
     }
+    
+    span.left {
+      display: inline;
+      float: left;
+      margin-left: 10px;
+    } 
 
     .mainProfile{
       margin-left: auto;
