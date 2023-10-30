@@ -113,7 +113,7 @@ export default {
       localStorage.setItem("currentQn", this.currentQn);
       const docSnap = await getDoc(doc(db, "topics", currentTopic));
       const data = docSnap.data();
-      console.log(data);
+
       let question = data.resources[q];
       this.questionDetails = question;
       this.questionLoaded = true;
