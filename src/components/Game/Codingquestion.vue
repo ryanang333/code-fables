@@ -78,7 +78,7 @@ export default {
         key: 0,
       },
       questionLoaded: false,
-      currQn: "",
+      currentQn: "",
     };
   },
   methods: {
@@ -108,10 +108,11 @@ export default {
       btn.classList.remove("disabled");
     },
     async getQuestion(currentTopic, userProg) {
-      const docSnap = await getDoc(doc(db, "topics", currentTopic));
-      const data = docSnap.data();
       let q = "qn" + userProg;
       this.currentQn = q;
+      localStorage.setItem("currentQn", this.currentQn);
+      const docSnap = await getDoc(doc(db, "topics", currentTopic));
+      const data = docSnap.data();
       console.log(data);
       let question = data.resources[q];
       this.questionDetails = question;
@@ -123,6 +124,7 @@ export default {
         }
         document.getElementById("nextBtn").classList.remove("disabled");
       }
+     
     },
     async nextQuestion() {
       if (this.userProg == 6) {

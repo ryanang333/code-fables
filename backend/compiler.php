@@ -18,10 +18,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     header('Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token');
     header('Access-Control-Allow-Credentials: true');
     $language = strtolower($_GET['language']);
+    $qn = $_GET['qn'];
     $code = $_GET['code'];
     $name = $_GET['name'];
-    $random = substr(md5(mt_rand()), 0, 7);
-    $filePath = "temp/" . $name . $random . ".txt";
+    $filePath = "temp/" . $name . $qn . ".txt";
     $programFile = fopen($filePath, "w");
     fwrite($programFile, $code);
     fclose($programFile);

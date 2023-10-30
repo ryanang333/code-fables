@@ -36,6 +36,7 @@ export default {
       output: "",
       question: [],
       isLesson: false,
+      currentQn: '',
     };
   },
   emits: ['resultOK'],
@@ -63,6 +64,7 @@ export default {
         language: "python",
         code: userCode,
         name: this.username,
+        qn : this.currentQn,
       };
       console.log(param);
       axios.get(url,{
@@ -93,7 +95,8 @@ export default {
     },
   },
   mounted() {
-    console.log(this.questionInfo);
+
+    this.currentQn = localStorage.getItem('currentQn');
     this.username = getAuth().currentUser.email.split(".com")[0];
     ace.config.set("basePath", "/backend/");
     this.editor = ace.edit("editor"); // Assign the editor to "this.editor"
@@ -101,6 +104,8 @@ export default {
     this.editor.session.setMode("ace/mode/python");
     this.editor.session.setValue
     this.getCode();
+    console.log(this.currentQn);
+
   },
 };
 </script>
