@@ -1,7 +1,6 @@
 <template>
   <div class="background">
   <div>
-    
     <h2 class="text-center"><img src="src\assets\images\START-YOUR-CODEQUEST.png"></h2>
   </div>
 
@@ -41,8 +40,8 @@
           <p class="text-danger" v-else>
             <i class="fas fa-times-circle fa-beat"></i> Not Completed
           </p>
-          <a href="#" class="btn btn-game" v-if="getProgress(topic.key)!=0">Continue</a>
-          <a href="#" class="btn btn-game" v-else>Begin Game</a>
+          <a href="#" class="btn btn-game" v-if="getProgress(topic.key)['width']=='0%'">Begin</a>
+          <a href="#" class="btn btn-game" v-else>Continue</a>
         </div>
       </div>
     </div>
@@ -116,6 +115,7 @@ export default {
       this.userTopics = docSnap.data().topics;
     },
   },
+  
   mounted() {
     this.getTopics();
     this.UID = getAuth().currentUser.uid;
@@ -151,13 +151,12 @@ h2 {
   outline: #7e6e5c solid 5px;
 }
 .card {
-  border: none;
   width: 90%;
   background-color: #cdbea2;
   border-radius: 8px;
   outline: #000000 solid 1px;
-  overflow: hidden;
   position: relative;
+  overflow: hidden;
   margin-right: auto;
   margin-left: auto;
   margin-bottom: 20px;
@@ -215,7 +214,7 @@ h2 {
   text-align: center;
   text-decoration: none;
   display: inline-block;
-  font-size: 1rem;
+  font-size: large;
   cursor: pointer;
   transition: background-color 0.3s;
 }

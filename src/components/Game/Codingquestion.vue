@@ -1,8 +1,10 @@
 <template>
   <div class="container-fluid">
     <div class="row">
-      <div class="col"></div>
-      <div class="col">
+      <div class="col-md-6 col-sm-6">
+        <Game :imageUrl="imageUrl"></Game>
+      </div>
+      <div class="col-md-6 col-sm-6">
         <div id="ide-component" v-if="questionLoaded">
           <Ide
             :questionInfo="questionDetails"
@@ -46,6 +48,7 @@
 import { getAuth } from "firebase/auth";
 import Ide from "./ide.vue";
 import db from "../../firebase/init";
+import Game from "./Game.vue"
 import {
   getDocs,
   getDoc,
@@ -62,6 +65,7 @@ export default {
   name: "Codingquestion",
   components: {
     Ide,
+    Game
   },
   computed: {
     prev() {
@@ -71,7 +75,9 @@ export default {
   },
   data() {
     return {
+      imageUrl: "",
       UID: "",
+      model_ID: "",
       currentTopic: "",
       userProg: 0,
       questionDetails: {
@@ -155,24 +161,39 @@ export default {
       }
       this.getQuestion(this.currentTopic, this.userProg);
     },
+        async getImage(model_ID){
+      if (model_ID.includes('wizard')){
+        this.imageUrl = 'src/assets/images/wizard.png'
+      }
+      if (model_ID.includes('knight')){
+        this.imageUrl = 'src/assets/images/knight.png'
+      }
+      if (model_ID.includes('sword')){
+        this.imageUrl = 'src/assets/images/sword.png'
+      }
+    },
     async getUserProgress(topic) {
       const docSnap = await getDoc(doc(db, "accounts", this.UID));
       // this.userProg = docSnap.data().
       this.userProg = docSnap.data().topics[topic].position;
+      this.model_ID = docSnap.data().model_ID
+      console.log(this.model_ID)
       this.getQuestion(this.currentTopic, this.userProg);
+      this.getImage(this.model_ID)
     },
 
   },
 
   mounted() {
+    this.getImage(this.model_ID)
     this.UID = getAuth().currentUser.uid;
     this.currentTopic = localStorage.getItem("currentTopic");
-    console.log(this.currentTopic);
-    console.log(this.currentTopic);
-    console.log(this.userProg);
     this.getUserProgress(this.currentTopic);
-  },
+    console.log(this.userProg);
+  }
 };
 </script>
 
-<style scoped></style>
+<style>
+
+</style>
