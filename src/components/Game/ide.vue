@@ -84,7 +84,7 @@ export default {
         var x = this.output.replace(/\n/g, '');
         if (x == correctOutput){
           this.$emit('resultOK');
-          updateExpandLevel();
+          this.updateExpandLevel();
         }
       })
       .catch(error => {
@@ -142,7 +142,7 @@ export default {
     this.editor.session.setValue
     this.getCode();
     this.currentTopic = localStorage.getItem("currentTopic");
-    this.updateExpandLevel();
+
   },
 };
 </script>
