@@ -1,11 +1,13 @@
 <template>
+  <div class="background">
   <div>
-    <h2 class="text-center">Greetings Hero</h2>
+    
+    <h2 class="text-center"><img src="src\assets\images\START-YOUR-CODEQUEST.png"></h2>
   </div>
 
   <div class="row">
     <div
-      class="col-6"
+      class="col-4"
       v-for="topic in topics"
       :key="topic.key"
       @click="openQuestion(topic.key)"
@@ -39,11 +41,13 @@
           <p class="text-danger" v-else>
             <i class="fas fa-times-circle fa-beat"></i> Not Completed
           </p>
-          <a href="#" class="btn btn-game">Begin Game</a>
+          <a href="#" class="btn btn-game" v-if="getProgress(topic.key)!=0">Continue</a>
+          <a href="#" class="btn btn-game" v-else>Begin Game</a>
         </div>
       </div>
     </div>
   </div>
+</div>
 </template>
 
 <script>
@@ -122,9 +126,14 @@ export default {
 </script>
 
 <style scoped>
+.background {
+  background-color:#26472c;
+}
 h2 {
   animation: glow 1s infinite alternate;
-  padding: 20px;
+  padding-top: 25px;
+  padding-bottom: 20px;
+  color: white;
 }
 @keyframes glow {
   0% {
@@ -136,31 +145,40 @@ h2 {
 }
 
 .fixed-sized {
-  width: 800px;
+  width: 100%;
   height: 400px;
+  border-radius: 10px 10px 0px 0px;
+  outline: #7e6e5c solid 5px;
 }
 .card {
-  box-shadow: 0 6px 1px rgba(0, 0, 0, 0.4);
   border: none;
-  border-radius: 10px;
+  width: 90%;
+  background-color: #cdbea2;
+  border-radius: 8px;
+  outline: #000000 solid 1px;
   overflow: hidden;
   position: relative;
-  margin: 3px;
-  padding: 10px;
+  margin-right: auto;
+  margin-left: auto;
+  margin-bottom: 20px;
+  padding: 20px;
 }
 .card-body {
   padding: 1px;
 }
 .card-title {
   font-weight: bold;
+  font-family:  'Palatino', serif;
   font-size: 1.8rem;
-  margin-bottom: 10px;
+  margin-top: 10px;
 }
 .card:hover {
-  box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
+  transform: translate3D(0,-1px,0) scale(1.03);
+  box-shadow: 0 6px 1px rgba(0, 0, 0, 0.4);
+  transition: 0.1s;
 }
 .card-text {
-  font-family: "Press Start 2P", cursive; /* Gaming font */
+  font-family:  'Palatino', serif;
   font-size: 1rem;
   margin-bottom: 15px;
 }
@@ -175,6 +193,7 @@ h2 {
 .text-danger {
   color: #dc3545;
   font-weight: bold;
+  font-family:  'Palatino', serif;
 }
 .btn-primary {
   background-color: #007bff;
@@ -186,9 +205,11 @@ h2 {
   background-color: #0056b3;
 }
 .btn-game {
-  background-color: #746e6e; /* Red button color */
-  color: #fff;
+  background-color: #978b74;; /* Red button color */
+  font-family:  'Palatino', serif;
+  color: #ffffff;
   border: none;
+  width:100%;
   border-radius: 5px;
   padding: 8px 16px;
   text-align: center;
@@ -200,5 +221,6 @@ h2 {
 }
 .btn-game:hover {
   background-color: #078627; /* Darker red on hover */
+  color: white;
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-expand-lg bg-dark">
+  <nav class="navbar navbar-expand-lg bg-dark" id="sticky-nav">
     <div class="container-fluid mx-5 row p-1">
       <div class="col-lg-1 col-2 mx-auto">
         <a class="navbar-brand" href="/">
@@ -10,7 +10,7 @@
       <div class="col-lg-3 col-8"></div>
         <div class="col-2 mx-auto">
           <button
-            class="navbar-toggler"
+            class="navbar-toggler bg-success"
             type="button"
             data-bs-toggle="collapse"
             data-bs-target="#navbarNav"
@@ -34,7 +34,7 @@
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Account
           </a>
-          <ul class="dropdown-menu bg-success text-white border-0 ">
+          <ul class="dropdown-menu bg-dark text-white border-0 ">
             <li><a class="dropdown-item " href="/account">My Profile</a></li>
             <li> <button class="dropdown-item " @click="logOut">Sign Out</button></li>
           </ul>
@@ -68,7 +68,11 @@ export default {
 </script>
 
 <style scoped> 
-
+#sticky-nav{
+  position:sticky ;
+  top:0;
+  z-index:100;
+}
 a, button {
   color: white;
   font-size: 18px;

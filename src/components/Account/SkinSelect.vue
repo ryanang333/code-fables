@@ -9,7 +9,6 @@
               :class="{ active: index === 0 }"
             >
               <ModelRender :modelUrl="model.url" />
-              <!-- need to implment some sort of v-if here to disable and have overlay if the user havent unlock certain skins -->
               <p class="mt-2 text-white fs-2">
                 {{ model.name }} 
               </p>
@@ -24,7 +23,7 @@
             type="button"
             data-bs-target="#carouselExample"
             data-bs-slide="prev"
-            @click="selectModel"
+            @click="updateButton"
           >
             <span
               class="carousel-control-prev-icon"
@@ -37,7 +36,7 @@
             type="button"
             data-bs-target="#carouselExample"
             data-bs-slide="next"
-            @click="selectModel"
+            @click="updateButton"
           >
             <span
               class="carousel-control-next-icon"
@@ -50,7 +49,7 @@
 
         </div>
         
-        <button type="button" class="btn btn-success submit" @click="updateModel">Set as Current Skin</button>
+        <button type="button" class="btn btn-success submit" @click="updateModel" disabled>Set as Current Skin</button>
   </div>
 
       
@@ -71,16 +70,10 @@ data() {
   return {
     models: [],
     selectedModel: "",
+    displayedModel: "",
     username: '',
     profileUrl: '',
-    friends: [],
-    friendsDetails: [],
     UID: '',
-    numberOfFriends: 0,
-    isFriendModal: false,
-    friendOpen: "",
-    friendRequest: "",
-    isRequestModal: false,
   };
 },
 methods: {
@@ -90,26 +83,54 @@ methods: {
       let username = docSnap.data().profile_name;
       this.username = username
 
-      let profile_pic = docSnap.data().profile_pic_ID;''
+      let profile_pic = docSnap.data().profile_pic_ID;
       this.profileUrl = profile_pic
+      this.selectedModel = docSnap.data().model_ID;
     }
 
   },async getModels() {
     const q = query(collection(db, "models"));
     const querySnap = await getDocs(q);
+
+    //get user model first
   
     querySnap.forEach((doc) => {
+      //get remaining models that isnt the users active
+      if (doc.data().path == this.selectModel){
+        this.models.unshift({'name': doc.id.toUpperCase(), 'url':doc.data().path})
+      }
+      else{
+        this.models.push({'name': doc.id.toUpperCase(), 'url':doc.data().path})
+      }
       // console.log(doc.data().path);
       // console.log(doc.id);
-      this.models.push({'name': doc.id.toUpperCase(), 'url':doc.data().path})
     });
+    
 
-    console.log(this.models);
   },
-  selectModel() {
-    const activeCarousel = document.getElementsByClassName("active")[0];
-    console.log(activeCarousel);
+  async updateButton() {
+    const activeCarousel =
+      document.getElementsByClassName("active")[0].childNodes[1];
+      var displayedModel = activeCarousel.textContent;
+      console.log(displayedModel,this.selectedModel)
+      if(this.selectedModel != this.displayedModel ){
+        document.getElementById("save").disabled = false
+      }
+      else{
+        document.getElementById("save").disabled = true
+      }
   },
+  async updateModel() {
+      //guard statements for invalid display_name input
+
+      
+      // this.models.forEach((modelObj) => {
+      //   if (modelObj.name === selectedModelName) {
+      //     this.selectedModelObj = modelObj;
+      //   }
+      // })
+
+    },
   
 },
 mounted(){
@@ -117,7 +138,13 @@ mounted(){
   this.username = getAuth().currentUser.email;
   this.getInfo();
   this.getModels();
-}
+  $('#carouselExample').on('slid.bs.carousel', this.updateButton);
+  // this.selectModel();
+},
+beforeDestroy() {
+    // Remove the event listener to prevent memory leaks
+    $('#carouselExample').off('slid.bs.carousel', this.updateButton);
+  },
 };
   </script>
   

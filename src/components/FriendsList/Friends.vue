@@ -144,6 +144,7 @@ export default {
             profile_pic_ID: friendData.profile_pic_ID,
             username: friendEmail,
             friends: friendData.friends,
+            model_ID: friendData.model_ID
           });
         }
       }
