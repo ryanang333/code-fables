@@ -1,26 +1,21 @@
 <template>
-  <!-- <div class="header">Online IDE</div> -->
-  <!-- <div class="control-panel">
-    Select Language:
-    <br />
-    <select id="languages" class="languages">
-      <option value="python">Python</option>
-    </select>
-  </div> -->
-  <div v-if="isLesson">
+  <div class="mt-5 bg-dark p-3 text-white rounded-1" v-if="isLesson"> 
+    <h2>Lesson:</h2>
+    <br>
     <h3>{{ question[0] }}</h3>
     <br>
     <h6>{{ question[1] }}</h6>
   </div>
-  <div v-else>
+  <div class="mt-5 bg-dark p-3 text-white rounded-1" v-else>
+    <h2>Question:</h2>
+    <br>
     <h3>{{ question }}</h3>
   </div>
-  <br>
   <div class="editor" id="editor"></div>
-  <div class="button-container">
-    <button class="btn" @click="executeCode">Run</button>
+  <div class="button-container mt-3">
+    <button type="button" class="btn btn-success w-100" @click="executeCode">Run</button>
   </div>
-  <div class="output">{{ output }}</div>
+  <div class="mt-3 output bg-dark text-white rounded-4 p-3">{{ output }}</div>
 </template>
 
 <script>
@@ -139,19 +134,11 @@ export default {
 
 #editor {
   height: 400px;
+  width:100%;
 }
 
-.button-container {
-  text-align: right;
-  padding: 4px;
-}
 
-.btn {
-  background: #57a958;
-  color: white;
-  padding: 8px;
-  border: 0;
-}
+
 
 .output {
   padding: 4px;

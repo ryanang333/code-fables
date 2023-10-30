@@ -9,7 +9,7 @@
         />
       </div>
       <div
-        class="mt-5 bg-dark rounded-5 row d-flex flex-row align-items-center justify-content-center w-50"
+        class="mt-5 bg-dark rounded-5 row d-flex flex-row align-items-center justify-content-center w-50 "
         style="margin-left:auto; margin-right:auto; "
       >
       <p class="fs-1 mt-4 text-white text-center">Create a New Hero</p>
