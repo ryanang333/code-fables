@@ -99,7 +99,6 @@ import FriendModal from "./FriendModal.vue";
 import db from "../../firebase/init";
 import Inbox from "./Inbox.vue";
 import config from "/config";
-import config from "../../../config";
 export default {
   name: "Friends",
   components: {
