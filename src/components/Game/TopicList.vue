@@ -80,6 +80,7 @@ export default {
         return {
             width: widthProg
         }
+        
         // let progress = this.userTopics[topicName].progress;
         // let widthProg = (progress/6) * 100 + '%';
         // return {

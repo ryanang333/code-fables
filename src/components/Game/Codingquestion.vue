@@ -100,7 +100,7 @@ export default {
       const data = docSnap.data();
       let q = "qn" + userProg;
       this.currentQn = q;
-      console.log(data);
+      //console.log(data);
       let question = data.resources[q];
       this.questionDetails = question;
       this.questionLoaded = true;
@@ -143,8 +143,17 @@ export default {
       // this.userProg = docSnap.data().
       this.userProg = docSnap.data().topics[topic].position;
       this.getQuestion(this.currentTopic, this.userProg);
+      
 
     },
+
+    async updateExpandLevel(){
+      
+
+      await setDoc(collection(db, 'accounts', this.UID), 
+      {name:'tom'}) 
+    }
+
   },
 
   mounted() {

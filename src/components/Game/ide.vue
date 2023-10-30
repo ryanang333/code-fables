@@ -27,7 +27,8 @@
 import axios from "axios";
 import { getAuth } from "firebase/auth";
 import db from "../../firebase/init";
-import { collection, addDoc, getDoc, doc, setDoc } from "firebase/firestore";
+import { collection, addDoc, getDoc, doc, setDoc,updateDoc } from "firebase/firestore";
+
 export default {
   name: "Ide",
   props:{
@@ -88,17 +89,56 @@ export default {
         var x = this.output.replace(/\n/g, '');
         if (x == correctOutput){
           this.$emit('resultOK');
+          updateExpandLevel();
         }
       })
       .catch(error => {
         // Process the error object
         console.error('An error occurred:', error);
       });
-     
+
     },
+
+    async updateExpandLevel(){
+      const docSnap = await getDoc(doc(db, 'accounts', this.UID));
+      let exp = 0; 
+      let level = 0;
+        if (docSnap.exists()){
+          console.log(docSnap.data());
+          exp = docSnap.data().exp; 
+          level = docSnap.data().level; 
+          //console.log(exp);
+          //console.log(level);
+        }else{
+          console.log('Document does not exist');
+        }
+      
+        if(this.currentTopic === 'topic6'){
+          exp += 100;
+          await updateDoc(doc(db, 'accounts', this.UID), 
+          {exp: exp} )
+        }
+        else{
+          exp += 50;
+          await updateDoc(doc(db, 'accounts', this.UID), 
+          {exp: exp} )
+        }
+      
+
+      const newLevel = Math.floor(exp / 100); 
+  
+      await updateDoc(doc(db, 'accounts', this.UID), {
+        level: newLevel 
+      });
+
+      
+    }
+
+    
   },
   mounted() {
     console.log(this.questionInfo);
+    this.UID = getAuth().currentUser.uid;
     this.username = getAuth().currentUser.email.split(".com")[0];
     ace.config.set("basePath", "/backend/");
     this.editor = ace.edit("editor"); // Assign the editor to "this.editor"
@@ -106,6 +146,8 @@ export default {
     this.editor.session.setMode("ace/mode/python");
     this.editor.session.setValue
     this.getCode();
+    this.currentTopic = localStorage.getItem("currentTopic");
+    this.updateExpandLevel();
   },
 };
 </script>
