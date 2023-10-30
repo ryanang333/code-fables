@@ -1,11 +1,13 @@
 <template>
+  <div class="background">
+  <button type="button" id="switch" class="btn btn-success submit" @click="friendBool">Switch to {{buttonTitle}}</button>
   <div class="container mt-5 podium-div" v-if="leaderboardPodium.length == 3">
-    <h1 class="text-center mt-4">Leaderboard:</h1>
+    <h1 class="text-center mt-4">{{boardTitle}}</h1>
     <div class="mt-4 row justify-content-center">
       <div class="col-3 mt-5 text-center">
         <img class="podium" src="/src/assets/images/medalSecond.png" />
         <div
-          class="bg-secondary-subtle card shadow d-flex flex-direction-column justify-content-center align-items-center"
+          class=" card shadow d-flex flex-direction-column justify-content-center align-items-center" v-bind:style="{ backgroundColor: leaderboardPodium[1].email==this.myUser ? 'lightgoldenrodyellow' : 'lightgray' }"
         >
           <img
             class="mt-4 podium mb-2"
@@ -20,7 +22,7 @@
       <div class="col-3 text-center podium-div">
         <img class="podium" src="/src/assets/images/medalFirst.png" />
         <div
-          class="bg-secondary-subtle card shadow d-flex flex-direction-column justify-content-center align-items-center"
+          class=" card shadow d-flex flex-direction-column justify-content-center align-items-center" v-bind:style="{ backgroundColor: leaderboardPodium[0].email==this.myUser ? 'lightgoldenrodyellow' : 'lightgray' }"
         >
           <img
             class="mt-4 podium mb-2"
@@ -34,7 +36,7 @@
       <div class="col-3 mt-5 text-center podium-div">
         <img class="podium" src="/src/assets/images/medalThird.png" />
         <div
-          class="bg-secondary-subtle card shadow d-flex flex-direction-column justify-content-center align-items-center"
+          class=" card shadow d-flex flex-direction-column justify-content-center align-items-center"  v-bind:style="{ backgroundColor: leaderboardPodium[2].email==this.myUser ? 'lightgoldenrodyellow' : 'lightgray' }"
         >
           <img
             class="mt-4 podium mb-2"
@@ -56,7 +58,7 @@
       :key="person.profile_name"
     >
       <div
-        class="row bg-secondary-subtle d-flex mb-4 align-items-center rounded-3 px-3 pt-3 d-flex-row"
+        class="row d-flex mb-4 align-items-center rounded-3 px-3 pt-3 d-flex-row" v-bind:style="{ backgroundColor: person.email==this.myUser ? 'lightgoldenrodyellow' : 'lightgray' }"
       >
         <div class="col-1 mb-3 me-4">
           <h1>{{ index + 4 }}</h1>
@@ -76,25 +78,51 @@
       </div>
     </div>
   </div>
+</div>
 </template>
 
 <script>
 import { getAuth } from "firebase/auth";
 import db from "../../firebase/init";
-import { getDocs, query, collection, orderBy } from "firebase/firestore";
+import { getDocs, query, collection, orderBy,getDoc, doc } from "firebase/firestore";
 export default {
   name: "Leaderboard",
   components: {},
   data() {
     return {
       UID: "",
+      isUser: true,
       myUser: "",
+      myUsername: "",
+      boardTitle: "Global Leaderboard",
+      buttonTitle: "Friends",
+      friendsbool: false,
       leaderboardPodium: [],
       leaderboardList: [],
+      friendLeaderboardPodium: [],
+      friendLeaderboardList: [],
     };
   },
   methods: {
+    async friendBool() {
+      if (this.friendsBool == true){
+        this.friendsBool = false
+        this.boardTitle = "Global Leaderboard"
+        this.buttonTitle = "Friends"
+        this.getAllUsers()
+        //change button property
+      }
+      else{
+        this.boardTitle = "Friend Leaderboard"
+        this.buttonTitle = "Global"
+        this.friendsBool = true
+        this.getAllFriends()
+        //change button property
+      }
+    },
     async getAllUsers() {
+      this.leaderboardPodium = []
+      this.leaderboardList = []
       const q = query(collection(db, "accounts"), orderBy("exp", "desc"));
       const querySnap = await getDocs(q);
       var count = 0;
@@ -102,12 +130,45 @@ export default {
         count += 1;
         if (count <= 3) {
           this.leaderboardPodium.push(doc.data());
+          
         } else {
           this.leaderboardList.push(doc.data());
         }
       });
-      console.log(this.leaderboardPodium);
-      console.log(this.leaderboardList);
+    },
+    async getAllFriends() {
+      this.leaderboardPodium = []
+      this.leaderboardList = []
+      const docSnap = await getDoc(doc(db, 'accounts', this.UID));
+      var friendsList = docSnap.data().friends
+      friendsList.push(this.myUser)
+
+    //   for (let friend of friends){
+    //     const docSnap = await getDoc(doc(db, 'user_profiles', friend));
+    //     const docSnap2 = await getDoc(doc(db, 'accounts', docSnap.data().uid ));
+    //     friendsList.push(docSnap2.data().profile_name);      
+    //     console.log(docSnap2.data().profile_name)
+    // }
+
+    const q = query(collection(db, "accounts"), orderBy("exp", "desc"));
+      const querySnap = await getDocs(q);
+      var count2 = 0;
+      querySnap.forEach((doc) => {
+        
+        if (count2 < 3 && friendsList.includes(doc.data().email)) {
+          count2 += 1;
+          this.leaderboardPodium.push(doc.data());
+  
+        } 
+        
+        else if (friendsList.includes(doc.data().email)) {
+          count2 += 1;
+          this.leaderboardList.push(doc.data());
+
+        } 
+        
+  
+      });
     },
   },
   mounted() {
@@ -119,6 +180,28 @@ export default {
 </script>
 
 <style scoped>
+.background {
+  background-image: url("/src/assets/images/background3.png");
+  background-attachment: fixed;
+  background-size: cover; /* Optional: Scales the background image to cover the entire container */
+  background-position: center;
+}
+
+#switch{
+  width: 100%;
+  border-radius: 0px;
+  position: sticky;
+  top: 65px; 
+  /* need to fix the sticky top */
+}
+
+.user{
+  background-color: orange;
+}
+
+.nonuser{
+  background-color: grey;
+}
 .podium {
   width: 80px;
   height: auto;
@@ -126,5 +209,6 @@ export default {
 
 .podium-div p {
   margin-top: -8px;
+
 }
 </style>

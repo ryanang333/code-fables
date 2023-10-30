@@ -49,14 +49,14 @@
 
         </div>
         
-        <button type="button" class="btn btn-success submit" @click="updateModel" disabled>Set as Current Skin</button>
+        <button type="button" id="saveModel" class="btn btn-success submit" @click="updateModel" disabled>Set Character</button>
   </div>
 
       
   </template>
   
   <script>
-      import { getDoc, doc ,getDocs, query, collection, } from "firebase/firestore"; 
+      import { getDoc, doc ,getDocs, query, collection, updateDoc} from "firebase/firestore"; 
       import { getAuth } from "firebase/auth";
       import ModelRender from '../ModelRender/ModelRender.vue';
       import db from "../../firebase/init";
@@ -70,9 +70,11 @@ data() {
   return {
     models: [],
     selectedModel: "",
+    selectedModelName: "",
     displayedModel: "",
     username: '',
     profileUrl: '',
+    modelUrl:'',
     UID: '',
   };
 },
@@ -89,15 +91,14 @@ methods: {
     }
 
   },async getModels() {
+    this.models = []
     const q = query(collection(db, "models"));
     const querySnap = await getDocs(q);
-
-    //get user model first
-  
     querySnap.forEach((doc) => {
       //get remaining models that isnt the users active
-      if (doc.data().path == this.selectModel){
+      if (doc.data().path == this.selectedModel){
         this.models.unshift({'name': doc.id.toUpperCase(), 'url':doc.data().path})
+        this.selectedModelName = doc.id.toUpperCase()
       }
       else{
         this.models.push({'name': doc.id.toUpperCase(), 'url':doc.data().path})
@@ -108,28 +109,26 @@ methods: {
     
 
   },
-  async updateButton() {
+  updateButton() {
     const activeCarousel =
       document.getElementsByClassName("active")[0].childNodes[1];
       var displayedModel = activeCarousel.textContent;
-      console.log(displayedModel,this.selectedModel)
-      if(this.selectedModel != this.displayedModel ){
-        document.getElementById("save").disabled = false
+      this.displayedModel = displayedModel
+      if(this.selectedModelName != displayedModel ){
+        document.getElementById("saveModel").disabled = false
       }
       else{
-        document.getElementById("save").disabled = true
+        document.getElementById("saveModel").disabled = true
       }
   },
   async updateModel() {
-      //guard statements for invalid display_name input
-
-      
-      // this.models.forEach((modelObj) => {
-      //   if (modelObj.name === selectedModelName) {
-      //     this.selectedModelObj = modelObj;
-      //   }
-      // })
-
+    const docSnap = await getDoc(doc(db, 'models', this.displayedModel.toLowerCase()));
+      if (docSnap.exists()){
+        this.modelUrl = docSnap.data().path;
+      }
+          await updateDoc(doc(db, 'accounts', this.UID), {model_ID:this.modelUrl} )
+          alert("Character Updated")
+          location.reload()
     },
   
 },
@@ -162,9 +161,9 @@ beforeDestroy() {
   }
 
   .submit {
-    margin-left: 500px;
+    margin-left: auto;
     margin-right: auto;
-    width: 200px;
+    width: 100%;
   }
 
   p,h2, h3 {
