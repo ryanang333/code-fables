@@ -109,7 +109,7 @@ export default {
       isAlreadyFriend: false,
       UID : '',
       friendsFriends : [],
-      modelUrl : '/3DModels/sword.glb',
+      modelUrl : '',
     };
   },
   components:{
@@ -141,6 +141,7 @@ export default {
         this.profile_pic_ID = data[0].profile_pic_ID;
         this.numberOfFriends = data[0].friends.length;
         this.friendsFriends = data[0].friends;
+        this.modelUrl = data[0].model_ID;
         this.showDivAfterDelay();
       } else {
         try {
@@ -160,6 +161,7 @@ export default {
             this.profile_pic_ID = data.profile_pic_ID;
             this.skin_ID = data.skin_ID;
             this.numberOfFriends = data.friends.length;
+            this.modelUrl = data.model_ID;
             data.friend_requests.includes(
               this.myUser
             ) && (this.isRequestSent = true);
