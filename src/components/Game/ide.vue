@@ -127,7 +127,7 @@ export default {
       });
 
 
-  },
+  }},
   mounted() {
 
     this.currentQn = localStorage.getItem('currentQn');
@@ -141,7 +141,7 @@ export default {
     this.currentTopic = localStorage.getItem("currentTopic");
     
   },
-}};
+};
 </script>
 
 <style scoped>

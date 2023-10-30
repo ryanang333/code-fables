@@ -116,6 +116,7 @@ export default {
       this.userTopics = docSnap.data().topics;
     },
   },
+  
   mounted() {
     this.getTopics();
     this.UID = getAuth().currentUser.uid;
