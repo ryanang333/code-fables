@@ -141,7 +141,7 @@ export default {
     this.currentTopic = localStorage.getItem("currentTopic");
     
   },
-};
+}};
 </script>
 
 <style scoped>
