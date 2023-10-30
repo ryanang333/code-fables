@@ -22,8 +22,7 @@
 import axios from "axios";
 import { getAuth } from "firebase/auth";
 import db from "../../firebase/init";
-import { collection, addDoc, getDoc, doc, setDoc,updateDoc } from "firebase/firestore";
-
+import { collection, addDoc, getDoc, doc, setDoc } from "firebase/firestore";
 export default {
   name: "Ide",
   props:{
@@ -37,6 +36,7 @@ export default {
       output: "",
       question: [],
       isLesson: false,
+      currentQn: '',
     };
   },
   emits: ['resultOK'],
@@ -64,6 +64,7 @@ export default {
         language: "python",
         code: userCode,
         name: this.username,
+        qn : this.currentQn,
       };
       console.log(param);
       axios.get(url,{
@@ -91,9 +92,8 @@ export default {
         // Process the error object
         console.error('An error occurred:', error);
       });
-
+     
     },
-
     async updateExpandLevel(){
       const docSnap = await getDoc(doc(db, 'accounts', this.UID));
       let exp = 0; 
@@ -126,14 +126,11 @@ export default {
         level: newLevel 
       });
 
-      
-    }
 
-    
   },
   mounted() {
-    console.log(this.questionInfo);
-    this.UID = getAuth().currentUser.uid;
+
+    this.currentQn = localStorage.getItem('currentQn');
     this.username = getAuth().currentUser.email.split(".com")[0];
     ace.config.set("basePath", "/backend/");
     this.editor = ace.edit("editor"); // Assign the editor to "this.editor"
@@ -142,7 +139,7 @@ export default {
     this.editor.session.setValue
     this.getCode();
     this.currentTopic = localStorage.getItem("currentTopic");
-
+    
   },
 };
 </script>
