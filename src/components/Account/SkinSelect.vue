@@ -2,6 +2,7 @@
   <div class="container">
     <div id="carouselExample" class="carousel slide">
           <div class="carousel-inner">
+            <div class="textbox">Use mouse controls to inspect your character!</div>
             <div
               class="carousel-item text-center"
               v-for="(model, index) in models"
@@ -48,7 +49,6 @@
 
 
         </div>
-        
         <button type="button" id="saveModel" class="btn btn-success submit" @click="updateModel" disabled>Set Character</button>
   </div>
 
@@ -158,6 +158,15 @@ beforeDestroy() {
       background-color: rgb(202, 202, 202);
       padding: 20px;
       border-radius: 15px;
+  }
+
+  .textbox {
+    position: absolute;
+    right: 10px;
+    background-color: #cdbea2;
+    border-radius: 5px;
+    border: 3px solid #7e6e5c ;
+    padding: 10px;
   }
 
   .submit {
