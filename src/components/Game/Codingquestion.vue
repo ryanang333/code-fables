@@ -85,6 +85,7 @@ export default {
       },
       questionLoaded: false,
       currentQn: "",
+      updatedOnce: false,
     };
   },
   methods: {
@@ -160,6 +161,11 @@ export default {
         console.error("Error updating document:", error);
       }
       this.getQuestion(this.currentTopic, this.userProg);
+
+      // increases the users progress if boolean set to true
+      if(updateData[fieldPathBool]){
+        this.updateExpandLevel();
+      }
     },
         async getImage(model_ID){
       if (model_ID.includes('wizard')){
@@ -180,6 +186,38 @@ export default {
       console.log(this.model_ID)
       this.getQuestion(this.currentTopic, this.userProg);
       this.getImage(this.model_ID)
+    },
+
+    async updateExpandLevel() {
+      if (!this.updatedOnce) {
+        const docSnap = await getDoc(doc(db, "accounts", this.UID));
+      let exp = 0;
+      let level = 0;
+      if (docSnap.exists()) {
+        console.log(docSnap.data());
+        exp = docSnap.data().exp;
+        level = docSnap.data().level;
+        //console.log(exp);
+        //console.log(level);
+      } else {
+        console.log("Document does not exist");
+      }
+
+      if (this.currentTopic === "topic6") {
+        exp += 100;
+        await updateDoc(doc(db, "accounts", this.UID), { exp: exp });
+      } else {
+        exp += 50;
+        await updateDoc(doc(db, "accounts", this.UID), { exp: exp });
+      }
+
+      const newLevel = Math.floor(exp / 100);
+
+      await updateDoc(doc(db, "accounts", this.UID), {
+        level: newLevel,
+      });
+      this.updatedOnce = true; // Set the flag to true after the first update
+      }
     },
 
   },

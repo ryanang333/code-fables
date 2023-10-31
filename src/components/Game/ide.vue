@@ -88,7 +88,6 @@ export default {
           let correctOutput = this.questionInfo["test_case"];
           var x = this.output.replace(/\n/g, "");
           if (x == correctOutput) {
-            this.updateExpandLevel();
             this.$emit("resultOK");
           }
         })
@@ -96,34 +95,6 @@ export default {
           // Process the error object
           console.error("An error occurred:", error);
         });
-    },
-    async updateExpandLevel() {
-      const docSnap = await getDoc(doc(db, "accounts", this.UID));
-      let exp = 0;
-      let level = 0;
-      if (docSnap.exists()) {
-        console.log(docSnap.data());
-        exp = docSnap.data().exp;
-        level = docSnap.data().level;
-        //console.log(exp);
-        //console.log(level);
-      } else {
-        console.log("Document does not exist");
-      }
-
-      if (this.currentTopic === "topic6") {
-        exp += 100;
-        await updateDoc(doc(db, "accounts", this.UID), { exp: exp });
-      } else {
-        exp += 50;
-        await updateDoc(doc(db, "accounts", this.UID), { exp: exp });
-      }
-
-      const newLevel = Math.floor(exp / 100);
-
-      await updateDoc(doc(db, "accounts", this.UID), {
-        level: newLevel,
-      });
     },
   },
   mounted() {
