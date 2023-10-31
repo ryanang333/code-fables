@@ -77,6 +77,7 @@ a, button {
   color: white;
   font-size: 18px;
   text-decoration:none;
+  font-family: Georgia, serif;
 }
 
 a:hover {

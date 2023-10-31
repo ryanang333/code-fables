@@ -1,13 +1,17 @@
 <template>
-  <div class="background">
   <button type="button" id="switch" class="btn btn-success submit" @click="friendBool">Switch to {{buttonTitle}}</button>
+  
+  <div class="container-fluid bg-image">
+  <div class="container-fluid bg-overlay">
+  
   <div class="container mt-5 podium-div" v-if="leaderboardPodium.length == 3">
-    <h1 class="text-center mt-4">{{boardTitle}}</h1>
+    <h2 class="text-center"><img src="src\assets\images\friends-leaderboard.png" v-if="friendsBool == true"></h2>
+    <h2 class="text-center"><img src="src\assets\images\global-leaderboard.png" v-if="friendsBool == false"></h2>
     <div class="mt-4 row justify-content-center">
       <div class="col-3 mt-5 text-center">
-        <img class="podium" src="/src/assets/images/medalSecond.png" />
+        <img class="podium" src="src\assets\images\king.png" />
         <div
-          class=" card shadow d-flex flex-direction-column justify-content-center align-items-center" v-bind:style="{ backgroundColor: leaderboardPodium[1].email==this.myUser ? 'lightgoldenrodyellow' : 'lightgray' }"
+          class=" card podiumBack shadow d-flex flex-direction-column justify-content-center align-items-center" v-bind:style="{ backgroundColor: leaderboardPodium[1].email==this.myUser ? 'lightgoldenrodyellow' : '#C0C0C0' }"
         >
           <img
             class="mt-4 podium mb-2"
@@ -20,9 +24,9 @@
         </div>
       </div>
       <div class="col-3 text-center podium-div">
-        <img class="podium" src="/src/assets/images/medalFirst.png" />
+        <img class="podium" src="src\assets\images\premium.png" />
         <div
-          class=" card shadow d-flex flex-direction-column justify-content-center align-items-center" v-bind:style="{ backgroundColor: leaderboardPodium[0].email==this.myUser ? 'lightgoldenrodyellow' : 'lightgray' }"
+          class=" card podiumBack shadow d-flex flex-direction-column justify-content-center align-items-center" v-bind:style="{ backgroundColor: leaderboardPodium[0].email==this.myUser ? 'lightgoldenrodyellow' : '#FFD700' }"
         >
           <img
             class="mt-4 podium mb-2"
@@ -34,9 +38,9 @@
         </div>
       </div>
       <div class="col-3 mt-5 text-center podium-div">
-        <img class="podium" src="/src/assets/images/medalThird.png" />
+        <img class="podium" src="src\assets\images\crown.png" />
         <div
-          class=" card shadow d-flex flex-direction-column justify-content-center align-items-center"  v-bind:style="{ backgroundColor: leaderboardPodium[2].email==this.myUser ? 'lightgoldenrodyellow' : 'lightgray' }"
+          class=" card podiumBack shadow d-flex flex-direction-column justify-content-center align-items-center"  v-bind:style="{ backgroundColor: leaderboardPodium[2].email==this.myUser ? 'lightgoldenrodyellow' : '#B87333' }"
         >
           <img
             class="mt-4 podium mb-2"
@@ -58,10 +62,10 @@
       :key="person.profile_name"
     >
       <div
-        class="row d-flex mb-4 align-items-center rounded-3 px-3 pt-3 d-flex-row" v-bind:style="{ backgroundColor: person.email==this.myUser ? 'lightgoldenrodyellow' : 'lightgray' }"
+        class="row listItem d-flex mb-4 align-items-center rounded-3 px-3 pt-3 d-flex-row" v-bind:style="{ backgroundColor: person.email==this.myUser ? 'lightgoldenrodyellow' : '#cdbea2' }"
       >
         <div class="col-1 mb-3 me-4">
-          <h1>{{ index + 4 }}</h1>
+          <h2>{{ index + 4 }}</h2>
         </div>
         <div
           class="col-2 justify-content-center d-flex flex-column align-items-center"
@@ -70,15 +74,16 @@
           <p class="fw-bold text-center">Level {{ person.level }}</p>
         </div>
         <div class="col-6 mb-3 text-center">
-          <p>{{ person.profile_name }}</p>
+          <h2>{{ person.profile_name }}</h2>
         </div>
         <div class="col mb-3">
-          <p class="text-center">EXP: {{ person.exp }}</p>
+          <h3>{{ person.exp }}xp</h3>
         </div>
       </div>
     </div>
   </div>
 </div>
+</div>  
 </template>
 
 <script>
@@ -96,7 +101,7 @@ export default {
       myUsername: "",
       boardTitle: "Global Leaderboard",
       buttonTitle: "Friends",
-      friendsbool: false,
+      friendsBool: false,
       leaderboardPodium: [],
       leaderboardList: [],
       friendLeaderboardPodium: [],
@@ -180,11 +185,25 @@ export default {
 </script>
 
 <style scoped>
-.background {
+h2 {
+  text-align: center;
+}
+
+.bg-image {
   background-image: url("/src/assets/images/background3.png");
   background-attachment: fixed;
   background-size: cover; /* Optional: Scales the background image to cover the entire container */
   background-position: center;
+  background-color: black;
+  padding: 0px;
+}
+
+.bg-overlay {
+  content: "";
+  padding: 10px;
+  background: rgba(0, 0, 0, 0.651);
+  background-size: cover; 
+  z-index: 0;
 }
 
 #switch{
@@ -192,7 +211,12 @@ export default {
   border-radius: 0px;
   position: sticky;
   top: 65px; 
+  z-index: 1;
   /* need to fix the sticky top */
+}
+
+.listItem{
+  border: #7e6e5c solid 5px;
 }
 
 .user{
@@ -203,8 +227,12 @@ export default {
   background-color: grey;
 }
 .podium {
-  width: 80px;
+  width: 100px;
   height: auto;
+}
+
+.podiumBack {
+  border-radius: 50%;
 }
 
 .podium-div p {
