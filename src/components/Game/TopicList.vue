@@ -1,12 +1,13 @@
 <template>
-  <div class="background">
+    <div class="container-fluid bg-image">
+  <div class="container-fluid bg-overlay">
   <div>
     <h2 class="text-center"><img src="src\assets\images\START-YOUR-CODEQUEST.png"></h2>
   </div>
 
   <div class="row">
     <div
-      class="col-4"
+      class="col-lg-4 col-md-12 card-deck "
       v-for="topic in topics"
       :key="topic.key"
       @click="openQuestion(topic.key)"
@@ -46,6 +47,7 @@
       </div>
     </div>
   </div>
+</div>
 </div>
 </template>
 
@@ -126,8 +128,21 @@ export default {
 </script>
 
 <style scoped>
-.background {
-  background-color:#26472c;
+.bg-image {
+  background-image: url("/src/assets/images/background3.png");
+  background-attachment: fixed;
+  background-size: cover; /* Optional: Scales the background image to cover the entire container */
+  background-position: center;
+  background-color: black;
+  padding: 0px;
+}
+
+.bg-overlay {
+  content: "";
+  padding: 10px;
+  background: rgba(0, 0, 0, 0.651);
+  background-size: cover; 
+  z-index: 0;
 }
 h2 {
   animation: glow 1s infinite alternate;
@@ -150,6 +165,14 @@ h2 {
   border-radius: 10px 10px 0px 0px;
   outline: #7e6e5c solid 5px;
 }
+
+.card-deck {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  align-items: stretch;
+}
 .card {
   width: 90%;
   background-color: #cdbea2;
@@ -161,23 +184,24 @@ h2 {
   margin-left: auto;
   margin-bottom: 20px;
   padding: 20px;
+  flex: none;
 }
 .card-body {
   padding: 1px;
 }
 .card-title {
   font-weight: bold;
-  font-family:  'Palatino', serif;
+  font-family: Georgia, serif;
   font-size: 1.8rem;
-  margin-top: 10px;
+  margin-top: 15px;
 }
 .card:hover {
-  transform: translate3D(0,-1px,0) scale(1.03);
+  transform: translateY(-10px); 
   box-shadow: 0 6px 1px rgba(0, 0, 0, 0.4);
   transition: 0.1s;
 }
 .card-text {
-  font-family:  'Palatino', serif;
+  font-family: Georgia, serif;
   font-size: 1rem;
   margin-bottom: 15px;
 }
@@ -192,20 +216,11 @@ h2 {
 .text-danger {
   color: #dc3545;
   font-weight: bold;
-  font-family:  'Palatino', serif;
-}
-.btn-primary {
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-}
-.btn-primary:hover {
-  background-color: #0056b3;
+  font-family: Georgia, serif;
 }
 .btn-game {
   background-color: #978b74;; /* Red button color */
-  font-family:  'Palatino', serif;
+  font-family: Georgia, serif;
   color: #ffffff;
   border: none;
   width:100%;
@@ -217,6 +232,7 @@ h2 {
   font-size: large;
   cursor: pointer;
   transition: background-color 0.3s;
+
 }
 .btn-game:hover {
   background-color: #078627; /* Darker red on hover */

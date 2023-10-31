@@ -108,6 +108,7 @@
           await updateDoc(doc(db, 'accounts', this.UID), {profile_pic_ID:this.SelectedPic} )
           this.getInfo()
           this.getPictures()
+          alert("Profile picture updated!")
         }
         else{
           console.log("failed")
