@@ -125,7 +125,7 @@
         this.exp = docSnap.data().exp;
         this.level = docSnap.data().level;
         this.nextlevel = this.level + 1
-        this.nextlevelexp = this.nextlevel * 50
+        this.nextlevelexp = this.nextlevel * 100
         this.expDiff = this.nextlevelexp - this.exp
         this.progress = Math.round(this.exp/this.nextlevelexp *100)
       }
