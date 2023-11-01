@@ -116,33 +116,33 @@ export default {
 @media (min-width: 577px) and (max-width: 768px) {
     .player {
         width: 15vw;
-        height: 20vh;
+        height: 10vh;
     }
     .enemy{
         width:15vw;
-        height:20vh
+        height:10vh
     }
 }
 
 @media (min-width:769px) {
     .player {
         width: 15vw;
-        height: 20vh;
+        height: 10vh;
     }
     .enemy{
         width:15vw;
-        height:20vh
+        height:10vh
     }
 }
 
 @media(max-width:576px) {
     .player {
-        width: 15vw;
-        height: 20vh;
+        width: 20vw;
+        height: 10vh;
     }
     .enemy{
         width:15vw;
-        height:20vh;
+        height:10vh;
         left:0;
     }
 }
