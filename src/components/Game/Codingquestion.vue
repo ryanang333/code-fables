@@ -74,12 +74,12 @@ export default {
   data() {
     return {
       enemyList: [
-        {imageUrl:'src/assets/images/hyena.png', positionX:'200px', positionY:'0px'},
-        {imageUrl:'src/assets/images/scorpio.png', positionX:'400px', positionY:'0px'},
-        {imageUrl: 'src/assets/images/snake.png', positionX:'600px',positionY:'0px'},
-        {imageUrl: 'src/assets/images/vulture.png', positionX:'800px',positionY:'0px'},
-        {imageUrl: 'src/assets/images/mummy.png', positionX:'1000px',positionY:'0px'},
-        {imageUrl: 'src/assets/images/deceased.png', positionX:'1200px',positionY:'0px'},
+        {imageUrl:'src/assets/images/hyena.png', positionX:'400px', positionY:'0px'},
+        {imageUrl:'src/assets/images/scorpio.png', positionX:'800px', positionY:'0px'},
+        {imageUrl: 'src/assets/images/snake.png', positionX:'1200px',positionY:'0px'},
+        {imageUrl: 'src/assets/images/vulture.png', positionX:'1600px',positionY:'0px'},
+        {imageUrl: 'src/assets/images/mummy.png', positionX:'2000px',positionY:'0px'},
+        {imageUrl: 'src/assets/images/deceased.png', positionX:'2400px',positionY:'0px'},
       ],
       imageUrl: "",
       gamePaused: false,
