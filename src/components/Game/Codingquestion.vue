@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid">
+  <div class="container-fluid" id="styler">
     <div class="row">
       <div class="game col-md-6 col-sm-6">
         <Game :imageUrl="imageUrl" :enemies="enemyList" @collisionDetected="handleCollision" :isGamePaused="gamePaused"></Game>
@@ -74,12 +74,12 @@ export default {
   data() {
     return {
       enemyList: [
-        {imageUrl:'src/assets/images/hyena.png', positionX:'200px', positionY:'0px'},
+        {imageUrl:'src/assets/images/hyena.png', positionX:'100px', positionY:'0px'},
         {imageUrl:'src/assets/images/scorpio.png', positionX:'400px', positionY:'0px'},
-        {imageUrl: 'src/assets/images/snake.png', positionX:'600px',positionY:'0px'},
-        {imageUrl: 'src/assets/images/vulture.png', positionX:'800px',positionY:'0px'},
-        {imageUrl: 'src/assets/images/mummy.png', positionX:'1000px',positionY:'0px'},
-        {imageUrl: 'src/assets/images/deceased.png', positionX:'1200px',positionY:'0px'},
+        {imageUrl: 'src/assets/images/snake.png', positionX:'700px',positionY:'0px'},
+        {imageUrl: 'src/assets/images/vulture.png', positionX:'1000px',positionY:'0px'},
+        {imageUrl: 'src/assets/images/mummy.png', positionX:'1300px',positionY:'0px'},
+        {imageUrl: 'src/assets/images/deceased.png', positionX:'1600px',positionY:'0px'},
       ],
       imageUrl: "",
       gamePaused: false,
@@ -157,6 +157,7 @@ export default {
       const updateData = {};
       updateData[fieldPathBool] = true;
       updateData[fieldPathPosition] = this.userProg;
+      this.gamePaused=false
 
       // Update the Firestore document
       const docRef = doc(db, "accounts", this.UID);
@@ -243,5 +244,8 @@ export default {
 <style>
 .game{
   padding-top:50px;
+}
+#styler{
+  background: radial-gradient(666px at 0.4% 48%, rgb(202, 204, 227) 0%, rgb(89, 89, 99) 97.5%);
 }
 </style>
