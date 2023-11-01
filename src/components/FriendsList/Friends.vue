@@ -1,7 +1,12 @@
 <template>
-  <div class="container d-flex flex-row justify-content-between">
-    <h3>Friends ({{ numberOfFriends }})</h3>
-    <form class="d-flex w-50" role="search" style="font-family: Georgia, serif;" @submit.prevent="openRequestModal">
+  <div class="container d-flex flex-column justify-content-between">
+    <img src="/src/assets/images/friends.png"/>
+    <form
+      class="d-flex w-50"
+      role="search"
+      style="font-family: Georgia, serif"
+      @submit.prevent="openRequestModal"
+    >
       <input
         class="form-control me-2"
         type="search"
@@ -12,61 +17,76 @@
       <button class="btn btn-outline-success" type="submit">Search</button>
     </form>
   </div>
-  <div class="container bg-white">
-    <div class="row mt-5 ms-1 d-flex w-100 justify-content-start">
+  <div class="container">
+    <div
+      class="row mt-5 ms-1 d-flex w-100 justify-content-start"
+      style="overflow-x: clip"
+    >
       <!-- Conditional rendering of friend list -->
       <div
         v-if="friends.length > 0"
         v-for="friend in friendsDetails"
         :key="friend.username"
         :id="friend.username"
-        class="border-5 rounded-4 border border-white p-4 my-2 bg-secondary col-12 col-lg-6 d-flex flex-row align-items-center friend-div"
+        class="border border-5 border-black rounded-4 p-3 bg-secondary col-12 col-lg-6 d-flex flex-row align-items-center friend-div"
       >
-        <div class="row" @click="openFriendModal(friend.username)">
+        <div class="container">
           <div
-            class="col-12 col-sm-4 col-md-6 col-lg-5 profilePic d-flex justify-content-center align-items-center"
+            class="row d-flex justify-content-between align-items-center"
+            @click="openFriendModal(friend.username)"
           >
-            <img
-              :src="friend.profile_pic_ID"
-              class="rounded-circle"
-              style="width: 150px; height: 150px"
-            />
+            <div class="col-12 col-xl-6 text-center mb-2">
+              <img
+                :src="friend.profile_pic_ID"
+                class="rounded-circle"
+                style="width: 200px"
+              />
+            </div>
+            <div
+              class="col-12 col-xl-6 d-flex flex-column justify-content-center align-items-center text-center"
+            >
+              <p class="text-white">Name: {{ friend.profile_name }}</p>
+              <p class="text-white">Username: {{ friend.username }}</p>
+              <p class="text-white">Level: {{ friend.level }}</p>
+              <!-- You can include online/offline status here -->
+            </div>
           </div>
-          <div class="col-1"></div>
           <div
-            class="col-12 col-sm-6 col-md-5 mt-3 text-center fs-6 d-flex flex-column justify-content-center align-items-center"
+            class="row d-flex justify-content-center mt-3"
+            style="margin-left: auto; margin-right: auto"
           >
-            <p class="text-white">Name: {{ friend.profile_name }}</p>
-            <p class="text-white">Username: {{ friend.username }}</p>
-            <p class="text-white">Level: {{ friend.level }}</p>
-            <!-- You can include online/offline status here -->
+            <button
+              type="button"
+              class="btn btn-warning"
+              @click="openChat(friend)"
+            >
+              Chat
+            </button>
           </div>
         </div>
-        <button type="button" class="btn btn-warning" @click="openChat(friend)">
-          Chat
-        </button>
       </div>
-
       <!-- Show loading or empty state when friends are not yet available -->
       <div v-else>
         <p class="fs-1">No friends yet!</p>
         <!-- You can also add a loading spinner here if needed -->
       </div>
     </div>
-    <div
-      v-if="isChatOpen"
-      class="row d-flex flex-col justify-content-center align-items-center"
-      :key="chatFriend"
-    >
-      <Inbox
-        :currentUser="userDetails"
-        :friendInfo="chatFriend"
-        :username="friendOpen"
-      />
-      <button type="button" class="btn btn-danger w-25" @click="closeChat">
-        Close Chat
-      </button>
-    </div>
+    <!--       style="position:absolute; top:0px; right:0px;" -->
+  </div>
+  <div
+    v-if="isChatOpen"
+    class="row d-flex flex-col justify-content-center align-items-center bg-dark-subtle rounded-5"
+    :key="chatFriend"
+    style="position: fixed; bottom: 0px; right: 0px"
+  >
+    <Inbox
+      :currentUser="userDetails"
+      :friendInfo="chatFriend"
+      :username="friendOpen"
+    />
+    <button type="button" class="btn btn-danger w-25 mb-4" @click="closeChat">
+      Close Chat
+    </button>
   </div>
   <teleport to="body">
     <FriendModal
@@ -206,12 +226,23 @@ export default {
 </script>
 
 <style scoped>
+.bg-image {
+  background-image: url("/src/assets/images/background3.png");
+  background-attachment: fixed;
+  background-size: cover; /* Optional: Scales the background image to cover the entire container */
+  background-position: center;
+  background-color: black;
+  padding: 0px;
+}
 .friend-div:hover {
-  transform: scale(1.05); /* Scale the element on hover */
+  transform: scale(1.01); /* Scale the element on hover */
   transition: transform 0.2s; /* Add smooth transitions */
 }
 
-p ,h1, h2, h3 {
+p,
+h1,
+h2,
+h3 {
   font-family: Georgia, serif;
 }
 

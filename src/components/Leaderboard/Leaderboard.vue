@@ -120,7 +120,14 @@
 <script>
 import { getAuth } from "firebase/auth";
 import db from "../../firebase/init";
-import { getDocs, query, collection, orderBy,getDoc, doc } from "firebase/firestore";
+import {
+  getDocs,
+  query,
+  collection,
+  orderBy,
+  getDoc,
+  doc,
+} from "firebase/firestore";
 export default {
   name: "Leaderboard",
   components: {},
@@ -141,26 +148,25 @@ export default {
   },
   methods: {
     async friendBool() {
-      if (this.friendsBool == true){
-        this.friendsBool = false
-        console.log(this.friendsBool)
-        this.boardTitle = "Global Leaderboard"
-        this.buttonTitle = "Friends"
-        this.getAllUsers()
+      if (this.friendsBool == true) {
+        this.friendsBool = false;
+        console.log(this.friendsBool);
+        this.boardTitle = "Global Leaderboard";
+        this.buttonTitle = "Friends";
+        this.getAllUsers();
         //change button property
-      }
-      else{
-        this.boardTitle = "Friend Leaderboard"
-        this.buttonTitle = "Global"
-        this.friendsBool = true
-        console.log(this.friendsBool)
-        this.getAllFriends()
+      } else {
+        this.boardTitle = "Friend Leaderboard";
+        this.buttonTitle = "Global";
+        this.friendsBool = true;
+        console.log(this.friendsBool);
+        this.getAllFriends();
         //change button property
       }
     },
     async getAllUsers() {
-      this.leaderboardPodium = []
-      this.leaderboardList = []
+      this.leaderboardPodium = [];
+      this.leaderboardList = [];
       const q = query(collection(db, "accounts"), orderBy("exp", "desc"));
       const querySnap = await getDocs(q);
       var count = 0;
@@ -168,41 +174,41 @@ export default {
         count += 1;
         if (count <= 3) {
           this.leaderboardPodium.push(doc.data());
-          
         } else {
           this.leaderboardList.push(doc.data());
         }
       });
     },
     async getAllFriends() {
-      this.leaderboardPodium = []
-      this.leaderboardList = []
-      const docSnap = await getDoc(doc(db, 'accounts', this.UID));
-      var friendsList = docSnap.data().friends
-      friendsList.push(this.myUser)
+      this.leaderboardPodium = [];
+      this.leaderboardList = [];
+      const docSnap = await getDoc(doc(db, "accounts", this.UID));
+      var friendsList = docSnap.data().friends;
+      friendsList.push(this.myUser);
 
       const q = query(collection(db, "accounts"), orderBy("exp", "desc"));
       const querySnap = await getDocs(q);
       var count2 = 0;
       querySnap.forEach((doc) => {
-
-        
         if (count2 < 3 && friendsList.includes(doc.data().email)) {
           count2 += 1;
           this.leaderboardPodium.push(doc.data());
-  
-        } 
-        
-        else if (friendsList.includes(doc.data().email)) {
+        } else if (friendsList.includes(doc.data().email)) {
           this.leaderboardList.push(doc.data());
 
         }        
   
       })
 
-      while (this.leaderboardPodium.length< 3 ){
-        console.log("ADDING")
-        this.leaderboardPodium.push({profile_pic_ID:"",level:"-",exp:"",profile_name:""})
+
+      while (this.leaderboardPodium.length < 3) {
+        console.log("ADDING");
+        this.leaderboardPodium.push({
+          profile_pic_ID: "",
+          level: "-",
+          exp: "",
+          profile_name: "",
+        });
       }
     },
   },
@@ -242,29 +248,29 @@ h3 {
   content: "";
   padding: 10px;
   background: rgba(0, 0, 0, 0.651);
-  background-size: cover; 
+  background-size: cover;
   z-index: 0;
 }
 
-#switch{
+#switch {
   width: 100%;
   border-radius: 0px;
   position: sticky;
-  top: 65px; 
+  top: 65px;
   z-index: 1;
   /* need to fix the sticky top */
 }
 
-.listItem{
+.listItem {
   border: #7e6e5c solid 5px;
   font-family: Georgia, serif;
 }
 
-.user{
+.user {
   background-color: orange;
 }
 
-.nonuser{
+.nonuser {
   background-color: grey;
 }
 .podium {
@@ -279,6 +285,5 @@ h3 {
 .podium-div p {
   margin-top: -8px;
   font-family: Georgia, serif;
-
 }
 </style>
