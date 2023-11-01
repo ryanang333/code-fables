@@ -37,14 +37,13 @@
       <div class="col-lg-3 col-md-12 order-lg-1 order-2 mt-5 text-center">
         <img class="podium" src="src\assets\images\king.png" />
         <div
-          class=" card podiumBack shadow d-flex flex-direction-column justify-content-center align-items-center" v-bind:style="{ backgroundColor: leaderboardPodium[1].email==this.myUser ? 'lightgoldenrodyellow' : '#C0C0C0' }"
+          class=" card podiumBack shadow d-flex flex-direction-column justify-content-center align-items-center" v-bind:style="{ backgroundColor: leaderboardPodium[1].email==this.myUser ? 'lightgoldenrodyellow' : '#C0C0C0' , borderColor : leaderboardPodium[1].email==this.myUser ? 'orange' : '#7e6e5c'  }"
         >
           <img
             class="mt-4 podium mb-2"
             :src="leaderboardPodium[1].profile_pic_ID"
           />
-          <h3 class="fw-bold" v-if="leaderboardPodium[1].email==this.myUser">{{ leaderboardPodium[1].profile_name }}(You)</h3>
-          <h3 class="fw-bold" v-else>{{ leaderboardPodium[1].profile_name }}</h3>
+          <h3 class="fw-bold">{{ leaderboardPodium[1].profile_name }}</h3>
           <p class="fw-bold">Level {{ leaderboardPodium[1].level }}</p>
           <p class="">EXP: {{ leaderboardPodium[1].exp }}</p>
         </div>
@@ -52,14 +51,13 @@
       <div class="col-lg-3 col-md-12 order-lg-2 order-1 text-center podium-div">
         <img class="podium" src="src\assets\images\premium.png" />
         <div
-          class=" card podiumBack shadow d-flex flex-direction-column justify-content-center align-items-center" v-bind:style="{ backgroundColor: leaderboardPodium[0].email==this.myUser ? 'lightgoldenrodyellow' : '#FFD700' }"
+          class=" card podiumBack shadow d-flex flex-direction-column justify-content-center align-items-center" v-bind:style="{ backgroundColor: leaderboardPodium[0].email==this.myUser ? 'lightgoldenrodyellow' : '#FFD700' , borderColor : leaderboardPodium[0].email==this.myUser ? 'orange' : '#7e6e5c'  }"
         >
           <img
             class="mt-4 podium mb-2"
             :src="leaderboardPodium[0].profile_pic_ID"
           />
-          <h3 class="fw-bold" v-if="leaderboardPodium[0].email==this.myUser">{{ leaderboardPodium[0].profile_name }}(You)</h3>
-          <h3 class="fw-bold" v-else>{{ leaderboardPodium[0].profile_name }}</h3>
+          <h3 class="fw-bold">{{ leaderboardPodium[0].profile_name }}</h3>
           <p class="fw-bold">Level {{ leaderboardPodium[0].level }}</p>
           <p>EXP: {{ leaderboardPodium[0].exp }}</p>
 
@@ -68,14 +66,13 @@
       <div class="col-lg-3 col-md-12 order-lg-3 order-3 mt-5 text-center podium-div">
         <img class="podium" src="src\assets\images\crown.png" />
         <div
-          class=" card podiumBack shadow d-flex flex-direction-column justify-content-center align-items-center"  v-bind:style="{ backgroundColor: leaderboardPodium[2].email==this.myUser ? 'lightgoldenrodyellow' : '#B87333' }"
+          class=" card podiumBack shadow d-flex flex-direction-column justify-content-center align-items-center"  v-bind:style="{ backgroundColor: leaderboardPodium[2].email==this.myUser ? 'lightgoldenrodyellow' : '#B87333' , borderColor : leaderboardPodium[2].email==this.myUser ? '#09B051' : '#7e6e5c'  }"
         >
           <img
             class="mt-4 podium mb-2"
             :src="leaderboardPodium[2].profile_pic_ID"
           />
-          <h3 class="fw-bold" v-if="leaderboardPodium[2].email==this.myUser">{{ leaderboardPodium[2].profile_name }}(You)</h3>
-          <h3 class="fw-bold" v-else>{{ leaderboardPodium[2].profile_name }}</h3>
+          <h3 class="fw-bold">{{ leaderboardPodium[2].profile_name }}</h3>
           <p class="fw-bold">Level {{ leaderboardPodium[2].level }}</p>
           <p>EXP: {{ leaderboardPodium[2].exp }}</p>
    
@@ -92,20 +89,20 @@
       :key="person.profile_name"
     >
       <div
-        class="row listItem d-flex mb-4 align-items-center rounded-3 px-3 pt-3 d-flex-row" v-bind:style="{ backgroundColor: person.email==this.myUser ? 'lightgoldenrodyellow' : '#cdbea2' }"
+        class="row listItem d-flex mb-4 align-items-center rounded-3 px-3 pt-3 d-flex-row" v-bind:style="{ backgroundColor: person.email==this.myUser ? 'lightgoldenrodyellow' : '#cdbea2' , borderColor : person.email==this.myUser ? '#00AEEF ' : '#7e6e5c'  }"
       >
-        <div class="col-1 mb-3 me-4">
-          <h2>{{ index + 4 }}</h2>
+        <div class="col-md-1 mb-3 me-4">
+          <h2 v-if="friendsBool == true">{{ index + 1 }}</h2>
+          <h2 v-else>{{ index + 4 }}</h2>
         </div>
         <div
-          class="col-2 justify-content-center d-flex flex-column align-items-center"
+          class="col-md-2 justify-content-center d-flex flex-column align-items-center"
         >
           <img class="podium" :src="person.profile_pic_ID" />
           <p class="fw-bold text-center">Level {{ person.level }}</p>
         </div>
-        <div class="col-6 mb-3 text-center">
-          <h2 v-if="person.email==this.myUser">{{ person.profile_name }} (you)</h2>
-          <h2 v-else>{{ person.profile_name }}</h2>
+        <div class="col-md-6 mb-3 text-center">
+          <h2>{{ person.profile_name }}</h2>
         </div>
         <div class="col mb-3">
           <h3>{{ person.exp }}xp</h3>
@@ -130,32 +127,21 @@ export default {
       isUser: true,
       myUser: "",
       myUsername: "",
-      boardTitle: "Global Leaderboard",
-      buttonTitle: "Friends",
       friendsBool: false,
       leaderboardPodium: [],
       leaderboardList: [],
-      friendLeaderboardPodium: [],
-      friendLeaderboardList: [],
     };
   },
   methods: {
     async friendBool() {
       if (this.friendsBool == true){
         this.friendsBool = false
-        console.log(this.friendsBool)
-        this.boardTitle = "Global Leaderboard"
-        this.buttonTitle = "Friends"
         this.getAllUsers()
-        //change button property
       }
       else{
-        this.boardTitle = "Friend Leaderboard"
-        this.buttonTitle = "Global"
         this.friendsBool = true
         console.log(this.friendsBool)
         this.getAllFriends()
-        //change button property
       }
     },
     async getAllUsers() {
@@ -183,27 +169,12 @@ export default {
 
       const q = query(collection(db, "accounts"), orderBy("exp", "desc"));
       const querySnap = await getDocs(q);
-      var count2 = 0;
       querySnap.forEach((doc) => {
-
-        
-        if (count2 < 3 && friendsList.includes(doc.data().email)) {
-          count2 += 1;
-          this.leaderboardPodium.push(doc.data());
-  
-        } 
-        
-        else if (friendsList.includes(doc.data().email)) {
+      if (friendsList.includes(doc.data().email)) {
           this.leaderboardList.push(doc.data());
-
-        }        
+        }       
   
       })
-
-      while (this.leaderboardPodium.length< 3 ){
-        console.log("ADDING")
-        this.leaderboardPodium.push({profile_pic_ID:"",level:"-",exp:"",profile_name:""})
-      }
     },
   },
   mounted() {
@@ -260,13 +231,6 @@ h3 {
   font-family: Georgia, serif;
 }
 
-.user{
-  background-color: orange;
-}
-
-.nonuser{
-  background-color: grey;
-}
 .podium {
   width: 100px;
   height: auto;
