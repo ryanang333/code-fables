@@ -35,7 +35,6 @@
         </div>
       </div>
       
-    </nav>
   </div>
   
   <div class="container mt-5 podium-div" v-if="leaderboardPodium.length == 3">
@@ -119,7 +118,6 @@
     </div>
   </div>
 </div>
-</div>  
 </template>
 
 <script>
