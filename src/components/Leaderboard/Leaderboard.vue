@@ -31,10 +31,10 @@
   </div>
   
   <div class="container mt-5 podium-div" v-if="leaderboardPodium.length == 3">
-    <h2 class="text-center"><img src="src\assets\images\friends-leaderboard.png" v-if="friendsBool == true"></h2>
-    <h2 class="text-center"><img src="src\assets\images\global-leaderboard.png" v-if="friendsBool == false"></h2>
+    <h2 class="text-center"><img class="w-100" src="src\assets\images\friends-leaderboard.png" v-if="friendsBool == true"></h2>
+    <h2 class="text-center"><img class="w-100" src="src\assets\images\global-leaderboard.png" v-if="friendsBool == false"></h2>
     <div class="mt-4 row justify-content-center">
-      <div class="col-3 mt-5 text-center">
+      <div class="col-lg-3 col-md-12 order-lg-1 order-2 mt-5 text-center">
         <img class="podium" src="src\assets\images\king.png" />
         <div
           class=" card podiumBack shadow d-flex flex-direction-column justify-content-center align-items-center" v-bind:style="{ backgroundColor: leaderboardPodium[1].email==this.myUser ? 'lightgoldenrodyellow' : '#C0C0C0' }"
@@ -49,7 +49,7 @@
           <p class="">EXP: {{ leaderboardPodium[1].exp }}</p>
         </div>
       </div>
-      <div class="col-3 text-center podium-div">
+      <div class="col-lg-3 col-md-12 order-lg-2 order-1 text-center podium-div">
         <img class="podium" src="src\assets\images\premium.png" />
         <div
           class=" card podiumBack shadow d-flex flex-direction-column justify-content-center align-items-center" v-bind:style="{ backgroundColor: leaderboardPodium[0].email==this.myUser ? 'lightgoldenrodyellow' : '#FFD700' }"
@@ -65,7 +65,7 @@
 
         </div>
       </div>
-      <div class="col-3 mt-5 text-center podium-div">
+      <div class="col-lg-3 col-md-12 order-lg-3 order-3 mt-5 text-center podium-div">
         <img class="podium" src="src\assets\images\crown.png" />
         <div
           class=" card podiumBack shadow d-flex flex-direction-column justify-content-center align-items-center"  v-bind:style="{ backgroundColor: leaderboardPodium[2].email==this.myUser ? 'lightgoldenrodyellow' : '#B87333' }"
@@ -104,7 +104,8 @@
           <p class="fw-bold text-center">Level {{ person.level }}</p>
         </div>
         <div class="col-6 mb-3 text-center">
-          <h2>{{ person.profile_name }}</h2>
+          <h2 v-if="person.email==this.myUser">{{ person.profile_name }} (you)</h2>
+          <h2 v-else>{{ person.profile_name }}</h2>
         </div>
         <div class="col mb-3">
           <h3>{{ person.exp }}xp</h3>
@@ -182,7 +183,7 @@ export default {
 
       const q = query(collection(db, "accounts"), orderBy("exp", "desc"));
       const querySnap = await getDocs(q);
-      var count2 = 1;
+      var count2 = 0;
       querySnap.forEach((doc) => {
 
         
@@ -198,7 +199,6 @@ export default {
         }        
   
       })
-
 
       while (this.leaderboardPodium.length< 3 ){
         console.log("ADDING")
