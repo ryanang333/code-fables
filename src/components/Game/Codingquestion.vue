@@ -36,9 +36,7 @@
             </button>
           </div>
         </div>
-        <div v-else>
-          Loading IDE...
-        </div>
+        <div v-else>Loading IDE...</div>
       </div>
     </div>
   </div>
@@ -48,7 +46,7 @@
 import { getAuth } from "firebase/auth";
 import Ide from "./ide.vue";
 import db from "../../firebase/init";
-import Game from "./Game.vue"
+import Game from "./Game.vue";
 import {
   getDocs,
   getDoc,
@@ -65,7 +63,7 @@ export default {
   name: "Codingquestion",
   components: {
     Ide,
-    Game
+    Game,
   },
   computed: {
     prev() {
@@ -85,7 +83,6 @@ export default {
       },
       questionLoaded: false,
       currentQn: "",
-      updatedOnce: false,
     };
   },
   methods: {
@@ -108,8 +105,8 @@ export default {
       this.getQuestion(this.currentTopic, this.userProg);
     },
     async enableButton() {
-      if (this.userProg == 6){
-        document.getElementById('nextBtn').textContent = 'Done';
+      if (this.userProg == 6) {
+        document.getElementById("nextBtn").textContent = "Done";
       }
       var btn = document.getElementById("nextBtn");
       btn.classList.remove("disabled");
@@ -126,12 +123,11 @@ export default {
       this.questionLoaded = true;
       const docSnapUser = await getDoc(doc(db, "accounts", this.UID));
       if (docSnapUser.data().topics[currentTopic].questions[q]) {
-        if (this.userProg == "6"){
-          document.getElementById('nextBtn').textContent= 'Done';
+        if (this.userProg == "6") {
+          document.getElementById("nextBtn").textContent = "Done";
         }
         document.getElementById("nextBtn").classList.remove("disabled");
       }
-     
     },
     async nextQuestion() {
       if (this.userProg == 6) {
@@ -140,7 +136,7 @@ export default {
       this.questionDetails.key++;
       const fieldPathBool = `topics.${this.currentTopic}.questions.${this.currentQn}`;
       const fieldPathPosition = `topics.${this.currentTopic}.position`;
-      if (this.userProg <6){
+      if (this.userProg < 6) {
         this.userProg++;
       }
       //   console.log(newProg);
@@ -151,7 +147,6 @@ export default {
       const updateData = {};
       updateData[fieldPathBool] = true;
       updateData[fieldPathPosition] = this.userProg;
-
       // Update the Firestore document
       const docRef = doc(db, "accounts", this.UID);
       try {
@@ -161,42 +156,42 @@ export default {
         console.error("Error updating document:", error);
       }
       this.getQuestion(this.currentTopic, this.userProg);
-
+      this.updateExpandLevel();
       // increases the users progress if boolean set to true
-      if(updateData[fieldPathBool]){
-        this.updateExpandLevel();
-      }
+      // if(updateData[fieldPathBool]){
+      //   this.updateExpandLevel();
+      // }
     },
-        async getImage(model_ID){
-      if (model_ID.includes('wizard')){
-        this.imageUrl = 'src/assets/images/wizard.png'
+    async getImage(model_ID) {
+      if (model_ID.includes("wizard")) {
+        this.imageUrl = "src/assets/images/wizard.png";
       }
-      if (model_ID.includes('knight')){
-        this.imageUrl = 'src/assets/images/knight.png'
+      if (model_ID.includes("knight")) {
+        this.imageUrl = "src/assets/images/knight.png";
       }
-      if (model_ID.includes('sword')){
-        this.imageUrl = 'src/assets/images/sword.png'
+      if (model_ID.includes("sword")) {
+        this.imageUrl = "src/assets/images/sword.png";
       }
     },
     async getUserProgress(topic) {
       const docSnap = await getDoc(doc(db, "accounts", this.UID));
       // this.userProg = docSnap.data().
       this.userProg = docSnap.data().topics[topic].position;
-      this.model_ID = docSnap.data().model_ID
-      console.log(this.model_ID)
+      this.model_ID = docSnap.data().model_ID;
+      console.log(this.model_ID);
       this.getQuestion(this.currentTopic, this.userProg);
-      this.getImage(this.model_ID)
+      this.getImage(this.model_ID);
     },
 
     async updateExpandLevel() {
-      if (!this.updatedOnce) {
-        const docSnap = await getDoc(doc(db, "accounts", this.UID));
-      let exp = 0;
-      let level = 0;
+      const docSnap = await getDoc(doc(db, "accounts", this.UID));
+      console.log(docSnap.data());
+      let isLevelAdded = docSnap.data().topics[this.currentTopic].questions[this.currentQn];
+      if (isLevelAdded) return;
       if (docSnap.exists()) {
         console.log(docSnap.data());
-        exp = docSnap.data().exp;
-        level = docSnap.data().level;
+        let exp = docSnap.data().exp;
+        let level = docSnap.data().level;
         //console.log(exp);
         //console.log(level);
       } else {
@@ -205,33 +200,27 @@ export default {
 
       if (this.currentTopic === "topic6") {
         exp += 100;
-        await updateDoc(doc(db, "accounts", this.UID), { exp: exp });
       } else {
         exp += 50;
-        await updateDoc(doc(db, "accounts", this.UID), { exp: exp });
       }
 
       const newLevel = Math.floor(exp / 100);
 
       await updateDoc(doc(db, "accounts", this.UID), {
         level: newLevel,
+        exp: exp,
       });
-      this.updatedOnce = true; // Set the flag to true after the first update
-      }
     },
-
   },
 
   mounted() {
-    this.getImage(this.model_ID)
+    this.getImage(this.model_ID);
     this.UID = getAuth().currentUser.uid;
     this.currentTopic = localStorage.getItem("currentTopic");
     this.getUserProgress(this.currentTopic);
     console.log(this.userProg);
-  }
+  },
 };
 </script>
 
-<style>
-
-</style>
+<style></style>
