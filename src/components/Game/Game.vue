@@ -104,6 +104,7 @@ export default {
     position: absolute;
     bottom: 0;
     left: 0;
+    right:0;
     width: 15vw;
     height: 20vh;
     background-size: contain;
@@ -117,6 +118,10 @@ export default {
         width: 15vw;
         height: 20vh;
     }
+    .enemy{
+        width:15vw;
+        height:20vh
+    }
 }
 
 @media (min-width:769px) {
@@ -124,12 +129,21 @@ export default {
         width: 15vw;
         height: 20vh;
     }
+    .enemy{
+        width:15vw;
+        height:20vh
+    }
 }
 
 @media(max-width:576px) {
     .player {
         width: 15vw;
         height: 20vh;
+    }
+    .enemy{
+        width:15vw;
+        height:20vh;
+        left:0;
     }
 }
 
