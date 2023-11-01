@@ -1,54 +1,62 @@
 <template>
-    <div class="container-fluid bg-image">
-  <div class="container-fluid bg-overlay">
-  <div>
-    <h2 class="text-center"><img src="src\assets\images\START-YOUR-CODEQUEST.png"></h2>
-  </div>
-
-  <div class="row">
-    <div
-      class="col-lg-4 col-md-12 card-deck "
-      v-for="topic in topics"
-      :key="topic.key"
-      @click="openQuestion(topic.key)"
-    >
-      <div class="card">
-        <div class="card-body">
+  <div class="container-fluid bg-image" v-if="isLoaded">
+    <div class="container-fluid bg-overlay">
+      <div class="row">
+        <div class="col-12 text-center mb-5 mt-5">
           <img
-            class="card-img-top fixed-sized"
-            :src="topic.topicObj.image"
-            alt="Card image cap"
+            src="src\assets\images\START-YOUR-CODEQUEST.png"
+            class="img-fluid"
           />
-          <h5 class="card-title game-font">{{ topic.topicObj.name }}</h5>
-          <p class="card-text game-font">{{ topic.topicObj.description }}</p>
-          <div class="progress">
-            <div
-              class="progress-bar"
-              role="progressbar"
-              aria-valuenow="75"
-              aria-valuemin="0"
-              aria-valuemax="100"
-              :style="getProgress(topic.key)"
-            ></div>
+        </div>
+
+        <div class="row">
+          <div
+            class="col-lg-6 col-md-12 col-xxl-4 card-deck"
+            v-for="(topic, index) in topics"
+            :key="topic.key"
+          >
+            <div class="card" @click="openQuestion(topic.key)">
+              <div class="card-body">
+                <div style="height: 90%">
+                  <img
+                    class="card-img-top fixed-sized"
+                    :src="topic.topicObj.image"
+                    alt="Card image cap"
+                  />
+                  <h5 class="card-title game-font">
+                    {{ topic.topicObj.name }}
+                  </h5>
+                  <p class="card-text game-font">
+                    {{ topic.topicObj.description }}
+                  </p>
+                </div>
+                <div class="progress">
+                  <div
+                    class="progress-bar"
+                    role="progressbar"
+                    aria-valuenow="75"
+                    aria-valuemin="0"
+                    aria-valuemax="100"
+                    :style="getProgress(topic.key, index)"
+                  ></div>
+                </div>
+                <p class="text-success" v-if="topic.isCompleted">
+                  <i
+                    class="fa-solid fa-circle-check fa-beat"
+                    style="color: #1bb666"
+                  ></i>
+                  Completed
+                </p>
+                <p class="text-danger" v-else>
+                  <i class="fas fa-times-circle fa-beat"></i> Not Completed
+                </p>
+              </div>
+            </div>
           </div>
-          <p class="text-success" v-if="topic.isCompleted">
-            <i
-              class="fa-solid fa-circle-check fa-beat"
-              style="color: #1bb666"
-            ></i>
-            Completed
-          </p>
-          <p class="text-danger" v-else>
-            <i class="fas fa-times-circle fa-beat"></i> Not Completed
-          </p>
-          <a href="#" class="btn btn-game" v-if="getProgress(topic.key)['width']=='0%'">Begin</a>
-          <a href="#" class="btn btn-game" v-else>Continue</a>
         </div>
       </div>
     </div>
   </div>
-</div>
-</div>
 </template>
 
 <script>
@@ -62,35 +70,36 @@ export default {
   data() {
     return {
       topics: [],
-      // userObj:"",
-      // isCompleted1: "",
-      // isCompleted2: "",
-      // isCompleted3: "",
-      // isCompleted4: "",
-      // isCompleted5: "",
-      // isCompleted6: "",
       userTopics: {},
+      isLoaded : false,
+      isCompleted : false,
     };
   },
   methods: {
-    getProgress(topicName) {
-        let count = 0;
-        let x = this.userTopics[topicName].questions;
-        for (let qn in x){
-            if (x[qn]){
-                count++;
-            }
+    getProgress(topicName, index) {
+      let count = 0;
+      let x = this.userTopics[topicName]['questions'];
+      console.log(x);
+      for (let qn in x) {
+        if (x[qn]) {
+          count++;
         }
-        let widthProg = (count/6) * 100 + '%';
-        return {
-            width: widthProg
+        if (count == 6){
+          this.topics[index]['isCompleted'] = true;
+        }else{
+          this.topics[index]['isCompleted'] = false;
         }
-        
-        // let progress = this.userTopics[topicName].progress;
-        // let widthProg = (progress/6) * 100 + '%';
-        // return {
-        //     width: widthProg
-        // }
+      }
+      let widthProg = (count / 6) * 100 + "%";
+      return {
+        width: widthProg,
+      };
+
+      // let progress = this.userTopics[topicName].progress;
+      // let widthProg = (progress/6) * 100 + '%';
+      // return {
+      //     width: widthProg
+      // }
     },
     openQuestion(topic) {
       // console.log(topic)
@@ -110,14 +119,16 @@ export default {
         });
       });
       console.log(this.topics);
+      this.isLoaded = true;
     },
 
     async getUserInfo() {
       const docSnap = await getDoc(doc(db, "accounts", this.UID));
       this.userTopics = docSnap.data().topics;
+      console.log(docSnap.data().topics);
     },
   },
-  
+
   mounted() {
     this.getTopics();
     this.UID = getAuth().currentUser.uid;
@@ -141,7 +152,7 @@ export default {
   content: "";
   padding: 10px;
   background: rgba(0, 0, 0, 0.651);
-  background-size: cover; 
+  background-size: cover;
   z-index: 0;
 }
 h2 {
@@ -196,7 +207,7 @@ h2 {
   margin-top: 15px;
 }
 .card:hover {
-  transform: translateY(-10px); 
+  transform: translateY(-10px);
   box-shadow: 0 6px 1px rgba(0, 0, 0, 0.4);
   transition: 0.1s;
 }
@@ -219,11 +230,11 @@ h2 {
   font-family: Georgia, serif;
 }
 .btn-game {
-  background-color: #978b74;; /* Red button color */
+  background-color: #978b74; /* Red button color */
   font-family: Georgia, serif;
   color: #ffffff;
   border: none;
-  width:100%;
+  width: 100%;
   border-radius: 5px;
   padding: 8px 16px;
   text-align: center;
@@ -232,7 +243,6 @@ h2 {
   font-size: large;
   cursor: pointer;
   transition: background-color 0.3s;
-
 }
 .btn-game:hover {
   background-color: #078627; /* Darker red on hover */
