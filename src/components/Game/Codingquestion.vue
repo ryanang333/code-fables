@@ -199,7 +199,7 @@ export default {
     handleCollision(){
       this.togglePause()
       console.log('pause')
-    }
+    },
     async updateExpandLevel() {
       const docSnap = await getDoc(doc(db, "accounts", this.UID));
       console.log(docSnap.data());
