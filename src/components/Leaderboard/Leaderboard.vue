@@ -4,7 +4,7 @@
       <div class="container my-5 p-3">
         <div
           class="container"
-          style="position: fixed; left: 0px; top: 80px; z-index: 9999999"
+          style="position: fixed; left: 0px; top: 80px;"
         >
           <button
             @click="friendBool"

@@ -22,7 +22,22 @@ export default {
     username: String,
     friendInfo: Object,
   },
-  methods: {},
+  methods: {
+    async filterWords(message) {
+      const url = "https://www.purgomalum.com/service/plain";
+      try {
+        const response = await axios.get(url, {
+          params: {
+            text: message,
+          },
+        });
+        console.log(response.data);
+        return response.data;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+  },
   async mounted() {
     await Talk.ready;
     console.log(this.friendInfo);
@@ -57,6 +72,17 @@ export default {
 
     // inbox.mount(this.$refs.talkjs);
     const chatbox = talkSession.createChatbox();
+    chatbox.onSendMessage(async (msgObj) => {
+      console.log(msgObj);
+      const censoredMSG = await this.filterWords(msgObj.message.text);
+      console.log(censoredMSG);
+      console.log(msgObj.message.text);
+      if (censoredMSG !== msgObj.message.text){
+        // conversation.sendMessage('Please be mindful of your language when chatting with others')
+        conversation.sendMessage("I'm sorry for my language used.");
+        alert('Please be mindful of your language when chatting with others')
+      }
+    });
     chatbox.select(conversation);
     chatbox.mount(this.$refs.talkjs);
   },
