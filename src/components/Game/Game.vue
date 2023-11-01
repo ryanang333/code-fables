@@ -82,6 +82,7 @@ export default {
     width: 5076px;
     animation: slide 15s linear infinite;
     animation-fill-mode: forwards;
+    animation-delay: 1s;
     z-index: 1;
     transform: translate3d(0, 0, 0)
 }
