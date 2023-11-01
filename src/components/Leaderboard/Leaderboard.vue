@@ -96,7 +96,7 @@
       :key="person.profile_name"
     >
       <div
-        class="row listItem d-flex mb-4 align-items-center rounded-3 px-3 pt-3 d-flex-row" v-bind:style="{ backgroundColor: person.email==this.myUser ? 'lightgoldenrodyellow' : '#cdbea2' , borderColor : person.email==this.myUser ? '#00AEEF ' : '#7e6e5c'  }"
+        class="row listItem d-flex mb-4 align-items-center rounded-3 px-3 pt-3 d-flex-row" v-bind:style="{ backgroundColor: person.email==this.myUser ? 'lightgoldenrodyellow' : '#cdbea2' , borderColor : person.email==this.myUser ? '#00AEEF ' : '#7e6e5c', boxShadow : person.email==this.myUser ?  '0 0 30px 5px #48abe0':''}"
       >
         <div class="col-md-1 mb-3 me-4">
           <h2 v-if="friendsBool == true">{{ index + 1 }}</h2>
