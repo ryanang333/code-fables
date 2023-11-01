@@ -19,7 +19,7 @@
           <p class="info mb-2 mb-2">{{numberOfFriends}} Friend(s)</p>
           <button
             v-if="isSearching && !isAlreadyFriend && !isRequestSent"
-            class="btn  btn-block mt-3 w-auto fs-3 p-3 d-inline"
+            class="btn btn-dark d-inline btn-block mt-3 w-50 fs-4 p-4"
             @click="addFriend"
           >
             Add Friend

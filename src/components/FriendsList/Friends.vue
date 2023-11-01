@@ -1,10 +1,10 @@
 <template>
-  <div class="container d-flex flex-column justify-content-between">
-    <img src="/src/assets/images/friends.png"/>
+  <div class="container d-flex flex-column justify-content-between" >
+    <h2 class="text-center"><img src="/src/assets/images/friends.png" style="width:40%"/></h2>
     <form
       class="d-flex w-50"
       role="search"
-      style="font-family: Georgia, serif"
+      style="font-family: Georgia, serif; margin-left:auto; margin-right:auto;"
       @submit.prevent="openRequestModal"
     >
       <input
@@ -14,7 +14,7 @@
         aria-label="Search"
         v-model="friendRequest"
       />
-      <button class="btn btn-outline-success" type="submit">Search</button>
+      <button class="btn btn-dark" type="submit">Search</button>
     </form>
   </div>
   <div class="container">
@@ -67,7 +67,7 @@
       </div>
       <!-- Show loading or empty state when friends are not yet available -->
       <div v-else>
-        <p class="fs-1">No friends yet!</p>
+        <p v-if="isLoaded" class="fs-1 text-white">No friends yet!</p>
         <!-- You can also add a loading spinner here if needed -->
       </div>
     </div>
@@ -77,7 +77,7 @@
     v-if="isChatOpen"
     class="row d-flex flex-col justify-content-center align-items-center bg-dark-subtle rounded-5"
     :key="chatFriend"
-    style="position: fixed; bottom: 0px; right: 0px"
+    style="position: fixed; bottom: 0px; right: 0px; z-index: 99999;"
   >
     <Inbox
       :currentUser="userDetails"
@@ -127,6 +127,7 @@ export default {
   },
   data() {
     return {
+      isLoaded: false,
       username: "",
       friends: [],
       friendsDetails: [],
@@ -214,6 +215,7 @@ export default {
             model_ID: friendData.model_ID,
           });
         }
+        this.isLoaded = true;
       }
     },
   },

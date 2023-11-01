@@ -1,120 +1,188 @@
 <template>
-  <div class="container-fluid bg-image">
-  <div class="container-fluid bg-overlay">
-
-    <div class="container my-5 ">
-    <nav>
-      <div class="nav nav-tabs" id="nav-tab" role="tablist">
-        <button @click="friendBool"
-          class="nav-link active"
-          id="nav-friends-tab"
-          data-bs-toggle="tab"
-          data-bs-target="#nav-friends"
-          type="button"
-          role="tab"
-          aria-controls="nav-friends"
-          aria-selected="true"
-        >Global</button>
-        <button @click="friendBool"
-          class="nav-link"
-          id="nav-leaderboard-tab"
-          data-bs-toggle="tab"
-          data-bs-target="#nav-leaderboard"
-          type="button"
-          role="tab"
-          aria-controls="nav-leaderboard"
-          aria-selected="false"
-        >Friends</button>
-      </div>
-      
-    </nav>
-  </div>
-  
-  <div class="container mt-5 podium-div" v-if="leaderboardPodium.length == 3">
-    <h2 class="text-center"><img class="w-100" src="src\assets\images\friends-leaderboard.png" v-if="friendsBool == true"></h2>
-    <h2 class="text-center"><img class="w-100" src="src\assets\images\global-leaderboard.png" v-if="friendsBool == false"></h2>
-    <div class="mt-4 row justify-content-center">
-      <div class="col-lg-3 col-md-12 order-lg-1 order-2 mt-5 text-center">
-        <img class="podium" src="src\assets\images\king.png" />
+  <div class="bg-image p-4">
+    <div class="bg-overlay p-5">
+      <div class="container my-5 p-3">
         <div
-          class=" card podiumBack shadow d-flex flex-direction-column justify-content-center align-items-center" v-bind:style="{ backgroundColor: leaderboardPodium[1].email==this.myUser ? 'lightgoldenrodyellow' : '#C0C0C0' }"
+          class="container"
+          style="position: fixed; left: 0px; top: 80px; z-index: 9999999"
         >
-          <img
-            class="mt-4 podium mb-2"
-            :src="leaderboardPodium[1].profile_pic_ID"
-          />
-          <h3 class="fw-bold" v-if="leaderboardPodium[1].email==this.myUser">{{ leaderboardPodium[1].profile_name }}(You)</h3>
-          <h3 class="fw-bold" v-else>{{ leaderboardPodium[1].profile_name }}</h3>
-          <p class="fw-bold">Level {{ leaderboardPodium[1].level }}</p>
-          <p class="">EXP: {{ leaderboardPodium[1].exp }}</p>
+          <button
+            @click="friendBool"
+            class="btn btn-lg btn-success"
+            id="nav-friends-tab"
+            data-bs-toggle="tab"
+            data-bs-target="#nav-friends"
+            type="button"
+            role="tab"
+            aria-controls="nav-friends"
+            aria-selected="true"
+          >
+            Global
+          </button>
+          <button
+            @click="friendBool"
+            class="btn btn-lg btn-success ms-2"
+            id="nav-leaderboard-tab"
+            data-bs-toggle="tab"
+            data-bs-target="#nav-leaderboard"
+            type="button"
+            role="tab"
+            aria-controls="nav-leaderboard"
+            aria-selected="false"
+          >
+            Friends
+          </button>
         </div>
       </div>
-      <div class="col-lg-3 col-md-12 order-lg-2 order-1 text-center podium-div">
-        <img class="podium" src="src\assets\images\premium.png" />
-        <div
-          class=" card podiumBack shadow d-flex flex-direction-column justify-content-center align-items-center" v-bind:style="{ backgroundColor: leaderboardPodium[0].email==this.myUser ? 'lightgoldenrodyellow' : '#FFD700' }"
-        >
-          <img
-            class="mt-4 podium mb-2"
-            :src="leaderboardPodium[0].profile_pic_ID"
-          />
-          <h3 class="fw-bold" v-if="leaderboardPodium[0].email==this.myUser">{{ leaderboardPodium[0].profile_name }}(You)</h3>
-          <h3 class="fw-bold" v-else>{{ leaderboardPodium[0].profile_name }}</h3>
-          <p class="fw-bold">Level {{ leaderboardPodium[0].level }}</p>
-          <p>EXP: {{ leaderboardPodium[0].exp }}</p>
-
-        </div>
-      </div>
-      <div class="col-lg-3 col-md-12 order-lg-3 order-3 mt-5 text-center podium-div">
-        <img class="podium" src="src\assets\images\crown.png" />
-        <div
-          class=" card podiumBack shadow d-flex flex-direction-column justify-content-center align-items-center"  v-bind:style="{ backgroundColor: leaderboardPodium[2].email==this.myUser ? 'lightgoldenrodyellow' : '#B87333' }"
-        >
-          <img
-            class="mt-4 podium mb-2"
-            :src="leaderboardPodium[2].profile_pic_ID"
-          />
-          <h3 class="fw-bold" v-if="leaderboardPodium[2].email==this.myUser">{{ leaderboardPodium[2].profile_name }}(You)</h3>
-          <h3 class="fw-bold" v-else>{{ leaderboardPodium[2].profile_name }}</h3>
-          <p class="fw-bold">Level {{ leaderboardPodium[2].level }}</p>
-          <p>EXP: {{ leaderboardPodium[2].exp }}</p>
-   
-        </div>
-      </div>
-    </div>
-    <br />
-    <hr />
-  </div>
-  <div class="container mt-5">
-    <div
-      class="padding-5"
-      v-for="(person, index) in leaderboardList"
-      :key="person.profile_name"
-    >
+      <h2 class="text-center">
+        <img
+          class="w-100"
+          src="src\assets\images\friends-leaderboard.png"
+          v-if="friendsBool == true"
+        />
+      </h2>
+      <h2 class="text-center">
+        <img
+          class="w-100"
+          src="src\assets\images\global-leaderboard.png"
+          v-if="friendsBool == false"
+        />
+      </h2>
       <div
-        class="row listItem d-flex mb-4 align-items-center rounded-3 px-3 pt-3 d-flex-row" v-bind:style="{ backgroundColor: person.email==this.myUser ? 'lightgoldenrodyellow' : '#cdbea2' }"
+        class="container mt-5 podium-div"
+        v-if="leaderboardPodium.length == 3"
       >
-        <div class="col-1 mb-3 me-4">
-          <h2>{{ index + 4 }}</h2>
+        <div class="mt-4 row justify-content-center">
+          <div class="col-lg-3 col-md-12 order-lg-1 order-2 mt-5 text-center">
+            <img class="podium" src="src\assets\images\king.png" />
+            <div
+              class="card podiumBack shadow d-flex flex-direction-column justify-content-center align-items-center"
+              v-bind:style="{
+                backgroundColor:
+                  leaderboardPodium[1].email == this.myUser
+                    ? 'lightgoldenrodyellow'
+                    : '#C0C0C0',
+              }"
+            >
+              <img
+                class="mt-4 podium mb-2"
+                :src="leaderboardPodium[1].profile_pic_ID"
+              />
+              <h3
+                class="fw-bold"
+                v-if="leaderboardPodium[1].email == this.myUser"
+              >
+                {{ leaderboardPodium[1].profile_name }}(You)
+              </h3>
+              <h3 class="fw-bold" v-else>
+                {{ leaderboardPodium[1].profile_name }}
+              </h3>
+              <p class="fw-bold">Level {{ leaderboardPodium[1].level }}</p>
+              <p class="">EXP: {{ leaderboardPodium[1].exp }}</p>
+            </div>
+          </div>
+          <div
+            class="col-lg-3 col-md-12 order-lg-2 order-1 text-center podium-div"
+          >
+            <img class="podium" src="src\assets\images\premium.png" />
+            <div
+              class="card podiumBack shadow d-flex flex-direction-column justify-content-center align-items-center"
+              v-bind:style="{
+                backgroundColor:
+                  leaderboardPodium[0].email == this.myUser
+                    ? 'lightgoldenrodyellow'
+                    : '#FFD700',
+              }"
+            >
+              <img
+                class="mt-4 podium mb-2"
+                :src="leaderboardPodium[0].profile_pic_ID"
+              />
+              <h3
+                class="fw-bold"
+                v-if="leaderboardPodium[0].email == this.myUser"
+              >
+                {{ leaderboardPodium[0].profile_name }}(You)
+              </h3>
+              <h3 class="fw-bold" v-else>
+                {{ leaderboardPodium[0].profile_name }}
+              </h3>
+              <p class="fw-bold">Level {{ leaderboardPodium[0].level }}</p>
+              <p>EXP: {{ leaderboardPodium[0].exp }}</p>
+            </div>
+          </div>
+          <div
+            class="col-lg-3 col-md-12 order-lg-3 order-3 mt-5 text-center podium-div"
+          >
+            <img class="podium" src="src\assets\images\crown.png" />
+            <div
+              class="card podiumBack shadow d-flex flex-direction-column justify-content-center align-items-center"
+              v-bind:style="{
+                backgroundColor:
+                  leaderboardPodium[2].email == this.myUser
+                    ? 'lightgoldenrodyellow'
+                    : '#B87333',
+              }"
+            >
+              <img
+                class="mt-4 podium mb-2"
+                :src="leaderboardPodium[2].profile_pic_ID"
+              />
+              <h3
+                class="fw-bold"
+                v-if="leaderboardPodium[2].email == this.myUser"
+              >
+                {{ leaderboardPodium[2].profile_name }}(You)
+              </h3>
+              <h3 class="fw-bold" v-else>
+                {{ leaderboardPodium[2].profile_name }}
+              </h3>
+              <p class="fw-bold">Level {{ leaderboardPodium[2].level }}</p>
+              <p>EXP: {{ leaderboardPodium[2].exp }}</p>
+            </div>
+          </div>
         </div>
+        <br />
+        <hr />
+      </div>
+      <div class="container mt-5">
         <div
-          class="col-2 justify-content-center d-flex flex-column align-items-center"
+          class="padding-5"
+          v-for="(person, index) in leaderboardList"
+          :key="person.profile_name"
         >
-          <img class="podium" :src="person.profile_pic_ID" />
-          <p class="fw-bold text-center">Level {{ person.level }}</p>
-        </div>
-        <div class="col-6 mb-3 text-center">
-          <h2 v-if="person.email==this.myUser">{{ person.profile_name }} (you)</h2>
-          <h2 v-else>{{ person.profile_name }}</h2>
-        </div>
-        <div class="col mb-3">
-          <h3>{{ person.exp }}xp</h3>
+          <div
+            class="row listItem d-flex mb-4 align-items-center rounded-3 px-3 pt-3 d-flex-row"
+            v-bind:style="{
+              backgroundColor:
+                person.email == this.myUser
+                  ? 'lightgoldenrodyellow'
+                  : '#cdbea2',
+            }"
+          >
+            <div class="col-1 mb-3 me-4">
+              <h2>{{ index + 4 }}</h2>
+            </div>
+            <div
+              class="col-2 justify-content-center d-flex flex-column align-items-center"
+            >
+              <img class="podium" :src="person.profile_pic_ID" />
+              <p class="fw-bold text-center">Level {{ person.level }}</p>
+            </div>
+            <div class="col-6 mb-3 text-center">
+              <h2 v-if="person.email == this.myUser">
+                {{ person.profile_name }} (you)
+              </h2>
+              <h2 v-else>{{ person.profile_name }}</h2>
+            </div>
+            <div class="col mb-3">
+              <h3>{{ person.exp }}xp</h3>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
-</div>  
 </template>
 
 <script>
@@ -195,11 +263,8 @@ export default {
           this.leaderboardPodium.push(doc.data());
         } else if (friendsList.includes(doc.data().email)) {
           this.leaderboardList.push(doc.data());
-
-        }        
-  
-      })
-
+        }
+      });
 
       while (this.leaderboardPodium.length < 3) {
         console.log("ADDING");
@@ -237,19 +302,25 @@ h3 {
 
 .bg-image {
   background-image: url("/src/assets/images/background3.png");
-  background-attachment: fixed;
-  background-size: cover; /* Optional: Scales the background image to cover the entire container */
+  width: 100vw;
+  height: 100vh;
   background-position: center;
-  background-color: black;
-  padding: 0px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: fixed;
+  overflow-x: auto;
 }
 
 .bg-overlay {
   content: "";
-  padding: 10px;
-  background: rgba(0, 0, 0, 0.651);
-  background-size: cover;
-  z-index: 0;
+  background: rgba(0, 0, 0, 0.65);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  overflow-x: auto;
 }
 
 #switch {

@@ -1,9 +1,8 @@
 <template>
   <div class="container my-5 ">
-    <nav>
-      <div class="nav nav-tabs" id="nav-tab" role="tablist">
+      <div class="container" style="position:fixed; left:0px; top:80px; z-index: 999;">
         <button @click="displayFriendTab"
-          class="nav-link active"
+          class="btn btn-lg btn-success"
           id="nav-friends-tab"
           data-bs-toggle="tab"
           data-bs-target="#nav-friends"
@@ -13,7 +12,7 @@
           aria-selected="true"
         >Friends</button>
         <button @click="displayRequestTab"
-          class="nav-link"
+          class="btn btn-lg btn-success ms-2"
           id="nav-leaderboard-tab"
           data-bs-toggle="tab"
           data-bs-target="#nav-leaderboard"
@@ -23,8 +22,6 @@
           aria-selected="false"
         >Requests</button>
       </div>
-      
-    </nav>
   </div>
 </template>
 

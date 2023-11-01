@@ -29,11 +29,6 @@
     <div class="row">
       <p>{{ expDiff }}xp to next level</p>
     </div>
-    <!-- <div class="row">
-            <div class="col-4"><p>Friends</p></div>
-            <div class="col-4"><p>Levels Completed</p></div>
-            <div class="col-4"><p>Duels Won</p></div>
-        </div> -->
     <div
       class="modal fade"
       id="exampleModal"
@@ -58,7 +53,9 @@
           <div class="modal-body">
             <table>
               <tr>
-                <td colspan="4"><img class="mainProfile" :src="mainUrl" /></td>
+                <td colspan="4">
+                  <img class="mainProfile" :src="mainUrl" />
+                </td>
               </tr>
               <tr v-for="(row, rowIndex) in picturesInRows" :key="rowIndex">
                 <td v-for="(picture, colIndex) in row" :key="colIndex">
@@ -172,10 +169,10 @@ export default {
         this.mainUrl = docSnap.data().profile_pic_ID;
         this.exp = docSnap.data().exp;
         this.level = docSnap.data().level;
-        this.nextlevel = this.level + 1
-        this.nextlevelexp = this.nextlevel * 100
-        this.expDiff = this.nextlevelexp - this.exp
-        this.progress = Math.round(this.exp/this.nextlevelexp *100)
+        this.nextlevel = this.level + 1;
+        this.nextlevelexp = this.nextlevel * 100;
+        this.expDiff = this.nextlevelexp - this.exp;
+        this.progress = Math.round((this.exp / this.nextlevelexp) * 100);
       }
     },
     async getPictures() {
@@ -198,6 +195,27 @@ export default {
 </script>
 
 <style scoped>
+.bg-image {
+  background-image: url("/src/assets/images/background3.png");
+  width: 100vw;
+  height: 100vh;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: fixed;
+  overflow-x: auto;
+}
+
+.bg-overlay {
+  content: "";
+  background: rgba(0, 0, 0, 0.65);
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  overflow-x: auto;
+}
 .container {
   position: relative;
   margin-left: auto;
