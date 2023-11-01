@@ -1,30 +1,43 @@
 <template>
-  <div class="mt-5 bg-dark p-3 text-white rounded-1" v-if="isLesson">
-    <h2>Lesson:</h2>
-    <br />
-    <h3>{{ question[0] }}</h3>
+  <div class="bg-dark p-3 text-white rounded-1" v-if="isLesson">
+    <h2>Lesson: {{ question[0] }}</h2>
     <br />
     <h6>{{ question[1] }}</h6>
+    <br />
   </div>
-  <div class="mt-5 bg-dark p-3 text-white rounded-1" v-else>
+  <div class="bg-dark p-3 text-white rounded-1" v-else>
     <h2>Task:</h2>
     <br />
-    <h3>{{ question }}</h3>
+    <h5>{{ question }}</h5>
+    <br />
   </div>
-  <div class="editor" id="editor"></div>
+  <div class="row">
+    <div class="editor col-6" id="editor"></div>
+    <div class="col-6">
+      <div class="mt-1 output bg-dark text-white rounded-4 p-3">
+        {{ output }}
+      </div>
+    </div>
+  </div>
   <div class="button-container mt-3">
     <button type="button" class="btn btn-success w-100" @click="executeCode">
       Run
     </button>
   </div>
-  <div class="mt-3 output bg-dark text-white rounded-4 p-3">{{ output }}</div>
 </template>
 
 <script>
 import axios from "axios";
 import { getAuth } from "firebase/auth";
 import db from "../../firebase/init";
-import { collection, addDoc, getDoc, doc, setDoc, updateDoc } from "firebase/firestore";
+import {
+  collection,
+  addDoc,
+  getDoc,
+  doc,
+  setDoc,
+  updateDoc,
+} from "firebase/firestore";
 export default {
   name: "Ide",
   props: {
@@ -42,7 +55,7 @@ export default {
       UID: "",
     };
   },
-  emits: ["resultOK"],
+  emits: ["resultOK", "resultWrong"],
   methods: {
     getCode() {
       console.log(this.questionInfo.question);
@@ -89,6 +102,8 @@ export default {
           var x = this.output.replace(/\n/g, "");
           if (x == correctOutput) {
             this.$emit("resultOK");
+          } else {
+            this.$emit("resultWrong");
           }
         })
         .catch((error) => {
@@ -140,15 +155,14 @@ export default {
 }
 
 #editor {
-  height: 400px;
-  width: 100%;
+  height: 200px;
+  width: 50%;
 }
 
 .output {
-  padding: 4px;
   border: 2px solid gray;
-  min-height: 100px;
-  width: 99%;
+  height: 200px;
+  width: 100%;
   resize: none;
   white-space: pre-line;
 }
