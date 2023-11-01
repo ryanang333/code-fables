@@ -1,8 +1,34 @@
 <template>
-  <button type="button" id="switch" class="btn btn-success submit" @click="friendBool">Switch to {{buttonTitle}}</button>
-  
   <div class="container-fluid bg-image">
   <div class="container-fluid bg-overlay">
+
+    <div class="container my-5 ">
+    <nav>
+      <div class="nav nav-tabs" id="nav-tab" role="tablist">
+        <button @click="friendBool"
+          class="nav-link active"
+          id="nav-friends-tab"
+          data-bs-toggle="tab"
+          data-bs-target="#nav-friends"
+          type="button"
+          role="tab"
+          aria-controls="nav-friends"
+          aria-selected="true"
+        >Global</button>
+        <button @click="friendBool"
+          class="nav-link"
+          id="nav-leaderboard-tab"
+          data-bs-toggle="tab"
+          data-bs-target="#nav-leaderboard"
+          type="button"
+          role="tab"
+          aria-controls="nav-leaderboard"
+          aria-selected="false"
+        >Friends</button>
+      </div>
+      
+    </nav>
+  </div>
   
   <div class="container mt-5 podium-div" v-if="leaderboardPodium.length == 3">
     <h2 class="text-center"><img src="src\assets\images\friends-leaderboard.png" v-if="friendsBool == true"></h2>
@@ -17,10 +43,10 @@
             class="mt-4 podium mb-2"
             :src="leaderboardPodium[1].profile_pic_ID"
           />
-
+          <h3 class="fw-bold" v-if="leaderboardPodium[1].email==this.myUser">{{ leaderboardPodium[1].profile_name }}(You)</h3>
+          <h3 class="fw-bold" v-else>{{ leaderboardPodium[1].profile_name }}</h3>
           <p class="fw-bold">Level {{ leaderboardPodium[1].level }}</p>
           <p class="">EXP: {{ leaderboardPodium[1].exp }}</p>
-          <p class="">{{ leaderboardPodium[1].profile_name }}</p>
         </div>
       </div>
       <div class="col-3 text-center podium-div">
@@ -32,9 +58,11 @@
             class="mt-4 podium mb-2"
             :src="leaderboardPodium[0].profile_pic_ID"
           />
+          <h3 class="fw-bold" v-if="leaderboardPodium[0].email==this.myUser">{{ leaderboardPodium[0].profile_name }}(You)</h3>
+          <h3 class="fw-bold" v-else>{{ leaderboardPodium[0].profile_name }}</h3>
           <p class="fw-bold">Level {{ leaderboardPodium[0].level }}</p>
           <p>EXP: {{ leaderboardPodium[0].exp }}</p>
-          <p>{{ leaderboardPodium[0].profile_name }}</p>
+
         </div>
       </div>
       <div class="col-3 mt-5 text-center podium-div">
@@ -46,9 +74,11 @@
             class="mt-4 podium mb-2"
             :src="leaderboardPodium[2].profile_pic_ID"
           />
+          <h3 class="fw-bold" v-if="leaderboardPodium[2].email==this.myUser">{{ leaderboardPodium[2].profile_name }}(You)</h3>
+          <h3 class="fw-bold" v-else>{{ leaderboardPodium[2].profile_name }}</h3>
           <p class="fw-bold">Level {{ leaderboardPodium[2].level }}</p>
           <p>EXP: {{ leaderboardPodium[2].exp }}</p>
-          <p>{{ leaderboardPodium[2].profile_name }}</p>
+   
         </div>
       </div>
     </div>
@@ -112,6 +142,7 @@ export default {
     async friendBool() {
       if (this.friendsBool == true){
         this.friendsBool = false
+        console.log(this.friendsBool)
         this.boardTitle = "Global Leaderboard"
         this.buttonTitle = "Friends"
         this.getAllUsers()
@@ -121,6 +152,7 @@ export default {
         this.boardTitle = "Friend Leaderboard"
         this.buttonTitle = "Global"
         this.friendsBool = true
+        console.log(this.friendsBool)
         this.getAllFriends()
         //change button property
       }
@@ -148,17 +180,11 @@ export default {
       var friendsList = docSnap.data().friends
       friendsList.push(this.myUser)
 
-    //   for (let friend of friends){
-    //     const docSnap = await getDoc(doc(db, 'user_profiles', friend));
-    //     const docSnap2 = await getDoc(doc(db, 'accounts', docSnap.data().uid ));
-    //     friendsList.push(docSnap2.data().profile_name);      
-    //     console.log(docSnap2.data().profile_name)
-    // }
-
-    const q = query(collection(db, "accounts"), orderBy("exp", "desc"));
+      const q = query(collection(db, "accounts"), orderBy("exp", "desc"));
       const querySnap = await getDocs(q);
-      var count2 = 0;
+      var count2 = 1;
       querySnap.forEach((doc) => {
+
         
         if (count2 < 3 && friendsList.includes(doc.data().email)) {
           count2 += 1;
@@ -167,13 +193,17 @@ export default {
         } 
         
         else if (friendsList.includes(doc.data().email)) {
-          count2 += 1;
           this.leaderboardList.push(doc.data());
 
-        } 
-        
+        }        
   
-      });
+      })
+
+
+      while (this.leaderboardPodium.length< 3 ){
+        console.log("ADDING")
+        this.leaderboardPodium.push({profile_pic_ID:"",level:"-",exp:"",profile_name:""})
+      }
     },
   },
   mounted() {
@@ -187,6 +217,16 @@ export default {
 <style scoped>
 h2 {
   text-align: center;
+}
+
+h3 {
+  text-align: center;
+  font-family: Georgia, serif;
+  margin-bottom: 15px;
+}
+
+.nav {
+  font-family: Georgia, serif;
 }
 
 .bg-image {
@@ -217,6 +257,7 @@ h2 {
 
 .listItem{
   border: #7e6e5c solid 5px;
+  font-family: Georgia, serif;
 }
 
 .user{
@@ -237,6 +278,7 @@ h2 {
 
 .podium-div p {
   margin-top: -8px;
+  font-family: Georgia, serif;
 
 }
 </style>

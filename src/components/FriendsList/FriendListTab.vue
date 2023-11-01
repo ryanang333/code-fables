@@ -42,4 +42,9 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+.nav {
+  font-family: Georgia, serif;
+}
+
+</style>
