@@ -1,6 +1,6 @@
 <template>
-  <div class="container-fluid bg-image ">
-    <div class="container-fluid bg-overlay ">
+  <div class="container-fluid bg-image">
+    <div class="container-fluid bg-overlay">
       <div class="row d-flex justify-content-center">
         <img
           src="/src/assets/images/code-fables.png"
@@ -9,77 +9,82 @@
         />
       </div>
       <div
-        class="mt-5 bg-dark rounded-5 row d-flex flex-row align-items-center justify-content-center w-50 "
-        style="margin-left:auto; margin-right:auto; "
+        class="container mt-5 bg-dark rounded-5 "
+        style="margin-left: auto; margin-right: auto"
+        v-if="isLoaded"
       >
-      <p class="fs-1 mt-4 text-white text-center">Create a New Hero</p>
-        <div class="col-12 mt-5">
-          <div id="carouselExample" class="carousel slide">
-            <div class="carousel-inner">
-              <div
-                class="carousel-item text-center"
-                v-for="(model, index) in models"
-                :key="model.name"
-                :class="{ active: index === 0 }"
-              >
-                <ModelRender :modelUrl="model.url" />
 
-                <p class="mt-2 text-white fs-2">
-                  {{ model.name }}
-                </p>
+        <div class="row">
+          <div class="col-12">
+            <p class="fs-1 text-white text-center">Create a New Hero</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-6 col-md-12">
+            <div id="carouselExample" class="carousel slide">
+              <div class="carousel-inner">
+                <div
+                  class="carousel-item text-center"
+                  v-for="(model, index) in models"
+                  :key="model.name"
+                  :class="{ active: index === 0 }"
+                >
+                  <ModelRender :modelUrl="model.url" />
+                  <p class="text-white fs-2">
+                    {{ model.name }}
+                  </p>
+                </div>
               </div>
+              <button
+                class="carousel-control-prev"
+                type="button"
+                data-bs-target="#carouselExample"
+                data-bs-slide="prev"
+              >
+                <span
+                  class="carousel-control-prev-icon"
+                  aria-hidden="true"
+                ></span>
+                <span class="visually-hidden">Previous</span>
+              </button>
+              <button
+                class="carousel-control-next"
+                type="button"
+                data-bs-target="#carouselExample"
+                data-bs-slide="next"
+              >
+                <span
+                  class="carousel-control-next-icon"
+                  aria-hidden="true"
+                ></span>
+                <span class="visually-hidden">Next</span>
+              </button>
             </div>
-            <button
-              class="carousel-control-prev"
-              type="button"
-              data-bs-target="#carouselExample"
-              data-bs-slide="prev"
-            >
-              <span
-                class="carousel-control-prev-icon"
-                aria-hidden="true"
-              ></span>
-              <span class="visually-hidden">Previous</span>
-            </button>
-            <button
-              class="carousel-control-next"
-              type="button"
-              data-bs-target="#carouselExample"
-              data-bs-slide="next"
-            >
-              <span
-                class="carousel-control-next-icon"
-                aria-hidden="true"
-              ></span>
-              <span class="visually-hidden">Next</span>
-            </button>
           </div>
-        </div>
-        <div class="col-10 mt-5">
-          <div class="mb-3 bg-secondary p-4 rounded-5">
-            <label for="exampleInputEmail1" class="text-white form-label"
-              >Who do you want to be known as?</label
-            >
-            <input
-              type="text"
-              class="form-control"
-              id="chosenUsername"
-              aria-describedby="username"
-              v-model="display_name"
-            />
-            <p class="text-warning ms-1 mt-3 fw-bold">
-              {{ errorMsg }}
-            </p>
+          <div class="col-6 col-md-12 d-flex justify-content-center align-items-center">
+            <div class="mb-3 bg-secondary text-center pt-5 px-4  rounded-5">
+              <label for="exampleInputEmail1" class="text-white form-label"
+                >Who do you want to be known as?</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                id="chosenUsername"
+                aria-describedby="username"
+                v-model="display_name"
+              />
+              <p class="text-warning ms-1 mt-3 fw-bold">
+                {{ errorMsg }}
+              </p>
+              <button
+                type="button"
+                class="mt-4 w-100 btn btn-success mb-5"
+                @click="createCharacter"
+              >
+                Create Character
+              </button>
+            </div>
           </div>
-        </div>
-        <div class="row d-flex justify-content-center">
-          <button
-            type="button"
-            class="mt-4 w-50 btn btn-success mb-5 "
-            @click="createCharacter"
-          >
-            Create Character
-          </button>
         </div>
       </div>
     </div>
@@ -101,6 +106,7 @@ export default {
       selectedModelObj: {},
       display_name: "",
       errorMsg: "",
+      isLoaded: false,
     };
   },
   methods: {
@@ -113,7 +119,7 @@ export default {
         // console.log(doc.id);
         this.models.push({ name: doc.id.toUpperCase(), url: doc.data().path });
       });
-
+      this.isLoaded = true;
       console.log(this.models);
     },
     async createCharacter() {
@@ -142,12 +148,12 @@ export default {
         }
       });
       console.log(this.selectedModelObj);
-      await updateDoc(doc(db, 'accounts', this.UID), {
+      await updateDoc(doc(db, "accounts", this.UID), {
         profile_name: this.display_name,
-        model_ID: this.selectedModelObj.url
-      })
-      this.$router.push('/');
-
+        model_ID: this.selectedModelObj.url,
+        profile_pic_ID: "/src/assets/images/ship-wheel.png",
+      });
+      this.$router.push("/");
     },
   },
   mounted() {
