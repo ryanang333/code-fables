@@ -151,6 +151,10 @@ export default {
   transform: scale(1.2);
   transition: transform 0.3s;
 }
+
+p ,h1, h2, h3 {
+  font-family: Georgia, serif;
+}
 .shake-image {
   animation: shake 0.5s linear infinite; /* Apply the "shake" animation */
 }

@@ -4,29 +4,29 @@
       v-if="isFriendFound && username!== myUser"
       class="modal-overlay d-flex align-items-center justify-content-center"
     >
-      <div class="modal-container bg-secondary-subtle p-5 rounded-4">
+      <div class="modal-container bg-secondary-subtle p-2 rounded-4 modal-sm">
         <div class="text-center d-flex justify-content-center">
-          <h1 class="fs-1 text-center mb-5">{{ profile_name }}</h1>
+          <h1 class="fs-1 text-center">{{profile_name}}</h1>
         </div>
         <div
           class="d-flex flex-column align-items-center justify-content-center modal-content"
         >
           <!-- <img :src="profile_pic_ID" style="width:100px; height:auto;" /> -->
           <ModelRender :modelUrl = "modelUrl"/>
-          <p class="mb-2 mt-5 mb-2 fw-bold">{{ username }}</p>
-          <p class="mb-2 mb-2">Level {{ level }}</p>
-          <p class="mb-2 mb-2">EXP: {{ experience }}</p>
-          <p class="mb-2 mb-2">{{ numberOfFriends }} Friend(s)</p>
+          <p class="info mb-2 mt-5 mb-2 fw-bold">{{username}}</p>
+          <p class="info mb-2 mb-2">Level {{level}}</p>
+          <p class="info mb-2 mb-2">EXP: {{experience}}</p>
+          <p class="info mb-2 mb-2">{{numberOfFriends}} Friend(s)</p>
           <button
             v-if="isSearching && !isAlreadyFriend && !isRequestSent"
-            class="btn btn-dark btn-block mt-3 w-auto fs-3 p-3"
+            class="btn  btn-block mt-3 w-auto fs-3 p-3 d-inline"
             @click="addFriend"
           >
             Add Friend
           </button>
           <button
             v-if="!isSearching"
-            class="btn btn-dark btn-block mt-3 w-75 fs-4 p-3"
+            class="btn btn-dark d-inline btn-block mt-3 w-50 fs-4 p-3"
             @click="removeFriend"
           >
             Unfriend
@@ -38,7 +38,7 @@
             Request Sent!
           </p>
           <button
-            class="btn btn-dark btn-block mt-3 w-75 fs-4 p-3"
+            class="btn btn-dark d-inline btn-block mt-3 w-50 fs-4 p-3 "
             @click="closeModal"
           >
             Close
@@ -176,7 +176,6 @@ export default {
     },
     async addFriend() {
       this.isRequestSent = true;
-
       const friendData = await getDoc(doc(db, 'accounts', this.UID));
       console.log(friendData.data());
       const friendReq = friendData.data().friend_requests;
@@ -188,7 +187,6 @@ export default {
       
     },
     async removeFriend() {
-
       this.$emit("close");
       this.onFriendRemoved(this.username);
       console.log(this.username);
@@ -203,7 +201,6 @@ export default {
         friends: userFriends
       });
       
-
       const friendsFriends = this.friendsFriends.filter(
         (friend) => friend !== this.myUser
       );
@@ -229,7 +226,8 @@ export default {
 <style scoped>
 .modal-overlay {
   position: fixed;
-  top: 0;
+  top: 20px;
+  bottom:20px;
   left: 0;
   width: 100%;
   height: 100%;
@@ -239,6 +237,12 @@ export default {
   justify-content: center;
   z-index: 9999;
 }
+
+.info{
+  font-size: larger;
+}
+
+
 
 .modal-container {
   box-shadow: 10px 10px 10px rgba(158, 148, 148, 0.6);

@@ -2,7 +2,7 @@
     <div class="container-fluid bg-image">
   <div class="container-fluid bg-overlay">
   <div>
-    <h2 class="text-center"><img src="src\assets\images\START-YOUR-CODEQUEST.png"></h2>
+    <h2 class="text-center"><img class="w-100" src="src\assets\images\START-YOUR-CODEQUEST.png"></h2>
   </div>
 
   <div class="row">

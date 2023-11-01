@@ -1,7 +1,7 @@
 <template>
   <div class="container d-flex flex-row justify-content-between">
     <h3>Friends ({{ numberOfFriends }})</h3>
-    <form class="d-flex w-50" role="search" @submit.prevent="openRequestModal">
+    <form class="d-flex w-50" role="search" style="font-family: Georgia, serif;" @submit.prevent="openRequestModal">
       <input
         class="form-control me-2"
         type="search"
@@ -209,5 +209,13 @@ export default {
 .friend-div:hover {
   transform: scale(1.05); /* Scale the element on hover */
   transition: transform 0.2s; /* Add smooth transitions */
+}
+
+p ,h1, h2, h3 {
+  font-family: Georgia, serif;
+}
+
+.btn {
+  font-family: Georgia, serif;
 }
 </style>

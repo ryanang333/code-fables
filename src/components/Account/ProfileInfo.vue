@@ -123,7 +123,7 @@
         this.profileUrl = docSnap.data().profile_pic_ID;
         this.mainUrl = docSnap.data().profile_pic_ID;
         this.exp = docSnap.data().exp;
-        this.level = this.exp / 50;
+        this.level = docSnap.data().level;
         this.nextlevel = this.level + 1
         this.nextlevelexp = this.nextlevel * 50
         this.expDiff = this.nextlevelexp - this.exp
@@ -158,7 +158,7 @@
       position: relative;
         margin-left: auto;
         margin-right: auto;
-        margin-top: 20px;
+   
         background-color: rgb(202, 202, 202);
         padding: 20px;
         border-radius: 20px;
