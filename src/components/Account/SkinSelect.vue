@@ -2,7 +2,7 @@
   <div class="container">
     <div id="carouselExample" class="carousel slide">
           <div class="carousel-inner">
-            <div class="textbox">Use mouse controls to inspect your character!</div>
+            <div class="textbox bg-dark fw-bold text-white">Use mouse controls to inspect your character!</div>
             <div
               class="carousel-item text-center"
               v-for="(model, index) in models"

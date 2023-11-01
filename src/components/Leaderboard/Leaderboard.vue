@@ -1,30 +1,38 @@
 <template>
-  <div class="container-fluid bg-image">
-  <div class="container-fluid bg-overlay">
-
-    <div class="container my-5 ">
-    <nav>
-      <div class="nav nav-tabs" id="nav-tab" role="tablist">
-        <button @click="friendBool"
-          class="nav-link active"
-          id="nav-friends-tab"
-          data-bs-toggle="tab"
-          data-bs-target="#nav-friends"
-          type="button"
-          role="tab"
-          aria-controls="nav-friends"
-          aria-selected="true"
-        >Global</button>
-        <button @click="friendBool"
-          class="nav-link"
-          id="nav-leaderboard-tab"
-          data-bs-toggle="tab"
-          data-bs-target="#nav-leaderboard"
-          type="button"
-          role="tab"
-          aria-controls="nav-leaderboard"
-          aria-selected="false"
-        >Friends</button>
+  <div class="bg-image p-4">
+    <div class="bg-overlay p-5">
+      <div class="container my-5 p-3">
+        <div
+          class="container"
+          style="position: fixed; left: 0px; top: 80px; z-index: 9999999"
+        >
+          <button
+            @click="friendBool"
+            class="btn btn-lg btn-success"
+            id="nav-friends-tab"
+            data-bs-toggle="tab"
+            data-bs-target="#nav-friends"
+            type="button"
+            role="tab"
+            aria-controls="nav-friends"
+            aria-selected="true"
+          >
+            Global
+          </button>
+          <button
+            @click="friendBool"
+            class="btn btn-lg btn-success ms-2"
+            id="nav-leaderboard-tab"
+            data-bs-toggle="tab"
+            data-bs-target="#nav-leaderboard"
+            type="button"
+            role="tab"
+            aria-controls="nav-leaderboard"
+            aria-selected="false"
+          >
+            Friends
+          </button>
+        </div>
       </div>
       
     </nav>
@@ -208,19 +216,25 @@ h3 {
 
 .bg-image {
   background-image: url("/src/assets/images/background3.png");
-  background-attachment: fixed;
-  background-size: cover; /* Optional: Scales the background image to cover the entire container */
+  width: 100vw;
+  height: 100vh;
   background-position: center;
-  background-color: black;
-  padding: 0px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: fixed;
+  overflow-x: auto;
 }
 
 .bg-overlay {
   content: "";
-  padding: 10px;
-  background: rgba(0, 0, 0, 0.651);
-  background-size: cover;
-  z-index: 0;
+  background: rgba(0, 0, 0, 0.65);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  overflow-x: auto;
 }
 
 #switch {

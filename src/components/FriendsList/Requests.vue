@@ -1,47 +1,57 @@
 <template>
-  <div class="container d-flex flex-row justify-content-between">
-    <h3>Friend Requests ({{ numberOfRequests }})</h3>
+  <div class="container d-flex flex-column justify-content-between">
+    <h2 class="text-center">
+      <img class="w-75" src="/src/assets/images/friendRequests.png" />
+    </h2>
   </div>
-  <div class="container bg-white">
-    <div class="row mt-5 ms-1 d-flex w-100 justify-content-start">
+  <div class="container">
+    <div class="row mt-5 ms-1 d-flex w-100 justify-content-start"
+    style="overflow-x:clip">
       <div
         v-if="numberOfRequests > 0"
         v-for="request in requestDetails"
         :key="request"
         :id="request"
-        class="border-5 rounded-4 border border-white p-4 my-2 bg-secondary col-12 col-lg-6 d-flex flex-row align-items-center"
+        class="border border-5 border-black rounded-4 p-4 my-2 bg-secondary col-12 col-lg-6 d-flex flex-row align-items-center"
       >
-        <div class="col-3 profilePic">
-          <img
-            :src="request.profile_pic_ID"
-            style="width: 150px; height: 150px"
-          />
-        </div>
-        <div class="col-9 ms-4 mt-1 text-center fs-6">
-          <p class="text-white">Name: {{ request.profile_name }}</p>
-          <p class="text-white">Username: {{ request.username }}</p>
-          <p class="text-white">Level: {{ request.level }}</p>
-          <!-- You can include online/offline status here -->
-          <button
-            type="button"
-            @click="acceptHandler(request.username)"
-            class="btn btn-success me-5 action-button"
-          >
-            Accept
-          </button>
-          <button
-            type="button"
-            @click="ignoreHandler(request.username)"
-            class="btn btn-danger ms-5 action-button"
-            @mouseover="shakePic()"
-            @mouseout="unshakePic()"
-          >
-            Reject
-          </button>
+        <div class="container">
+          <div class="row">
+            <div class="col-12 col-xl-6 text-center mb-2">
+              <img
+                :src="request.profile_pic_ID"
+                class="rounded-circle"
+                style="width: 200px"
+              />
+            </div>
+            <div class="col-12 col-xl-6 d-flex flex-column justify-content-center align-items-center text-center">
+              <p class="text-white">Name: {{ request.profile_name }}</p>
+              <p class="text-white">Username: {{ request.username }}</p>
+              <p class="text-white">Level: {{ request.level }}</p>
+              <!-- You can include online/offline status here -->
+            </div>
+          </div>
+          <div class="d-flex flex-row align-items-center justify-content-between mt-2">
+            <button
+                type="button"
+                @click="acceptHandler(request.username)"
+                class="btn btn-success action-button"
+              >
+                Accept
+              </button>
+              <button
+                type="button"
+                @click="ignoreHandler(request.username)"
+                class="btn btn-danger action-button"
+                @mouseover="shakePic()"
+                @mouseout="unshakePic()"
+              >
+                Reject
+              </button>
+          </div>
         </div>
       </div>
       <div v-else>
-        <p class="fs-1">No friend requests yet!</p>
+        <p v-if= "isLoaded" class="fs-1 text-white">No friend requests yet!</p>
       </div>
     </div>
   </div>
@@ -61,18 +71,19 @@ export default {
       requests: [],
       numberOfRequests: 0,
       requestDetails: [],
+      isLoaded: false,
     };
   },
   methods: {
-    unshakePic(){ 
+    unshakePic() {
       var button = event.target;
       var img = button.parentNode.previousSibling.children[0];
-      img.classList.remove('shake-image');
+      img.classList.remove("shake-image");
     },
-    shakePic(){ 
+    shakePic() {
       var button = event.target;
       var img = button.parentNode.previousSibling.children[0];
-      img.classList.add('shake-image');
+      img.classList.add("shake-image");
     },
     async getRequests() {
       this.requests = [];
@@ -99,11 +110,12 @@ export default {
         });
         console.log(this.requestDetails);
       }
+      this.isLoaded = true;
     },
     async acceptHandler(username) {
       alert(`${username} added as friend!`);
       event.target.parentNode.parentNode.remove();
-      this.numberOfRequests -=1;
+      this.numberOfRequests -= 1;
       console.log(username);
       const newFriendReq = this.requests.filter((email) => email !== username);
       this.requests = newFriendReq;
@@ -124,18 +136,16 @@ export default {
       await updateDoc(doc(db, "accounts", friendUID), {
         friends: friendFriends,
       });
-      
     },
     async ignoreHandler(username) {
-        event.target.parentNode.parentNode.remove();
-        this.numberOfRequests-=1;
-        console.log(username);
-        const newFriendReq = this.requests.filter( (email) => email !== username); 
-        await updateDoc(doc(db, "accounts", this.UID), {
-            friend_requests:newFriendReq
-        })
-        this.requests = newFriendReq;
-        
+      event.target.parentNode.parentNode.remove();
+      this.numberOfRequests -= 1;
+      console.log(username);
+      const newFriendReq = this.requests.filter((email) => email !== username);
+      await updateDoc(doc(db, "accounts", this.UID), {
+        friend_requests: newFriendReq,
+      });
+      this.requests = newFriendReq;
     },
   },
   mounted() {
@@ -147,12 +157,18 @@ export default {
 </script>
 
 <style scoped>
+.action-button{
+  width:40%;
+}
 .action-button:hover {
   transform: scale(1.2);
   transition: transform 0.3s;
 }
 
-p ,h1, h2, h3 {
+p,
+h1,
+h2,
+h3 {
   font-family: Georgia, serif;
 }
 .shake-image {
