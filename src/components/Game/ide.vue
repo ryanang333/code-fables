@@ -7,7 +7,7 @@
     <h6>{{ question[1] }}</h6>
   </div>
   <div class="mt-5 bg-dark p-3 text-white rounded-1" v-else>
-    <h2>Question:</h2>
+    <h2>Task:</h2>
     <br />
     <h3>{{ question }}</h3>
   </div>
