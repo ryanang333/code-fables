@@ -1,10 +1,10 @@
 <template>
   <div class="container-fluid">
     <div class="row">
-      <div class="col-md-6 col-sm-6">
-        <Game :imageUrl="imageUrl"></Game>
+      <div class="game col-md-6 col-sm-6">
+        <Game :imageUrl="imageUrl" :enemies="enemyList" @collisionDetected="handleCollision" :isGamePaused="gamePaused"></Game>
       </div>
-      <div class="col-md-6 col-sm-6">
+      <div class="ide col-md-6 col-sm-6">
         <div id="ide-component" v-if="questionLoaded">
           <Ide
             :questionInfo="questionDetails"
@@ -73,7 +73,16 @@ export default {
   },
   data() {
     return {
+      enemyList: [
+        {imageUrl:'src/assets/images/hyena.png', positionX:'200px', positionY:'0px'},
+        {imageUrl:'src/assets/images/scorpio.png', positionX:'400px', positionY:'0px'},
+        {imageUrl: 'src/assets/images/snake.png', positionX:'600px',positionY:'0px'},
+        {imageUrl: 'src/assets/images/vulture.png', positionX:'800px',positionY:'0px'},
+        {imageUrl: 'src/assets/images/mummy.png', positionX:'1000px',positionY:'0px'},
+        {imageUrl: 'src/assets/images/deceased.png', positionX:'1200px',positionY:'0px'},
+      ],
       imageUrl: "",
+      gamePaused: false,
       UID: "",
       model_ID: "",
       currentTopic: "",
@@ -110,6 +119,7 @@ export default {
       }
       var btn = document.getElementById("nextBtn");
       btn.classList.remove("disabled");
+      this.gamePaused = true
     },
     async getQuestion(currentTopic, userProg) {
       let q = "qn" + userProg;
@@ -147,6 +157,7 @@ export default {
       const updateData = {};
       updateData[fieldPathBool] = true;
       updateData[fieldPathPosition] = this.userProg;
+
       // Update the Firestore document
       const docRef = doc(db, "accounts", this.UID);
       try {
@@ -182,7 +193,13 @@ export default {
       this.getQuestion(this.currentTopic, this.userProg);
       this.getImage(this.model_ID);
     },
-
+    togglePause(){
+      this.gamePaused = !this.gamePaused
+    },
+    handleCollision(){
+      this.togglePause()
+      console.log('pause')
+    }
     async updateExpandLevel() {
       const docSnap = await getDoc(doc(db, "accounts", this.UID));
       console.log(docSnap.data());
@@ -223,4 +240,8 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.game{
+  padding-top:50px;
+}
+</style>
