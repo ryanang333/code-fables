@@ -1,14 +1,16 @@
 <template>
   <div class="bg-image p-4">
     <div class="bg-overlay p-5">
-      <div class="container my-5 p-3">
+           
+  </div>
+
+  <div class="container ">
         <div
-          class="container"
-          style="position: fixed; left: 0px; top: 80px;"
+          class="container" style="position: fixed; left: 0px; top: 80px; z-index: 999;"
         >
           <button
             @click="friendBool"
-            class="btn btn-lg btn-success"
+            class="btn btn-lg btn-success top"
             id="nav-friends-tab"
             data-bs-toggle="tab"
             data-bs-target="#nav-friends"
@@ -16,12 +18,13 @@
             role="tab"
             aria-controls="nav-friends"
             aria-selected="true"
+            v-if="friendsBool == true"
           >
-            Global
+            Switch to Global
           </button>
           <button
             @click="friendBool"
-            class="btn btn-lg btn-success ms-2"
+            class="btn btn-lg btn-success top"
             id="nav-leaderboard-tab"
             data-bs-toggle="tab"
             data-bs-target="#nav-leaderboard"
@@ -29,22 +32,21 @@
             role="tab"
             aria-controls="nav-leaderboard"
             aria-selected="false"
+            v-if="friendsBool == false"
           >
-            Friends
+            Switch to Friends
           </button>
         </div>
       </div>
-      
-  </div>
   
   <div class="container mt-5 podium-div" v-if="leaderboardPodium.length == 3">
-    <h2 class="text-center"><img class="w-100" src="src\assets\images\friends-leaderboard.png" v-if="friendsBool == true"></h2>
-    <h2 class="text-center"><img class="w-100" src="src\assets\images\global-leaderboard.png" v-if="friendsBool == false"></h2>
+    
+    <h2 class="text-center"><img class="w-100" src="/src/assets/images/global-leaderboard.png" v-if="friendsBool == false"></h2>
     <div class="mt-4 row justify-content-center">
       <div class="col-lg-3 col-md-12 order-lg-1 order-2 mt-5 text-center">
-        <img class="podium" src="src\assets\images\king.png" />
+        <img class="podium" src="/src/assets/images/king.png" />
         <div
-          class=" card podiumBack shadow d-flex flex-direction-column justify-content-center align-items-center" v-bind:style="{ backgroundColor: leaderboardPodium[1].email==this.myUser ? 'lightgoldenrodyellow' : '#C0C0C0' , borderColor : leaderboardPodium[1].email==this.myUser ? 'orange' : '#7e6e5c'  }"
+          class=" card podiumBack shadow d-flex flex-direction-column justify-content-center align-items-center" v-bind:style="{ backgroundColor: leaderboardPodium[1].email==this.myUser ? 'lightgoldenrodyellow' : '#C0C0C0' , borderColor : leaderboardPodium[1].email==this.myUser ? '#00AEEF ' : '#7e6e5c' , boxShadow : leaderboardPodium[1].email==this.myUser ?  '0 0 30px 50px #48abe0':'' }"
         >
           <img
             class="mt-4 podium mb-2"
@@ -56,9 +58,9 @@
         </div>
       </div>
       <div class="col-lg-3 col-md-12 order-lg-2 order-1 text-center podium-div">
-        <img class="podium" src="src\assets\images\premium.png" />
+        <img class="podium" src="/src/assets/images/premium.png" />
         <div
-          class=" card podiumBack shadow d-flex flex-direction-column justify-content-center align-items-center" v-bind:style="{ backgroundColor: leaderboardPodium[0].email==this.myUser ? 'lightgoldenrodyellow' : '#FFD700' , borderColor : leaderboardPodium[0].email==this.myUser ? 'orange' : '#7e6e5c'  }"
+          class=" card podiumBack shadow d-flex flex-direction-column justify-content-center align-items-center" v-bind:style="{ backgroundColor: leaderboardPodium[0].email==this.myUser ? 'lightgoldenrodyellow' : '#FFD700' , borderColor : leaderboardPodium[0].email==this.myUser ? '#00AEEF ' : '#7e6e5c' , boxShadow : leaderboardPodium[0].email==this.myUser ?  '0 0 30px 50px #48abe0':'' }"
         >
           <img
             class="mt-4 podium mb-2"
@@ -71,9 +73,9 @@
         </div>
       </div>
       <div class="col-lg-3 col-md-12 order-lg-3 order-3 mt-5 text-center podium-div">
-        <img class="podium" src="src\assets\images\crown.png" />
+        <img class="podium" src="/src/assets/images/crown.png" />
         <div
-          class=" card podiumBack shadow d-flex flex-direction-column justify-content-center align-items-center"  v-bind:style="{ backgroundColor: leaderboardPodium[2].email==this.myUser ? 'lightgoldenrodyellow' : '#B87333' , borderColor : leaderboardPodium[2].email==this.myUser ? '#09B051' : '#7e6e5c'  }"
+          class=" card podiumBack shadow d-flex flex-direction-column justify-content-center align-items-center"  v-bind:style="{ backgroundColor: leaderboardPodium[2].email==this.myUser ? 'lightgoldenrodyellow' : '#B87333' , borderColor : leaderboardPodium[2].email==this.myUser ? '#00AEEF ' : '#7e6e5c' , boxShadow : leaderboardPodium[2].email==this.myUser ?  '0 0 30px 50px #48abe0':'' }"
         >
           <img
             class="mt-4 podium mb-2"
@@ -90,6 +92,7 @@
     <hr />
   </div>
   <div class="container mt-5">
+    <h2 class="text-center"><img class="w-100" src="/src/assets/images/friends-leaderboard.png" v-if="friendsBool == true"></h2>
     <div
       class="padding-5"
       v-for="(person, index) in leaderboardList"
@@ -122,9 +125,8 @@
 
 <script>
 import { getAuth } from "firebase/auth";
-import db from "../../firebase/init";
-import {
-  getDocs,
+import db from "/src/firebase/init";
+import { getDocs,
   query,
   collection,
   orderBy,
@@ -137,7 +139,6 @@ export default {
   data() {
     return {
       UID: "",
-      isUser: true,
       myUser: "",
       myUsername: "",
       friendsBool: false,
@@ -149,6 +150,7 @@ export default {
     async friendBool() {
       if (this.friendsBool == true){
         this.friendsBool = false
+        console.log(this.friendsBool)
         this.getAllUsers()
       }
       else{
@@ -249,6 +251,10 @@ h3 {
   font-family: Georgia, serif;
 }
 
+.top {
+  z-index: 999;
+}
+
 .podium {
   width: 100px;
   height: auto;
@@ -256,6 +262,7 @@ h3 {
 
 .podiumBack {
   border-radius: 50%;
+  border: solid 3px;
 }
 
 .podium-div p {

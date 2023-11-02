@@ -196,6 +196,7 @@ h2 {
   margin-bottom: 20px;
   padding: 20px;
   flex: none;
+  cursor: pointer;
 }
 .card-body {
   padding: 1px;
