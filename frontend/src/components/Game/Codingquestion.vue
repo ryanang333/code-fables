@@ -477,11 +477,11 @@ export default {
 </script>
 
 <style>
-@media screen and (max-width: 767px) {
+/* @media screen and (max-width: 767px) {
   #game-show {
     display: none;
   }
-}
+} */
 
 .game {
   padding-top: 50px;

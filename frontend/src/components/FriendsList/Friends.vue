@@ -1,25 +1,28 @@
 <template>
-  <div class="container d-flex flex-column justify-content-between" >
-    <h2 class="text-center"><img src="/assets/images/friends.png" style="width:40%"/></h2>
-    <form
-      class="d-flex w-50"
-      role="search"
-      style="font-family: Georgia, serif; margin-left:auto; margin-right:auto;"
-      @submit.prevent="openRequestModal"
-    >
-      <input
-        class="form-control me-2"
-        type="search"
-        placeholder="Add Friends by Email"
-        aria-label="Search"
-        v-model="friendRequest"
-      />
-      <button class="btn btn-dark" type="submit">Search</button>
-    </form>
+  <div class="container d-flex flex-column justify-content-between">
+    <h2 class="text-center">
+      <img src="/assets/images/friends.png" style="width: 40%" />
+    </h2>
+    <div class="row d-flex justify-content-center align-items-center">
+      <div class="col-12 mt-3 col-sm-9 col-md-6 col-lg-5 ">
+        <input
+          class="form-control"
+          type="search"
+          placeholder="Add Friends by Email"
+          aria-label="Search"
+          v-model="friendRequest"
+        />
+      </div>
+      <div class="col-12 mt-3 col-sm-2 text-center">
+        <button class="btn btn-dark" type="submit" @click="openRequestModal">
+          Search
+        </button>
+      </div>
+    </div>
   </div>
   <div class="container">
     <div
-      class="row mt-5 ms-1 d-flex w-100 justify-content-start"
+      class="row mt-3 mt-lg-5 ms-1 d-flex w-100 justify-content-start"
       style="overflow-x: clip"
     >
       <!-- Conditional rendering of friend list -->
@@ -77,7 +80,7 @@
     v-if="isChatOpen"
     class="row d-flex flex-col justify-content-center align-items-center bg-dark-subtle rounded-5"
     :key="chatFriend"
-    style="position: fixed; bottom: 0px; right: 0px; z-index: 99999;"
+    style="position: fixed; bottom: 0px; right: 0px; z-index: 99999"
   >
     <Inbox
       :currentUser="userDetails"
