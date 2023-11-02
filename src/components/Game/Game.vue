@@ -1,6 +1,6 @@
 <template>
 <div class="container">
-    <div id="game-world"  :style="{ animationPlayState: isGamePaused ? 'paused' : 'running' }">
+    <div class="game-world" ref="gameworld" :style="{ animationPlayState: isGamePaused ? 'paused' : 'running' }" @animationiteration="handleAnimationIteration">
         <div v-for="(enemy, index) in enemies" :key="index" :style="{ backgroundImage: `url(${enemy.imageUrl})`, left: enemy.positionX, bottom: enemy.positionY }" :ref="`enemyElement-${index}`" class="enemy"></div>
     </div>
     <div class="player" ref="playerElement" :style="{ backgroundImage: `url(${imageUrl})` }"></div>
@@ -19,7 +19,7 @@ export default {
             enemy: null,
             playerRect: null,
             checkedEnemies: [],
-            
+            gameworld: null,
         }
     },
     props: {
@@ -58,8 +58,14 @@ export default {
                 }}
             }});
     })},
+        handleAnimationIteration(){
+            if(event.target === this.gameworld && event.animationName==='slide')
+            this.checkedEnemies = []
+            console.log('reset')
+        }
     },
     mounted(){
+        this.gameworld = this.$refs.gameworld
         this.interval = setInterval(() => {
             this.checkCollisions()
         }, 1000);
@@ -76,10 +82,10 @@ export default {
     position: relative;
 }
 
-#game-world {
+.game-world {
     background: url(src/assets/images/forestbackground.png) repeat-x;
     height: 480px;
-    width: 5076px;
+    width: 2410px;
     animation: slide 15s linear infinite;
     animation-fill-mode: forwards;
     animation-delay: 1s;
