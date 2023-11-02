@@ -147,10 +147,12 @@
           v-if="friendsBool == true"
         />
       </h2>
+      <p v-if="friendsBool == true && leaderboardList.length == 1" style="font-family: Georgia, serif;" class="fs-1 text-white">No friends yet!</p>
       <div
         class="padding-5"
         v-for="(person, index) in leaderboardList"
         :key="person.profile_name"
+        v-else
       >
         <div
           class="row listItem d-flex mb-4 align-items-center rounded-3 px-3 pt-3 d-flex-row"
