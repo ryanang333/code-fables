@@ -4,7 +4,7 @@
       <div class="row">
         <div class="col-12 text-center mb-5 mt-5">
           <img
-            src="src\assets\images\START-YOUR-CODEQUEST.png"
+            src="/src/assets/images/START-YOUR-CODEQUEST.png"
             class="img-fluid mt-5"
           />
         </div>
