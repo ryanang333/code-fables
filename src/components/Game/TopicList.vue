@@ -71,23 +71,23 @@ export default {
     return {
       topics: [],
       userTopics: {},
-      isLoaded : false,
-      isCompleted : false,
+      isLoaded: false,
+      isCompleted: false,
     };
   },
   methods: {
     getProgress(topicName, index) {
       let count = 0;
-      let x = this.userTopics[topicName]['questions'];
+      let x = this.userTopics[topicName]["questions"];
       console.log(x);
       for (let qn in x) {
         if (x[qn]) {
           count++;
         }
-        if (count == 6){
-          this.topics[index]['isCompleted'] = true;
-        }else{
-          this.topics[index]['isCompleted'] = false;
+        if (count == 6) {
+          this.topics[index]["isCompleted"] = true;
+        } else {
+          this.topics[index]["isCompleted"] = false;
         }
       }
       let widthProg = (count / 6) * 100 + "%";
