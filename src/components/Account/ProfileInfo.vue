@@ -179,8 +179,7 @@ export default {
       this.pictures = [];
       const querySnapshot = await getDocs(collection(db, "profile_pictures"));
       querySnapshot.forEach((doc) => {
-        // doc.data() is never undefined for query doc snapshots
-        if (this.profileUrl != doc.data().url) {
+      if (this.profileUrl != doc.data().url) {
           this.pictures.push(doc.data().url);
         }
       });
