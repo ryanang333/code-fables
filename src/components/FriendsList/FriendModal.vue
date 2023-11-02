@@ -11,7 +11,6 @@
         <div
           class="d-flex flex-column align-items-center justify-content-center modal-content"
         >
-          <!-- <img :src="profile_pic_ID" style="width:100px; height:auto;" /> -->
           <ModelRender :modelUrl = "modelUrl"/>
           <p class="info mb-2 mt-5 mb-2 fw-bold">{{username}}</p>
           <p class="info mb-2 mb-2">Level {{level}}</p>

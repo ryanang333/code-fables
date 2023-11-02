@@ -4,7 +4,7 @@
       <div class="row">
         <div class="col-12 text-center mb-5 mt-5">
           <img
-            src="/src/assets/images/START-YOUR-CODEQUEST.png"
+            src="/public/assets/images/START-YOUR-CODEQUEST.png"
             class="img-fluid mt-5"
           />
         </div>
@@ -140,7 +140,7 @@ export default {
 
 <style scoped>
 .bg-image {
-  background-image: url("/src/assets/images/background3.png");
+  background-image: url("/public/assets/images/background3.png");
   background-attachment: fixed;
   background-size: cover; /* Optional: Scales the background image to cover the entire container */
   background-position: center;

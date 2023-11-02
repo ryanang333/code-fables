@@ -2,34 +2,34 @@
   <div id="game-show">
     <audio
       ref="victory"
-      src="/src/assets/audio/victory.mp3"
+      src="/public/assets/audio/victory.mp3"
       preload="auto"
       loop
     ></audio>
     <audio
       ref="battle"
-      src="/src/assets/audio/pokemonBattle.mp3"
+      src="/public/assets/audio/pokemonBattle.mp3"
       preload="auto"
       loop
     ></audio>
     <audio
       ref="fireball"
-      src="/src/assets/audio/fireballwoosh.mp3"
+      src="/public/assets/audio/fireballwoosh.mp3"
       preload="auto"
     ></audio>
     <audio
       ref="roar"
-      src="/src/assets/audio/dragonroar.mp3"
+      src="/public/assets/audio/dragonroar.mp3"
       preload="auto"
     ></audio>
     <audio
       ref="slash"
-      src="/src/assets/audio/samurai-slash-6845.mp3"
+      src="/public/assets/audio/samurai-slash-6845.mp3"
       preload="auto"
     ></audio>
     <audio
       ref="hurt"
-      src="/src/assets/audio/classic_hurt.mp3"
+      src="/public/assets/audio/classic_hurt.mp3"
       preload="auto"
     ></audio>
     <div
@@ -43,7 +43,7 @@
           <div class="row">
             <div class="col-12 mt-5">
               <h2 class="text-center">
-                <img src="/src/assets/images/VICTORY.png" style="width: 80%" />
+                <img src="/public/assets/images/VICTORY.png" style="width: 80%" />
               </h2>
             </div>
             <div class="col-12 d-flex justify-content-center mb-5">
@@ -119,7 +119,7 @@
                 >
                   <img
                     id="scaryDragon"
-                    src="/src/assets/images/scarydragon.gif"
+                    src="/public/assets/images/scarydragon.gif"
                   />
                 </div>
               </div>
@@ -167,32 +167,32 @@ export default {
       showIde: false,
       enemyList: [
         {
-          imageUrl: "src/assets/images/hyena.png",
+          imageUrl: "/public/assets/images/hyena.png",
           positionX: "600px",
           positionY: "0px",
         },
         {
-          imageUrl: "src/assets/images/scorpio.png",
+          imageUrl: "/public/assets/images/scorpio.png",
           positionX: "1200px",
           positionY: "0px",
         },
         {
-          imageUrl: "src/assets/images/snake.png",
+          imageUrl: "/public/assets/images/snake.png",
           positionX: "1800px",
           positionY: "0px",
         },
         {
-          imageUrl: "src/assets/images/vulture.png",
+          imageUrl: "/public/assets/images/vulture.png",
           positionX: "2400px",
           positionY: "0px",
         },
         {
-          imageUrl: "src/assets/images/mummy.png",
+          imageUrl: "/public/assets/images/mummy.png",
           positionX: "3000px",
           positionY: "0px",
         },
         {
-          imageUrl: "src/assets/images/deceased.png",
+          imageUrl: "/public/assets/images/deceased.png",
           positionX: "4000px",
           positionY: "0px",
         },
@@ -221,11 +221,11 @@ export default {
       const slashImage = document.createElement("img");
       console.log(this.character);
       this.character == "knight" &&
-        (slashImage.src = "/src/assets/images/Slash.webp");
+        (slashImage.src = "/public/assets/images/Slash.webp");
       this.character == "sword" &&
-        (slashImage.src = "/src/assets/images/blueSwordSlash.png");
+        (slashImage.src = "/public/assets/images/blueSwordSlash.png");
       this.character == "wizard" &&
-        (slashImage.src = "/src/assets/images/wizardBall.gif");
+        (slashImage.src = "/public/assets/images/wizardBall.gif");
       slashImage.style.zIndex = "999999";
       slashImage.style.position = "absolute";
       slashImage.style.top = `${gameTop}px`;
@@ -272,7 +272,7 @@ export default {
       const bossLeft = bossPosition.left;
 
       const fireballImage = document.createElement("img");
-      fireballImage.src = "/src/assets/images/dragonFireball.png";
+      fireballImage.src = "/public/assets/images/dragonFireball.png";
       fireballImage.style.width = "200px";
       fireballImage.style.zIndex = "999999";
       fireballImage.style.position = "absolute";
@@ -282,10 +282,10 @@ export default {
 
       const player = document.getElementsByClassName("player")[0];
       const playerComputedStyle = getComputedStyle(player);
-      const playerWidth = playerComputedStyle.getPropertyValue("width");
+      const playerWidth = (playerComputedStyle.getPropertyValue("width"));
       const playerPos = player.getBoundingClientRect();
-      const gameTop = playerPos.top + window.scrollY;
-      const gameLeft = playerPos.left + window.scrollX;
+      const gameTop = playerPos.top;
+      const gameLeft = playerPos.left;
 
       // Calculate the difference in positions
       const topDifference = gameTop - bossTop;
@@ -300,12 +300,12 @@ export default {
 
       setTimeout(() => {
         let onFireImage = document.createElement("img");
-        onFireImage.src = "/src/assets/images/onFire.gif";
+        onFireImage.src = "/public/assets/images/onFire.gif";
         onFireImage.style.zIndex = "999999999";
         onFireImage.style.position = "absolute";
         onFireImage.style.top = `${gameTop}px`;
         onFireImage.style.left = `${gameLeft}px`;
-        onFireImage.style.width = `${playerWidth}`;
+        onFireImage.style.width = '200px';
         document.body.appendChild(onFireImage);
         document.body.removeChild(fireballImage);
         this.pauseSound("fireball");
@@ -407,15 +407,15 @@ export default {
     },
     async getImage(model_ID) {
       if (model_ID.includes("wizard")) {
-        this.imageUrl = "src/assets/images/wizard.png";
+        this.imageUrl = "/public/assets/images/wizard.png";
         this.character = "wizard";
       }
       if (model_ID.includes("knight")) {
-        this.imageUrl = "src/assets/images/knight.png";
+        this.imageUrl = "/public/assets/images/knight.png";
         this.character = "knight";
       }
       if (model_ID.includes("sword")) {
-        this.imageUrl = "src/assets/images/sword.png";
+        this.imageUrl = "/public/assets/images/sword.png";
         this.character = "sword";
       }
     },
@@ -489,7 +489,7 @@ export default {
 }
 
 .bg-monster {
-  background-image: url("/src/assets/images/dragonforest.png");
+  background-image: url("/public/assets/images/dragonforest.png");
   height: 100%;
   width: 100%;
   background-position: center;
@@ -498,7 +498,7 @@ export default {
   position: relative;
 }
 .bg-image {
-  background-image: url("/src/assets/images/scaryforest.png");
+  background-image: url("/public/assets/images/scaryforest.png");
   width: 100vw;
   height: 100vh;
   background-position: center;

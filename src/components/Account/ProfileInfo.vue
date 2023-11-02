@@ -196,7 +196,7 @@ export default {
 
 <style scoped>
 .bg-image {
-  background-image: url("/src/assets/images/background3.png");
+  background-image: url("/public/assets/images/background3.png");
   width: 100vw;
   height: 100vh;
   background-position: center;

@@ -25,8 +25,14 @@
     </button>
   </div>
 </template>
-
+    <!-- <script src="node_modules/ace-builds/src-min/ace.js" type="module"></script>
+    <script src="node_modules/ace-builds/src-min/mode-python.js" type="module"></script>
+    <script src="node_modules/ace-builds/src-min/theme-monokai.js" type="module"></script> -->
 <script>
+import ace from 'ace-builds';
+import 'ace-builds/src-noconflict/mode-python';
+import 'ace-builds/src-noconflict/theme-monokai';
+
 import axios from "axios";
 import { getAuth } from "firebase/auth";
 import db from "../../firebase/init";
@@ -74,6 +80,7 @@ export default {
       console.log(userCode);
 
       const url = "http://3.27.193.241/compiler.php";
+      // const url = "/backend/compiler.php";
 
       // Make an Axios GET request
       const param = {

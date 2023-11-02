@@ -1,7 +1,7 @@
 <template>
   <div class="container d-flex flex-column justify-content-between">
     <h2 class="text-center">
-      <img class="w-75" src="/src/assets/images/friendRequests.png" />
+      <img class="w-75" src="/public/assets/images/friendRequests.png" />
     </h2>
   </div>
   <div class="container">

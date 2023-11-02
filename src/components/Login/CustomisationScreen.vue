@@ -3,7 +3,7 @@
     <div class="container-fluid bg-overlay">
       <div class="row d-flex justify-content-center">
         <img
-          src="/src/assets/images/code-fables.png"
+          src="/public/assets/images/code-fables.png"
           class="text-center mt-3"
           style="width: 400px; height: auto"
         />
@@ -151,7 +151,7 @@ export default {
       await updateDoc(doc(db, "accounts", this.UID), {
         profile_name: this.display_name,
         model_ID: this.selectedModelObj.url,
-        profile_pic_ID: "/src/assets/images/ship-wheel.png",
+        profile_pic_ID: "/public/assets/images/ship-wheel.png",
       });
       this.$router.push("/");
     },
@@ -166,7 +166,7 @@ export default {
 
 <style scoped>
 .bg-image {
-  background-image: url("/src/assets/images/character_customisation_screen.jpg");
+  background-image: url("/public/assets/images/character_customisation_screen.jpg");
   width: 100vw;
   height: 100vh;
   background-position: center;

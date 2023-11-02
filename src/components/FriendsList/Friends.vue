@@ -1,6 +1,6 @@
 <template>
   <div class="container d-flex flex-column justify-content-between" >
-    <h2 class="text-center"><img src="/src/assets/images/friends.png" style="width:40%"/></h2>
+    <h2 class="text-center"><img src="/public/assets/images/friends.png" style="width:40%"/></h2>
     <form
       class="d-flex w-50"
       role="search"
@@ -143,14 +143,6 @@ export default {
     };
   },
   methods: {
-    // async filterProfanitiesWithAPI(message) {
-    //   const config = {
-    //     method: 'post',
-    //     url: 'https://api.apilayer.com/bad_words?censor_character=censor_character',
-    //     headers: config.badWordsAPIKey,
-    //     data: data,
-    //   }
-    // },
     closeChat() {
       this.isChatOpen = false;
     },
@@ -229,7 +221,7 @@ export default {
 
 <style scoped>
 .bg-image {
-  background-image: url("/src/assets/images/background3.png");
+  background-image: url("/public/assets/images/background3.png");
   background-attachment: fixed;
   background-size: cover; /* Optional: Scales the background image to cover the entire container */
   background-position: center;

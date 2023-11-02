@@ -42,13 +42,13 @@
       <h2 class="text-center">
         <img
           class="w-100"
-          src="/src/assets/images/global-leaderboard.png"
+          src="/public/assets/images/global-leaderboard.png"
           v-if="friendsBool == false"
         />
       </h2>
       <div class="mt-4 row justify-content-center">
         <div class="col-lg-3 col-md-12 order-lg-1 order-2 mt-5 text-center">
-          <img class="podium" src="/src/assets/images/king.png" />
+          <img class="podium" src="/public/assets/images/king.png" />
           <div
             class="card podiumBack shadow d-flex flex-direction-column justify-content-center align-items-center"
             v-bind:style="{
@@ -78,7 +78,7 @@
         <div
           class="col-lg-3 col-md-12 order-lg-2 order-1 text-center podium-div"
         >
-          <img class="podium" src="/src/assets/images/premium.png" />
+          <img class="podium" src="/public/assets/images/premium.png" />
           <div
             class="card podiumBack shadow d-flex flex-direction-column justify-content-center align-items-center"
             v-bind:style="{
@@ -108,7 +108,7 @@
         <div
           class="col-lg-3 col-md-12 order-lg-3 order-3 mt-5 text-center podium-div"
         >
-          <img class="podium" src="/src/assets/images/crown.png" />
+          <img class="podium" src="/public/assets/images/crown.png" />
           <div
             class="card podiumBack shadow d-flex flex-direction-column justify-content-center align-items-center"
             v-bind:style="{
@@ -143,7 +143,7 @@
       <h2 class="text-center">
         <img
           class="w-100"
-          src="/src/assets/images/friends-leaderboard.png"
+          src="/public/assets/images/friends-leaderboard.png"
           v-if="friendsBool == true"
         />
       </h2>
@@ -276,7 +276,7 @@ h3 {
 }
 
 .bg-image {
-  background-image: url("/src/assets/images/background3.png");
+  background-image: url("/public/assets/images/background3.png");
   width: 100vw;
   height: 100vh;
   background-position: center;

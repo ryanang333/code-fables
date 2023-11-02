@@ -4,7 +4,7 @@
       <div class="col-lg-1 col-2 mx-auto">
         <a class="navbar-brand" href="/">
           <img
-            src="/src/assets/images/code-fables.png"
+            src="/public/assets/images/code-fables.png"
             style="width: 200px; height: auto"
           />
         </a>

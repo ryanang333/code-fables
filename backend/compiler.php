@@ -32,6 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         'message' => 'Code running',
         'output' => $output
     ];
+    unlink($programFile);
     header('Content-Type: application/json');
     http_response_code(200);
     echo json_encode($response);

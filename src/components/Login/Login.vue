@@ -9,7 +9,7 @@
         class="col-12 col-md-10 col-lg-9 col-xl-8 col-xxl-7 d-flex justify-content-center align-items-center"
       >
         <img
-          src="/src/assets/images/code-fables.png"
+          src="/public/assets/images/code-fables.png"
           class="mb-5 logo-pic w-75"
         />
       </div>
@@ -112,7 +112,7 @@ export default {
 
 <style scoped>
 .bg-image {
-  background-image: url("/src/assets/images/background3.png");
+  background-image: url("/public/assets/images/background3.png");
   width: 100vw;
   height: 100vh;
   background-position: center;

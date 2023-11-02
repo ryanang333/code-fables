@@ -83,7 +83,7 @@ export default {
 }
 
 .game-world {
-    background: url(src/assets/images/forestbackground.png) repeat-x;
+    background: url(/public/assets/images/forestbackground.png) repeat-x;
     height: 480px;
     width: 5000px;
     animation: slide 30s linear infinite;
