@@ -85,8 +85,8 @@ export default {
 .game-world {
     background: url(src/assets/images/forestbackground.png) repeat-x;
     height: 480px;
-    width: 2410px;
-    animation: slide 15s linear infinite;
+    width: 5000px;
+    animation: slide 30s linear infinite;
     animation-fill-mode: forwards;
     animation-delay: 1s;
     z-index: 1;
@@ -122,22 +122,22 @@ export default {
 @media (min-width: 577px) and (max-width: 768px) {
     .player {
         width: 15vw;
-        height: 10vh;
+        height: 30vh;
     }
     .enemy{
         width:15vw;
-        height:10vh
+        height:30vh
     }
 }
 
 @media (min-width:769px) {
     .player {
-        width: 15vw;
-        height: 10vh;
+        width: 30vw;
+        height: 15vh;
     }
     .enemy{
-        width:15vw;
-        height:10vh
+        width:30vw;
+        height:15vh
     }
 }
 
@@ -159,7 +159,7 @@ export default {
     }
 
     100% {
-        transform: translate3d(-1692px, 0, 0);
+        transform: translate3d(-4300px, 0, 0);
     }
 }
 </style>

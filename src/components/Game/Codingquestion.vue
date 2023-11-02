@@ -130,32 +130,32 @@ export default {
       enemyList: [
         {
           imageUrl: "src/assets/images/hyena.png",
-          positionX: "100px",
+          positionX: "600px",
           positionY: "0px",
         },
         {
           imageUrl: "src/assets/images/scorpio.png",
-          positionX: "400px",
+          positionX: "1200px",
           positionY: "0px",
         },
         {
           imageUrl: "src/assets/images/snake.png",
-          positionX: "700px",
+          positionX: "1800px",
           positionY: "0px",
         },
         {
           imageUrl: "src/assets/images/vulture.png",
-          positionX: "1000px",
+          positionX: "2400px",
           positionY: "0px",
         },
         {
           imageUrl: "src/assets/images/mummy.png",
-          positionX: "1300px",
+          positionX: "3000px",
           positionY: "0px",
         },
         {
           imageUrl: "src/assets/images/deceased.png",
-          positionX: "1600px",
+          positionX: "4000px",
           positionY: "0px",
         },
       ],
