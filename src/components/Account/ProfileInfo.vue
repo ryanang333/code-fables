@@ -30,7 +30,7 @@
       <p>{{ expDiff }}xp to next level</p>
     </div>
     <div
-      class="modal fade"
+      class="modal fade top"
       id="exampleModal"
       tabindex="-1"
       aria-labelledby="exampleModalLabel"
@@ -293,6 +293,10 @@ span.left {
   display: inline;
   float: left;
   margin-left: 10px;
+}
+
+.top {
+  top: 45px;
 }
 
 .mainProfile {
