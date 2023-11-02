@@ -93,10 +93,11 @@
   </div>
   <div class="container mt-5">
     <h2 class="text-center"><img class="w-100" src="/src/assets/images/friends-leaderboard.png" v-if="friendsBool == true"></h2>
+    <p v-if="friendsBool == true && leaderboardList.length == 1" style="font-family: Georgia, serif;" class="fs-1 text-white">No friends yet!</p>
     <div
       class="padding-5"
       v-for="(person, index) in leaderboardList"
-      :key="person.profile_name"
+      :key="person.profile_name" v-else
     >
       <div
         class="row listItem d-flex mb-4 align-items-center rounded-3 px-3 pt-3 d-flex-row" v-bind:style="{ backgroundColor: person.email==this.myUser ? 'lightgoldenrodyellow' : '#cdbea2' , borderColor : person.email==this.myUser ? '#00AEEF ' : '#7e6e5c', boxShadow : person.email==this.myUser ?  '0 0 30px 5px #48abe0':''}"
