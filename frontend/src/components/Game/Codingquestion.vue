@@ -442,8 +442,8 @@ export default {
       if (isLevelAdded) return;
       if (docSnap.exists()) {
         console.log(docSnap.data());
-        let exp = docSnap.data().exp;
-        let level = docSnap.data().level;
+        var exp = docSnap.data().exp;
+        var level = docSnap.data().level;
         //console.log(exp);
         //console.log(level);
       } else {

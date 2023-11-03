@@ -147,7 +147,17 @@
           v-if="friendsBool == true"
         />
       </h2>
-      <p v-if="friendsBool == true && leaderboardList.length == 1" style="font-family: Georgia, serif;" class="fs-1 text-white">No friends yet!</p>
+      <div
+        class="container"
+        v-if="friendsBool == true && leaderboardList.length == 1"
+      >
+        <p
+          style="font-family: Georgia, serif"
+          class="fs-1 text-white text-center"
+        >
+          No friends yet!
+        </p>
+      </div>
       <div
         class="padding-5"
         v-for="(person, index) in leaderboardList"
@@ -215,11 +225,9 @@ export default {
     async friendBool() {
       if (this.friendsBool == true) {
         this.friendsBool = false;
-        console.log(this.friendsBool);
         this.getAllUsers();
       } else {
         this.friendsBool = true;
-        console.log(this.friendsBool);
         this.getAllFriends();
       }
     },

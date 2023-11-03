@@ -122,6 +122,7 @@ export default {
         uid: userUID,
       });
       await setDoc(doc(db, "accounts", userUID), {
+        email: this.email,
         exp: 0,
         friend_requests: [],
         friends: [],
