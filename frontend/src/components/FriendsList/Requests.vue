@@ -98,7 +98,6 @@ export default {
           doc(db, "accounts", friendInfo.data().uid)
         );
         const friendData = friendUID.data();
-        console.log(friendData);
         this.requestDetails.push({
           uid: friendInfo.data().uid,
           exp: friendData.exp,
@@ -108,7 +107,6 @@ export default {
           username: email,
           friends: friendData.friends,
         });
-        console.log(this.requestDetails);
       }
       this.isLoaded = true;
     },
@@ -116,14 +114,11 @@ export default {
       alert(`${username} added as friend!`);
       event.target.parentNode.parentNode.remove();
       this.numberOfRequests -= 1;
-      console.log(username);
       const newFriendReq = this.requests.filter((email) => email !== username);
       this.requests = newFriendReq;
       const docSnap = await getDoc(doc(db, "accounts", this.UID));
-      console.log(docSnap.data());
       const newFriends = docSnap.data().friends;
       newFriends.push(username);
-      console.log(newFriends);
       await updateDoc(doc(db, "accounts", this.UID), {
         friends: newFriends,
         friend_requests: newFriendReq,
@@ -140,7 +135,6 @@ export default {
     async ignoreHandler(username) {
       event.target.parentNode.parentNode.remove();
       this.numberOfRequests -= 1;
-      console.log(username);
       const newFriendReq = this.requests.filter((email) => email !== username);
       await updateDoc(doc(db, "accounts", this.UID), {
         friend_requests: newFriendReq,

@@ -79,7 +79,6 @@ export default {
     getProgress(topicName, index) {
       let count = 0;
       let x = this.userTopics[topicName]["questions"];
-      console.log(x);
       for (let qn in x) {
         if (x[qn]) {
           count++;
@@ -97,7 +96,6 @@ export default {
 
     },
     openQuestion(topic) {
-      // console.log(topic)
       localStorage.setItem("currentTopic", topic);
       this.$router.push("/codingquestion");
     },
@@ -105,22 +103,18 @@ export default {
       const querySnap = await getDocs(query(collection(db, "topics")));
       querySnap.forEach((doc) => {
         let key = doc.id;
-        // console.log(doc.id);
         let topic = doc.data();
-        // console.log(doc.data());
         this.topics.push({
           key: key,
           topicObj: topic,
         });
       });
-      console.log(this.topics);
       this.isLoaded = true;
     },
 
     async getUserInfo() {
       const docSnap = await getDoc(doc(db, "accounts", this.UID));
       this.userTopics = docSnap.data().topics;
-      console.log(docSnap.data().topics);
     },
   },
 
@@ -128,7 +122,6 @@ export default {
     this.getTopics();
     this.UID = getAuth().currentUser.uid;
     this.getUserInfo();
-    console.log(this.topics);
   },
 };
 </script>
@@ -137,7 +130,7 @@ export default {
 .bg-image {
   background-image: url("/assets/images/background3.png");
   background-attachment: fixed;
-  background-size: cover; /* Optional: Scales the background image to cover the entire container */
+  background-size: cover; 
   background-position: center;
   background-color: black;
   padding: 0px;

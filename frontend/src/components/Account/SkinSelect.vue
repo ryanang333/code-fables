@@ -96,7 +96,6 @@ export default {
       const q = query(collection(db, "models"));
       const querySnap = await getDocs(q);
       querySnap.forEach((doc) => {
-        //get remaining models that isnt the users active
         if (doc.data().path == this.selectedModel) {
           this.models.unshift({
             name: doc.id.toUpperCase(),
@@ -109,8 +108,6 @@ export default {
             url: doc.data().path,
           });
         }
-        // console.log(doc.data().path);
-        // console.log(doc.id);
       });
     },
     updateButton() {
@@ -144,10 +141,8 @@ export default {
     this.getInfo();
     this.getModels();
     $("#carouselExample").on("slid.bs.carousel", this.updateButton);
-    // this.selectModel();
   },
   beforeDestroy() {
-    // Remove the event listener to prevent memory leaks
     $("#carouselExample").off("slid.bs.carousel", this.updateButton);
   },
 };

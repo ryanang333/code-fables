@@ -218,7 +218,6 @@ export default {
       const gameLeft = playerPos.left - 15;
 
       const slashImage = document.createElement("img");
-      console.log(this.character);
       this.character == "knight" &&
         (slashImage.src = "/assets/images/Slash.webp");
       this.character == "sword" &&
@@ -329,7 +328,7 @@ export default {
         await updateDoc(docRef, updateData);
         console.log("Document updated successfully");
       } catch (error) {
-        console.error("Error updating document:", error);
+        console.log("Error updating document:", error);
       }
       this.getQuestion(this.currentTopic, this.userProg);
     },
@@ -367,7 +366,6 @@ export default {
       }
     },
     async nextQuestion() {
-      console.log(this.userProg);
       if (this.userProg == 6) {
         this.isVictory = true;
         this.pauseSound("battle");
@@ -395,14 +393,10 @@ export default {
         await updateDoc(docRef, updateData);
         console.log("Document updated successfully");
       } catch (error) {
-        console.error("Error updating document:", error);
+        console.log("Error updating document:", error);
       }
       this.getQuestion(this.currentTopic, this.userProg);
       this.updateExpandLevel();
-      // increases the users progress if boolean set to true
-      // if(updateData[fieldPathBool]){
-      //   this.updateExpandLevel();
-      // }
     },
     async getImage(model_ID) {
       if (model_ID.includes("wizard")) {
@@ -431,21 +425,16 @@ export default {
     },
     handleCollision() {
       this.togglePause();
-      console.log("pause");
       this.showIde = true;
     },
     async updateExpandLevel() {
       const docSnap = await getDoc(doc(db, "accounts", this.UID));
-      console.log(docSnap.data());
       let isLevelAdded =
         docSnap.data().topics[this.currentTopic].questions[this.currentQn];
       if (isLevelAdded) return;
       if (docSnap.exists()) {
-        console.log(docSnap.data());
         var exp = docSnap.data().exp;
         var level = docSnap.data().level;
-        //console.log(exp);
-        //console.log(level);
       } else {
         console.log("Document does not exist");
       }
@@ -471,18 +460,11 @@ export default {
     this.UID = getAuth().currentUser.uid;
     this.currentTopic = localStorage.getItem("currentTopic");
     this.getUserProgress(this.currentTopic);
-    console.log(this.userProg);
   },
 };
 </script>
 
 <style>
-/* @media screen and (max-width: 767px) {
-  #game-show {
-    display: none;
-  }
-} */
-
 .game {
   padding-top: 50px;
 }
@@ -518,20 +500,17 @@ export default {
   overflow-x: auto;
 }
 
-/* Define the keyframes for the bounce animation */
 @keyframes bounce {
   0%,
   100% {
-    transform: translateY(0); /* Start and end position */
+    transform: translateY(0); 
   }
   50% {
-    transform: translateY(-20px); /* Bounce up */
+    transform: translateY(-20px); 
   }
 }
 
-/* Apply the animation to your image element */
 .image-to-bounce {
-  animation: bounce 1s infinite; /* Bounce animation with a 1-second duration, repeating infinitely */
-  /* You can adjust the duration and other animation properties as needed */
+  animation: bounce 1s infinite; 
 }
 </style>

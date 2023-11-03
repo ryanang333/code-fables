@@ -61,7 +61,6 @@ export default {
         handleAnimationIteration(){
             if(event.target === this.gameworld && event.animationName==='slide')
             this.checkedEnemies = []
-            console.log('reset')
         }
     },
     mounted(){

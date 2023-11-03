@@ -81,13 +81,11 @@ export default {
     register() {
       createUserWithEmailAndPassword(getAuth(), this.email, this.password)
         .then((data) => {
-          console.log("Registered successfully!");
           const userUID = data.user.uid;
           this.createUser(userUID);
           this.$router.push("/character");
         })
         .catch((error) => {
-          console.log(error);
           console.log(error.code);
           switch (error.code) {
             case "auth/missing-email":

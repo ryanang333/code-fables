@@ -154,14 +154,11 @@ export default {
       this.chatFriend = friend;
     },
     updateFriendsList(username) {
-      console.log(username);
       var newFriends = this.friends.filter((friend) => friend !== username);
       this.friends = newFriends;
       var newFriendDetails = this.friendsDetails.filter(
         (friendObj) => friendObj.username !== username
       );
-      console.log(newFriends);
-      console.log(newFriendDetails);
       this.friendsDetails = newFriendDetails;
       this.numberOfFriends = this.friends.length;
     },
@@ -185,9 +182,7 @@ export default {
         let userDet = docSnap.data();
         userDet["uid"] = docSnap.id;
         this.userDetails = userDet;
-        console.log(this.userDetails);
         let friends = docSnap.data().friends;
-        console.log(friends);
         this.friends = friends;
         this.numberOfFriends = this.friends.length;
         this.friendsDetails = [];

@@ -128,7 +128,7 @@ export default {
   computed: {
     picturesInRows() {
       const rows = [];
-      const itemsPerRow = 4; // Adjust this as needed
+      const itemsPerRow = 4; 
       for (let i = 0; i < this.pictures.length; i += itemsPerRow) {
         rows.push(this.pictures.slice(i, i + itemsPerRow));
       }
@@ -139,7 +139,6 @@ export default {
     getUrl(url) {
       this.SelectedPic = url;
       this.mainUrl = url;
-      console.log(url);
       document.getElementById("save").disabled = false;
     },
     clearUrl() {
@@ -157,7 +156,6 @@ export default {
         this.getPictures();
         alert("Profile picture updated!");
       } else {
-        console.log("failed");
       }
     },
     async getInfo() {
@@ -179,7 +177,7 @@ export default {
       this.pictures = [];
       const querySnapshot = await getDocs(collection(db, "profile_pictures"));
       querySnapshot.forEach((doc) => {
-      if (this.profileUrl != doc.data().url) {
+        if (this.profileUrl != doc.data().url) {
           this.pictures.push(doc.data().url);
         }
       });

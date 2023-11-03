@@ -115,12 +115,9 @@ export default {
       const querySnap = await getDocs(q);
 
       querySnap.forEach((doc) => {
-        // console.log(doc.data().path);
-        // console.log(doc.id);
         this.models.push({ name: doc.id.toUpperCase(), url: doc.data().path });
       });
       this.isLoaded = true;
-      console.log(this.models);
     },
     async createCharacter() {
       //guard statements for invalid display_name input
@@ -141,13 +138,11 @@ export default {
       const activeCarousel =
         document.getElementsByClassName("active")[0].childNodes[1];
       var selectedModelName = activeCarousel.textContent;
-      console.log(this.models);
       this.models.forEach((modelObj) => {
         if (modelObj.name === selectedModelName) {
           this.selectedModelObj = modelObj;
         }
       });
-      console.log(this.selectedModelObj);
       await updateDoc(doc(db, "accounts", this.UID), {
         profile_name: this.display_name,
         model_ID: this.selectedModelObj.url,
@@ -159,7 +154,6 @@ export default {
   mounted() {
     this.getModels();
     this.UID = getAuth().currentUser.uid;
-    console.log(this.UID);
   },
 };
 </script>

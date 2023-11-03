@@ -80,12 +80,9 @@ export default {
       const auth = getAuth();
       signInWithEmailAndPassword(auth, this.email, this.password)
         .then((data) => {
-          console.log("Successfuly logged in!");
-          console.log(auth.currentUser);
           this.$router.push("/");
         })
         .catch((error) => {
-          console.log(error.code);
           switch (error.code) {
             case "auth/invalid-email":
               this.errMsg = "Invalid email";

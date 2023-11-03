@@ -1,21 +1,21 @@
 <template>
   <div v-if="showDiv">
     <div
-      v-if="isFriendFound && username!== myUser"
+      v-if="isFriendFound && username !== myUser"
       class="modal-overlay d-flex align-items-center justify-content-center"
     >
       <div class="modal-container bg-secondary-subtle p-2 rounded-4 modal-sm">
         <div class="text-center d-flex justify-content-center">
-          <h1 class="fs-1 text-center">{{profile_name}}</h1>
+          <h1 class="fs-1 text-center">{{ profile_name }}</h1>
         </div>
         <div
           class="d-flex flex-column align-items-center justify-content-center modal-content"
         >
-          <ModelRender :modelUrl = "modelUrl"/>
-          <p class="info mb-2 mt-5 mb-2 fw-bold">{{username}}</p>
-          <p class="info mb-2 mb-2">Level {{level}}</p>
-          <p class="info mb-2 mb-2">EXP: {{experience}}</p>
-          <p class="info mb-2 mb-2">{{numberOfFriends}} Friend(s)</p>
+          <ModelRender :modelUrl="modelUrl" />
+          <p class="info mb-2 mt-5 mb-2 fw-bold">{{ username }}</p>
+          <p class="info mb-2 mb-2">Level {{ level }}</p>
+          <p class="info mb-2 mb-2">EXP: {{ experience }}</p>
+          <p class="info mb-2 mb-2">{{ numberOfFriends }} Friend(s)</p>
           <button
             v-if="isSearching && !isAlreadyFriend && !isRequestSent"
             class="btn btn-dark d-inline btn-block mt-3 w-50 fs-4 p-4"
@@ -30,14 +30,10 @@
           >
             Unfriend
           </button>
-          <p class="fw-bold" v-if="isAlreadyFriend">
-            Already friends!
-          </p>
-          <p class="fw-bold" v-if="isRequestSent">
-            Request Sent!
-          </p>
+          <p class="fw-bold" v-if="isAlreadyFriend">Already friends!</p>
+          <p class="fw-bold" v-if="isRequestSent">Request Sent!</p>
           <button
-            class="btn btn-dark d-inline btn-block mt-3 w-50 fs-4 p-3 "
+            class="btn btn-dark d-inline btn-block mt-3 w-50 fs-4 p-3"
             @click="closeModal"
           >
             Close
@@ -51,7 +47,9 @@
     >
       <div class="modal-container bg-secondary-subtle p-5 rounded-4">
         <div class="text-center d-flex justify-content-center">
-          <h1 class="fs-1 text-center mb-5">Can't add yourself, silly goose! </h1>
+          <h1 class="fs-1 text-center mb-5">
+            Can't add yourself, silly goose!
+          </h1>
         </div>
         <div
           class="d-flex flex-column align-items-center justify-content-center modal-content"
@@ -89,9 +87,9 @@
 </template>
 
 <script>
-import ModelRender from '../ModelRender/ModelRender.vue';
-import { getDoc, doc, updateDoc } from 'firebase/firestore';
-import db from '../../firebase/init';
+import ModelRender from "../ModelRender/ModelRender.vue";
+import { getDoc, doc, updateDoc } from "firebase/firestore";
+import db from "../../firebase/init";
 export default {
   name: "FriendModal",
   data() {
@@ -106,13 +104,13 @@ export default {
       skin_ID: "",
       isRequestSent: false,
       isAlreadyFriend: false,
-      UID : '',
-      friendsFriends : [],
-      modelUrl : '',
+      UID: "",
+      friendsFriends: [],
+      modelUrl: "",
     };
   },
-  components:{
-    ModelRender
+  components: {
+    ModelRender,
   },
   props: {
     username: String,
@@ -129,7 +127,6 @@ export default {
     },
     async loadFriendData() {
       if (!this.isSearching) {
-        console.log(this.friendDetails);
         var data = this.friendDetails.filter(
           (value) => value.username === this.username
         );
@@ -144,15 +141,16 @@ export default {
         this.showDivAfterDelay();
       } else {
         try {
-          console.log(this.username);
-          const docSnap = await getDoc(doc(db, 'user_profiles', this.username));
-          console.log(docSnap.data());
+          const docSnap = await getDoc(doc(db, "user_profiles", this.username));
+
           if (docSnap.data() === undefined) {
             this.isFriendFound = false;
           } else {
             this.UID = docSnap.data().uid;
-            console.log(this.UID);
-            const friendData = await getDoc(doc(db, 'accounts', docSnap.data().uid))
+
+            const friendData = await getDoc(
+              doc(db, "accounts", docSnap.data().uid)
+            );
             const data = friendData.data();
             this.profile_name = data.profile_name;
             this.level = data.level;
@@ -161,12 +159,9 @@ export default {
             this.skin_ID = data.skin_ID;
             this.numberOfFriends = data.friends.length;
             this.modelUrl = data.model_ID;
-            data.friend_requests.includes(
-              this.myUser
-            ) && (this.isRequestSent = true);
-            data.friends.includes(
-              this.myUser
-            ) && (this.isAlreadyFriend = true);
+            data.friend_requests.includes(this.myUser) &&
+              (this.isRequestSent = true);
+            data.friends.includes(this.myUser) && (this.isAlreadyFriend = true);
           }
         } finally {
           this.showDivAfterDelay();
@@ -175,42 +170,30 @@ export default {
     },
     async addFriend() {
       this.isRequestSent = true;
-      const friendData = await getDoc(doc(db, 'accounts', this.UID));
-      console.log(friendData.data());
+      const friendData = await getDoc(doc(db, "accounts", this.UID));
       const friendReq = friendData.data().friend_requests;
-      console.log(friendReq);
       friendReq.push(this.myUser);
-      await updateDoc(doc(db, 'accounts', this.UID), {
-        friend_requests: friendReq
+      await updateDoc(doc(db, "accounts", this.UID), {
+        friend_requests: friendReq,
       });
-      
     },
     async removeFriend() {
       this.$emit("close");
       this.onFriendRemoved(this.username);
-      console.log(this.username);
-      console.log(this.userFriends);
-      console.log(this.UID);
       const userFriends = this.userFriends.filter(
         (friend) => friend !== this.username
       );
-      console.log(userFriends);
 
-      await updateDoc(doc(db ,'accounts', this.myUID), {
-        friends: userFriends
+      await updateDoc(doc(db, "accounts", this.myUID), {
+        friends: userFriends,
       });
-      
+
       const friendsFriends = this.friendsFriends.filter(
         (friend) => friend !== this.myUser
       );
-      console.log(this.UID);
-      await updateDoc(doc(db, 'accounts', this.UID), {
-        friends: friendsFriends
+      await updateDoc(doc(db, "accounts", this.UID), {
+        friends: friendsFriends,
       });
-      
-      
-    
-      
     },
     showDivAfterDelay() {
       this.showDiv = true;
@@ -226,7 +209,7 @@ export default {
 .modal-overlay {
   position: fixed;
   top: 20px;
-  bottom:20px;
+  bottom: 20px;
   left: 0;
   width: 100%;
   height: 100%;
@@ -237,20 +220,18 @@ export default {
   z-index: 9999;
 }
 
-.info{
+.info {
   font-size: larger;
 }
 
-
-
 .modal-container {
   box-shadow: 10px 10px 10px rgba(158, 148, 148, 0.6);
-  overflow:hidden;
+  overflow: hidden;
 }
 
-.modal-content{
-  max-height:100%;
-  overflow-y:auto;
+.modal-content {
+  max-height: 100%;
+  overflow-y: auto;
 }
 @media (max-width: 576px) {
   p {

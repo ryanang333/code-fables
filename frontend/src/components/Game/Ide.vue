@@ -57,7 +57,6 @@ export default {
   emits: ["resultOK", "resultWrong"],
   methods: {
     getCode() {
-      console.log(this.questionInfo.question);
       if (Array.isArray(this.questionInfo.question)) {
         this.isLesson = true;
       }
@@ -70,7 +69,6 @@ export default {
     },
     async executeCode() {
       const userCode = this.editor.getSession().getValue(); // Use "this" to access data properties
-      console.log(userCode);
 
       const url = "http://3.27.193.241/compiler.php";
       // const url = "/backend/compiler.php";
@@ -82,7 +80,6 @@ export default {
         name: this.username,
         qn: this.currentQn,
       };
-      console.log(param);
       axios
         .get(url, {
           params: param,
@@ -90,8 +87,6 @@ export default {
         .then((response) => {
           // Process the response data object
           console.log("Server Response:", response.data);
-          console.log(response.data);
-          console.log(response);
           this.output = response.data.output;
           if (response.data.output.includes('.txt",')) {
             this.output = response.data.output.split('.txt",')[1];
