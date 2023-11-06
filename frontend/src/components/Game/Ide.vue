@@ -108,9 +108,11 @@ export default {
     },
   },
   async mounted() {
-    const ace = await import('ace-builds/src-noconflict/ace.js');
-    const modePython = await import('ace-builds/src-noconflict/mode-python.js');
-    const themeMonokai = await import('ace-builds/src-noconflict/theme-monokai.js');
+    const ace = await import("ace-builds/src-noconflict/ace.js");
+    const modePython = await import("ace-builds/src-noconflict/mode-python.js");
+    const themeMonokai = await import(
+      "ace-builds/src-noconflict/theme-monokai.js"
+    );
     this.UID = getAuth().currentUser.uid;
     this.currentQn = localStorage.getItem("currentQn");
     this.username = getAuth().currentUser.email.split(".com")[0];

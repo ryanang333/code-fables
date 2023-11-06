@@ -79,7 +79,7 @@
               ></Game>
             </div>
             <div class="row" v-if="questionLoaded && showIde && !isVictory">
-              <div class="ide col-6 bg-dark p-5 mt-2 rounded-5">
+              <div class="ide col-12 col-md-6 bg-dark p-5 mt-2 rounded-5">
                 <div id="ide-component">
                   <Ide
                     :questionInfo="questionDetails"
@@ -113,7 +113,7 @@
                   </div>
                 </div>
               </div>
-              <div class="col-6 mt-3" id="bossFrame">
+              <div class="col-12 col-md-6 mt-3" id="bossFrame">
                 <div
                   class="bg-monster d-flex justify-content-center align-items-center rounded-5"
                 >

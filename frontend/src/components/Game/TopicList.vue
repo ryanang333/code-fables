@@ -78,7 +78,7 @@ export default {
   methods: {
     getProgress(topicName, index) {
       let count = 0;
-      let x = this.userTopics[topicName]["questions"];
+      let x = this.userTopics[topicName]['questions'];
       for (let qn in x) {
         if (x[qn]) {
           count++;

@@ -117,6 +117,17 @@ export default {
     z-index: 2;
 }
 
+@media(max-width:576px) {
+    .player {
+        width: 20vw;
+        height: 10vh;
+    }
+    .enemy{
+        width:15vw;
+        height:10vh;
+        left:0;
+    }
+}
 
 @media (min-width: 577px) and (max-width: 768px) {
     .player {
@@ -140,17 +151,6 @@ export default {
     }
 }
 
-@media(max-width:576px) {
-    .player {
-        width: 20vw;
-        height: 10vh;
-    }
-    .enemy{
-        width:15vw;
-        height:10vh;
-        left:0;
-    }
-}
 
 @keyframes slide {
     0% {
